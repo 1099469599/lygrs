@@ -415,18 +415,19 @@
 	//alert("链接中断或无法链接服务器, 原因:"+info);
 </script>
 
-<div style="width:100px; height:220px; top:200px; border-radius:4px; background:#bbff77; right:20px;border:1px solid #3B9FFF; position:fixed;">
-	<a class="com-ask-float-block0" title="分机状态" style="top:207px"><img id="tel_state" src="images/phone_0602.jpg"/></a>
-	<a class="com-ask-float-block" id="line1" title="拔号" style="top:257px">拔号</a>
-	<a class="com-ask-float-block" id="line2" title="重拔" style="top:297px">重拔</a>
-	<a class="com-ask-float-block" id="line3" title="应答" style="top:337px">应答</a>
-	<a class="com-ask-float-block" id="line4" title="挂断" style="top:377px;">挂机</a>
+<div style="width:100px; height:240px; top:200px; border-radius:4px; background:#bbff77; right:20px;border:1px solid #3B9FFF; position:fixed;">
+	<h2 style="text-align:center">坐席分机状态</h2>
+	<a class="com-ask-float-block0" title="分机状态" style="top:227px"><img id="tel_state" src="images/phone_0602.jpg"/></a>
+	<a class="com-ask-float-block" id="line1" title="拔号" style="top:277px">拔号</a>
+	<a class="com-ask-float-block" id="line2" title="重拔" style="top:317px">重拔</a>
+	<a class="com-ask-float-block" id="line3" title="应答" style="top:357px">应答</a>
+	<a class="com-ask-float-block" id="line4" title="挂断" style="top:397px;">挂机</a>
 </div>
 <style type="text/css">
-	#bohaopan table{text-align:center; height:220px; width:200px; background:#bbff77; border:0;}
+	#bohaopan table{text-align:center; height:240px; width:200px; background:#bbff77; border:0;}
 	#bohaopan .num_input{color:#000; width:100%; height:30px;}
 	#bohaopan .num_input1{color:#000; width:40%; height:30px;}
-	.bohaopan-fix{display:none; width:200px; height:220px; top:200px; border-radius:4px; background:#E0EEFB; right:130px;border:1px solid #3B9FFF; position:fixed;}
+	.bohaopan-fix{display:none; width:200px; height:240px; top:200px; border-radius:4px; background:#E0EEFB; right:130px;border:1px solid #3B9FFF; position:fixed;}
 </style>
 <div id="bohaopan" class="bohaopan-fix">
 	<table>
