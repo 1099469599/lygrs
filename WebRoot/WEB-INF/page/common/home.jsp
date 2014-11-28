@@ -196,7 +196,7 @@
 
 <!--POP OCXLOG START-->
 <div id="popOCXLogDiv" style="display:none;"> 
-	<div style="width:750px; max-height:300px; overflow-y:auto;">
+	<div style="width:750px; height:300px; max-height:260px; overflow-y:auto;">
 		<table width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #3B9FFF; border-left:1px solid #3B9FFF; line-height:18px;">
 	    	<thead class="tab_border">
 	    		<tr style="font-weight:bold;">
