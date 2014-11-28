@@ -96,33 +96,33 @@
              <tbody class="tab_tbody" id="movies">
 				<c:forEach items="${cList }" var="ls" varStatus="status">
 				<tr>
+					<c:if test="${ls.pdt_l eq 2}">
+						<c:set var="ispdt" value="color:#DC143C; font-weight:bold;"></c:set>
+						<c:set var="gqtxt" value="已过期"></c:set>
+					</c:if>
+					<c:if test="${ls.pdt_l eq 1}">
+						<c:set var="ispdt" value=""></c:set>
+						<c:set var="gqtxt" value="未过期"></c:set>
+					</c:if>
+					<c:if test="${ls.pdt_l eq 0}">
+						<c:set var="ispdt" value=""></c:set>
+						<c:set var="gqtxt" value="未设置"></c:set>
+					</c:if>
+					
 					<td>${ls.ids }</td>
 					<td>${ls.cp }</td>
 					<td>${ls.byear }</td>
 					<td>${ls.ot }</td>
-					<c:if test="${ls.pdt_l eq 2}">
-						<c:set var="ispdt" value="#DC143C"></c:set>
-						<c:set var="gqtxt" value="未过期"></c:set>
-					</c:if>
-					<c:if test="${ls.pdt_l eq 1}">
-						<c:set var="ispdt" value="#ADFF2F"></c:set>
-						<c:set var="gqtxt" value="已过期"></c:set>
-					</c:if>
-					<c:if test="${ls.pdt_l eq 0}">
-						<c:set var="ispdt" value="#4682B4"></c:set>
-						<c:set var="gqtxt" value="未设置"></c:set>
-					</c:if>
-					
 					<c:if test="${sessionScope.vts.roleID eq 3 }">
 						<c:set var="cd" value="${fn:substring(ls.pdt,0,10) }"></c:set>
 						<c:set var="ct" value="${fn:substring(ls.pdt,10,19) }"></c:set>
 						<c:set var="pdtlen" value="${fn:length(ls.pdt) }"></c:set>
 						<c:choose>
 							<c:when test="${cd eq curDate }">
-								<td title="${gqtxt }:${fn:substring(ls.pdt,0,19) }" style="color:#fff; font-weight:bold; background:${ispdt }">${ct }</td>
+								<td title="${gqtxt }:${fn:substring(ls.pdt,0,19) }">${ct }</td>
 							</c:when>
 							<c:otherwise>
-								<td title="${gqtxt }:${fn:substring(ls.pdt,0,19) }" style="color:#fff; font-weight:bold; background:${ispdt }">${fn:substring(ls.pdt,0,10) }</td>
+								<td title="${gqtxt }:${fn:substring(ls.pdt,0,19) }" style="${ispdt }">${fn:substring(ls.pdt,0,10) }</td>
 							</c:otherwise>
 						</c:choose>
 					</c:if>
@@ -138,7 +138,7 @@
 					<td title="${ls.noteinfo }">
 						<c:set var="nilen" value="${fn:length(ls.noteinfo) }"/>
 						<c:choose>
-							<c:when test="${nilen gt 8 }">${fn:substring(ls.noteinfo,0,8) }..</c:when>
+							<c:when test="${nilen gt 7 }">${fn:substring(ls.noteinfo,0,7) }..</c:when>
 							<c:otherwise>${ls.noteinfo }</c:otherwise>
 						</c:choose>
 					</td>

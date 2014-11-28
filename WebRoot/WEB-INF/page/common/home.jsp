@@ -14,13 +14,13 @@
 	<script type="text/javascript" src="<c:url value='js/menu.js?v=8'/>"></script>
 	<!-- menu plugin end -->
 	<style type="text/css">
-		#com-ask-float-block {
+		.com-ask-float-block0 {
 			cursor: pointer;
 			border: 0px;
 			bottom: 124px;
 			min-width: 40px;
-			height: 28px;
-			width: 90px;
+			height: 30px;
+			width: 65px;
 			margin: 0px;
 			padding: 0px;
 			position: fixed;
@@ -28,9 +28,47 @@
 			border-radius: 0;
 			line-height: 16px;
 			font-weight:bold;
-			color: #f00;
-			padding:4px 0 0 8px;
-			background: transparent url(images/common_float_block.png) no-repeat scroll 0px 0px;
+			color: #fff;
+			text-align:center;
+			line-height:28px;
+		}
+		.com-ask-float-block {
+			cursor: pointer;
+			border: 0px;
+			bottom: 124px;
+			min-width: 40px;
+			height: 30px;
+			width: 60px;
+			margin: 0px;
+			padding: 0px;
+			position: fixed;
+			right: 40px;
+			border-radius: 0;
+			line-height: 16px;
+			font-weight:bold;
+			color: #fff;
+			text-align:center;
+			line-height:28px;
+			background:url(images/common_float_telbg.jpg);
+		}
+		.com-ask-float-block:hover{
+			cursor: pointer;
+			border: 0px;
+			bottom: 124px;
+			min-width: 40px;
+			height: 30px;
+			width: 60px;
+			margin: 0px;
+			padding: 0px;
+			position: fixed;
+			right: 40px;
+			border-radius: 0;
+			line-height: 16px;
+			font-weight:bold;
+			color: #fff;
+			text-align:center;
+			line-height:28px;
+			background:url(images/common_float_telbg1.jpg);
 		}
 	</style>
 </head>
@@ -59,12 +97,15 @@
     		<span>欢迎：&nbsp;<s:property value="#session.vts.roleName"/></span><span><s:property value="#session.vts.username"/></span>
     		</div>
     		<div id="navigate" class="nav_left_path">
+    			<span id="calling_num" class="calling_num"></span>
     		</div>
         </div>
         <div class="nav_right">
             <span><a class="menu_righta" href="javascript:showUpdatePwdDiv()" id="bt">修改密码</a></span>
             <span><a class="menu_righta" href="javascript:logout()">[&nbsp;注销&nbsp;]</a></span>
+            <c:if test="${sessionScope.vts.roleID eq 1 }">
             <span><a class="menu_righta" href="javascript:viewOCXLog()">查看日志</a></span>
+            </c:if>
         </div>
     </div>
     <!-- main -->
@@ -167,7 +208,7 @@
 	    </table>
     </div>
 </div>
-<!--POP OCXLOG END-->
+<!--POP OCXLOG END -->
 
 <form id="form2" action="<c:url value='/user-logout.action'/>" method="post"></form>
 <!--POP LAYER END-->
@@ -315,24 +356,8 @@
 	var d = new Date().Format("yyyy-MM-dd hh:mm:ss");
 	//
 	var tabId = window.frames["mainFrame"].document.getElementById("ocxTabId").insertRow(0);
-	var doc=window.frames['mainFrame'].document;  
 	if(null!=tabId)
 	{
-		//添加在表格最后
-		/*
-		var tab_tr = doc.createElement("tr"); 
-		//
-		var tab_td1 = doc.createElement("td"); 
-		tab_td1.innerHTML = d;
-		tab_tr.appendChild(tab_td1);
-		//
-		var tab_td2 = doc.createElement("td"); 
-		tab_td2.innerHTML = "&nbsp;"+info;
-		tab_tr.appendChild(tab_td2);
-		//
-		tabId.appendChild(tab_tr);
-		*/
-		
 		//JS代码通过表格对象的insertRow方法动态向表格的最顶端添加新的行
 		var dateCol = tabId.insertCell(0);
 		var infoCol = tabId.insertCell(1);
@@ -390,17 +415,239 @@
 	//alert("链接中断或无法链接服务器, 原因:"+info);
 </script>
 
-<a id="com-ask-float-block" title="提问按钮" style="top:247px">拔号</a>
-<a id="com-ask-float-block" title="提问按钮" style="top:287px">重拔</a>
-<a id="com-ask-float-block" title="提问按钮" style="top:327px">应答</a>
-<a id="com-ask-float-block" title="提问按钮" style="top:367px" href="javascript:onHook()">挂机</a>
+<div style="width:100px; height:220px; top:200px; border-radius:4px; background:#bbff77; right:20px;border:1px solid #3B9FFF; position:fixed;">
+	<a class="com-ask-float-block0" title="分机状态" style="top:207px"><img id="tel_state" src="images/phone_0602.jpg"/></a>
+	<a class="com-ask-float-block" id="line1" title="拔号" style="top:257px">拔号</a>
+	<a class="com-ask-float-block" id="line2" title="重拔" style="top:297px">重拔</a>
+	<a class="com-ask-float-block" id="line3" title="应答" style="top:337px">应答</a>
+	<a class="com-ask-float-block" id="line4" title="挂断" style="top:377px;">挂机</a>
+</div>
+<style type="text/css">
+	#bohaopan table{text-align:center; height:220px; width:200px; background:#bbff77; border:0;}
+	#bohaopan .num_input{color:#000; width:100%; height:30px;}
+	#bohaopan .num_input1{color:#000; width:40%; height:30px;}
+	.bohaopan-fix{display:none; width:200px; height:220px; top:200px; border-radius:4px; background:#E0EEFB; right:130px;border:1px solid #3B9FFF; position:fixed;}
+</style>
+<div id="bohaopan" class="bohaopan-fix">
+	<table>
+		<tr>
+			<td colspan="3">
+				<input type="text" id="nummessege" class="ipt_bohao_w190" maxlength="11"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="button" value="1" id="1" onclick="onclicknum(1)" class="num_input"/>
+			</td>
+			<td>
+				<input type="button" value="2" id="2" onclick="onclicknum(2)" class="num_input"/>
+			</td>
+			<td>
+				<input type="button" value="3" id="3" onclick="onclicknum(3)" class="num_input"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="button" value="4" id="4" onclick="onclicknum(4)" class="num_input"/>
+			</td>
+			<td>
+				<input type="button" value="5" id="5" onclick="onclicknum(5)" class="num_input"/>
+			</td>
+			<td>
+				<input type="button" value="6" id="6" onclick="onclicknum(6)" class="num_input"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="button" value="7" id="7" onclick="onclicknum(7)" class="num_input"/>
+			</td>
+			<td>
+				<input type="button" value="8" id="8" onclick="onclicknum(8)" class="num_input"/>
+			</td>
+			<td>
+				<input type="button" value="9" id="9" onclick="onclicknum(9)" class="num_input"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="button" value="*" id="mul" onclick="onclicknum('*')" class="num_input"/>
+			</td>	
+			<td>
+				<input type="button" value="0" id="0" onclick="onclicknum(0)" class="num_input"/>
+			</td>
+			<td>
+				<input type="button" value="#" id="mul" onclick="onclicknum('#')" class="num_input"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="button" value="清除" id="clear" onclick="onclickclear()" class="num_input"/>
+			</td>
+			<td>	
+				<input type="button" value="呼叫" id="result" onclick="onDial()" class="num_input"/>
+			</td>
+			<td>	
+				<input type="button" value="关闭" onclick="closeBohaopan()" class="num_input"/>
+			</td>
+		</tr>
+	</table>
+</div>
+
+
+
 <script type="text/javascript">
+	//ocx插件
 	var ocx = document.getElementById("OCXPlugin");
-	// 座席控制函数 short doOnHook()
-	function onHook()
+	//拔号盘 
+	var bohp = document.getElementById("bohaopan");
+
+	var ing = "正在呼叫：";
+	var callingTel = document.getElementById("calling_num"); 
+
+	$(function(){
+		$("#line1").bind("click",function(){
+			bohp.style.display="block";
+		});
+
+		//重拔
+		$("#line2").bind("click",function(){
+			var recalltel = ocx.GetLastCallee();
+			ocx.doDial(recalltel);
+			callingTel.innerHTML=ing+recalltel;
+		});
+		
+		//挂断
+		$("#line4").bind("click",function(){
+			ocx.doOnHook();
+			callingTel.innerHTML="";
+		});
+	});
+	//拔号盘按钮点击
+	function onclicknum(nums) { 
+		str = document.getElementById("nummessege"); 
+		str.value = str.value + nums;
+		if(str.value.length>11)
+		{
+			str.value=(str.value).substring(0,11);
+		}	 
+	} 
+	//拔号盘清除
+	function onclickclear() { 
+		str = document.getElementById("nummessege"); 
+		str.value = ""; 
+	} 
+	//关闭拔号盘
+	function closeBohaopan()
 	{
-		ocx.doOnHook();
+		bohp.style.display="none";
 	}
+	//呼叫
+	function onDial()
+	{
+		var tel = $("#nummessege").val();
+		var regT = /^([0-9]|[-])+$/g;
+		var regP = /0?(13|14|15|18)[0-9]{9}/;
+		
+		if(!tel)
+		{
+			alert("请输入要拔打的号码！");
+			return false;
+		}
+		else if(!regT.exec(tel) && !regT.exec(tel))
+		{
+			alert("请输入合理的电话号码");
+			return false;
+		}
+		else
+		{
+			ocx.doDial(tel);
+			callingTel.innerHTML=ing+tel;
+		}
+	}
+	
 </script>
+
+<%-- 4.1 指挥座席线路状态改变 --%>
+<script type="text/javascript" for="OCXPlugin" event="OnLineChange(line,state,desc)">
+	//分机状态
+	var ts = document.getElementById("tel_state");
+	var imgnum = [0,1,2,3,4];
+	var img="images/phone_060";
+	//正在呼叫
+	var callingTel = document.getElementById("calling_num"); 
+	//拔号
+	var line1 = document.getElementById("line1");
+	//重拔
+	var line2 = document.getElementById("line2");
+	//应答
+	var line3 = document.getElementById("line3");
+	//挂断
+	var line4 = document.getElementById("line4");
+	
+	//0:断开
+	if(state==0)
+	{
+		ts.src=img+imgnum[0]+".jpg";
+		line1.style.display="";
+		line2.style.display="";
+		line3.style.display="";
+		line4.style.display="none";
+		//
+		callingTel.innerHTML="";
+	}
+	//1:空闲
+	else if(state==1)
+	{
+		ts.src=img+imgnum[1]+".jpg";
+		line1.style.display="";
+		line2.style.display="";
+		line3.style.display="";
+		line4.style.display="";
+		//
+		callingTel.innerHTML="";
+	}
+	//2:通话 
+	else if(state==2)
+	{
+		ts.src=img+imgnum[3]+".jpg";
+		line1.style.display="none";
+		line2.style.display="none";
+		line3.style.display="none";
+		line4.style.display="";
+	}
+	//3:振铃 
+	else if(state==3)
+	{
+		ts.src=img+imgnum[2]+".jpg";
+		line1.style.display="none";
+		line2.style.display="none";
+		line3.style.display="";
+		line4.style.display="";
+	}
+	//4:拨号 
+	else if(state==4)
+	{
+		ts.src=img+imgnum[3]+".jpg";
+		line1.style.display="";
+		line2.style.display="";
+		line3.style.display="none";
+		line4.style.display="";
+	}
+	//5:催挂
+	else if(state==5)
+	{
+		ts.src=img+imgnum[4]+".jpg";
+		line1.style.display="none";
+		line2.style.display="none";
+		line3.style.display="none";
+		line4.style.display="";
+	}
+	else
+	{
+		alert("状态错误");
+	}
+	
+</script>
+
 </body>
 </html>
