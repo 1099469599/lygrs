@@ -14,63 +14,26 @@
 	<script type="text/javascript" src="<c:url value='js/menu.js?v=8'/>"></script>
 	<!-- menu plugin end -->
 	<style type="text/css">
-		.com-ask-float-block0 {
-			cursor: pointer;
-			border: 0px;
-			bottom: 124px;
-			min-width: 40px;
-			height: 30px;
-			width: 65px;
-			margin: 0px;
-			padding: 0px;
-			position: fixed;
-			right: 40px;
-			border-radius: 0;
-			line-height: 16px;
-			font-weight:bold;
-			color: #fff;
-			text-align:center;
-			line-height:28px;
-		}
-		.com-ask-float-block {
-			cursor: pointer;
-			border: 0px;
-			bottom: 124px;
-			min-width: 40px;
-			height: 30px;
-			width: 60px;
-			margin: 0px;
-			padding: 0px;
-			position: fixed;
-			right: 40px;
-			border-radius: 0;
-			line-height: 16px;
-			font-weight:bold;
-			color: #fff;
-			text-align:center;
-			line-height:28px;
-			background:url(images/common_float_telbg.jpg);
-		}
-		.com-ask-float-block:hover{
-			cursor: pointer;
-			border: 0px;
-			bottom: 124px;
-			min-width: 40px;
-			height: 30px;
-			width: 60px;
-			margin: 0px;
-			padding: 0px;
-			position: fixed;
-			right: 40px;
-			border-radius: 0;
-			line-height: 16px;
-			font-weight:bold;
-			color: #fff;
-			text-align:center;
-			line-height:28px;
-			background:url(images/common_float_telbg1.jpg);
-		}
+		#zuojifenji{width:100px; height:240px; top:200px; border-radius:4px; background:#bbff77; right:20px; border:1px solid #3B9FFF; position:fixed;}
+		.com-ask-float-block0{cursor:pointer; border:0px; bottom:124px; min-width:40px; height:30px; width:65px; margin:0px; padding:0px; position:fixed; right:40px; border-radius:0; line-height:16px; font-weight:bold; color:#fff; text-align:center; line-height:28px;}
+		.com-ask-float-block{cursor: pointer; border: 0px; bottom: 124px; min-width: 40px; height: 30px; width: 60px; margin: 0px; padding: 0px; position: fixed; right: 40px; border-radius: 0; line-height: 16px; font-weight:bold; color: #fff; text-align:center; line-height:28px; background:url(images/common_float_telbg.jpg);}
+		.com-ask-float-block:hover{ cursor:pointer; border:0px; bottom:124px; min-width:40px; height:30px; width:60px; margin:0px; padding:0px; position:fixed; right:40px; border-radius:0; line-height:16px; font-weight:bold; color:#fff; text-align:center; line-height:28px; background:url(images/common_float_telbg1.jpg);}
+		.bohaopan-fix{display:none; width:200px; height:240px; top:200px; border-radius:4px; background:#E0EEFB; right:130px;border:1px solid #3B9FFF; position:fixed;}
 	</style>
+	<!--[if IE 6]>
+	<style type="text/css">
+		html{overflow:hidden}
+		body{height:100%;overflow:auto}
+		#zuojifenji{position:absolute; _top:200px; }
+		.bohaopan-fix{position:absolute; _top:200px;}
+		.com-ask-float-block0{position:absolute; _top:0px;}
+		.com-ask-float-block{position:absolute;_top:2px;}
+		.bohao1{position:absolute; _top:277px;}
+		.bohao2{position:absolute; _top:317px;}
+		.bohao3{position:absolute; _top:357px;}
+		.bohao4{position:absolute; _top:497px;}
+	</style>
+	<![endif]-->
 </head>
 <body>
 <div id="container">
@@ -223,12 +186,14 @@
 	//logout
 	function logout()
 	{
+		var ocx = document.getElementById("OCXPlugin");
 		layer.confirm("确定要注销吗？",function(){
+			ocx.AgentCheckOut();
 			$("#form2").ajaxSubmit({ 
 				success:function(data){ //提交成功的回调函数
 					location.href="index.action";
-		        }  
-			}); 
+		        }
+			});
 		    return false;
 		});
 	}
@@ -372,7 +337,6 @@
 	dtCol.innerHTML="&nbsp;"+d;
 	ifCol.innerHTML="&nbsp;"+info;
 	
-	
 </script>
 
 <script type="text/javascript" for="OCXPlugin" event="OnRing(line,ani,dnis,param)">
@@ -396,6 +360,10 @@
 </script>
 <script type="text/javascript">
 	$(function(){
+		//登录成功CheckIn
+		var agttel = "<s:property value='#session.vts.agttelnum'/>";
+		var ocx = document.getElementById("OCXPlugin");
+		ocx.AgentCheckIn(agttel,0);
 		//判断OCX
 		if(document.all.OCXPlugin.object==null)
 		{
@@ -415,19 +383,20 @@
 	//alert("链接中断或无法链接服务器, 原因:"+info);
 </script>
 
-<div style="width:100px; height:240px; top:200px; border-radius:4px; background:#bbff77; right:20px;border:1px solid #3B9FFF; position:fixed;">
-	<h2 style="text-align:center">坐席分机状态</h2>
-	<a class="com-ask-float-block0" title="分机状态" style="top:227px"><img id="tel_state" src="images/phone_0602.jpg"/></a>
-	<a class="com-ask-float-block" id="line1" title="拔号" style="top:277px">拔号</a>
-	<a class="com-ask-float-block" id="line2" title="重拔" style="top:317px">重拔</a>
-	<a class="com-ask-float-block" id="line3" title="应答" style="top:357px">应答</a>
-	<a class="com-ask-float-block" id="line4" title="挂断" style="top:397px;">挂机</a>
+
+<%-- 我的分机 start --%>
+<div id="zuojifenji">
+	<h2 style="text-align:center">我的分机</h2>
 </div>
+<a class="com-ask-float-block0" id="line0" title="分机状态[点击播放提示音]" style="top:227px"><img id="tel_state" src="images/phone_0602.jpg"/></a>
+<a class="com-ask-float-block bohao1" id="line1" title="拔号" style="top:277px">拔号</a>
+<a class="com-ask-float-block bohao2" id="line2" title="重拔" style="top:317px">重拔</a>
+<a class="com-ask-float-block bohao3" id="line3" title="应答" style="top:357px">应答</a>
+<a class="com-ask-float-block bohao4" id="line4" title="挂断" style="top:397px;">挂机</a>
 <style type="text/css">
 	#bohaopan table{text-align:center; height:240px; width:200px; background:#bbff77; border:0;}
 	#bohaopan .num_input{color:#000; width:100%; height:30px;}
 	#bohaopan .num_input1{color:#000; width:40%; height:30px;}
-	.bohaopan-fix{display:none; width:200px; height:240px; top:200px; border-radius:4px; background:#E0EEFB; right:130px;border:1px solid #3B9FFF; position:fixed;}
 </style>
 <div id="bohaopan" class="bohaopan-fix">
 	<table>
@@ -493,19 +462,24 @@
 		</tr>
 	</table>
 </div>
-
-
-
+<%-- 我的分机 end --%>
 <script type="text/javascript">
 	//ocx插件
 	var ocx = document.getElementById("OCXPlugin");
 	//拔号盘 
 	var bohp = document.getElementById("bohaopan");
-
+	//工具栏显示信息 
 	var ing = "正在呼叫：";
+	//正在呼叫号码
 	var callingTel = document.getElementById("calling_num"); 
-
+	//
 	$(function(){
+		//播放提示音 
+		$("#line0").bind("click",function(){
+			ocx.doPlayInfo();
+		});
+
+		//拔号
 		$("#line1").bind("click",function(){
 			bohp.style.display="block";
 		});
@@ -519,9 +493,13 @@
 		
 		//挂断
 		$("#line4").bind("click",function(){
-			ocx.doOnHook();
-			callingTel.innerHTML="";
+			//ocx.doOnHook();
+			//callingTel.innerHTML="";
+			ocx.AgentCallMe();
 		});
+		
+		//呼我 ocx.AgentCallMe();
+		
 	});
 	//拔号盘按钮点击
 	function onclicknum(nums) { 
@@ -542,7 +520,7 @@
 	{
 		bohp.style.display="none";
 	}
-	//呼叫
+	//拔号盘呼叫
 	function onDial()
 	{
 		var tel = $("#nummessege").val();
@@ -554,7 +532,7 @@
 			alert("请输入要拔打的号码！");
 			return false;
 		}
-		else if(!regT.exec(tel) && !regT.exec(tel))
+		else if(!regT.exec(tel) && !regP.exec(tel))
 		{
 			alert("请输入合理的电话号码");
 			return false;
