@@ -150,8 +150,15 @@
 							<a href="javascript:deleteCustomerInfo('${ls.cid }')">删除</a>&nbsp;&nbsp;
 							<a href="javascript:fenPeiAgt('${ls.cid }','${status.count }')">分配</a>&nbsp;&nbsp;
 						</c:if>
-						<c:if test="${sessionScope.vts.roleID eq 3 }">						
-						<a href="#">呼叫</a>&nbsp;&nbsp;
+						<c:if test="${sessionScope.vts.roleID eq 3 }">	
+							<c:choose>
+								<c:when test="${!empty(ls.mobile) }">
+									<a href="javascript:callCustomer('${ls.mobile }')">呼叫</a>&nbsp;&nbsp;								
+								</c:when>
+								<c:otherwise>
+									<label style="color:#808080;">呼叫&nbsp;&nbsp;</label>
+								</c:otherwise>
+							</c:choose>				
 						</c:if>
 						<a href="<c:url value='customer-viewDetail.action?pino=${ls.ids }&cid=${ls.cid }&caryear=${ls.byear }&chuxcs=${ls.ot }&chudrq=${ls.odt }&baoxdq=${ls.edt }&changphm=${ls.pp }&chephm=${ls.cp }&chejh=${ls.cfif }&fadjbh=${ls.eid }&uname=${ls.uname }&idcard=${ls.crid }&mobile=${ls.mobile }&hometel=${ls.home }&officetel=${ls.office }&address=${ls.addr }&noteinfo=${ls.noteinfo }&hideflag=${ls.hideflag }&yuydate=${fn:substring(ls.pdt,0,10) }&yuytime=${fn:substring(ls.pdt,10,16) }&q_pino=${q_pino }&q_caryear=${q_caryear }&q_chuxcs=${q_chuxcs }&q_chephm=${q_chephm }&q_uname=${q_uname }&q_mobile=${q_mobile }&q_agtacc=${q_agtacc }'/>">查看</a>&nbsp;&nbsp;
 						<!--  
@@ -262,6 +269,14 @@ $(function(){
 		{
 			alert("请选择话务员！");
 		}
+	}
+	//呼叫
+	function callCustomer(mobile)
+	{
+		var ocx = $("#OCXPlugin",window.parent.document)[0];
+		var callingTel = $("#calling_num",window.parent.document)[0];
+		ocx.doDial(mobile);
+		callingTel.innerHTML="正在呼叫："+mobile;
 	}
 	
 </script>
