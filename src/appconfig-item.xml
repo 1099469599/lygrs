@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dot2014 product="" provider="南京威帝通讯科技有限公司" customer="呼叫中心系统"
+	fax="02584868924" tel="02584869817" url="http://www.voicet.com.cn"
+	mail="jime6688@163.com" version="1.0">
+	<role roleid="0" describle="未登录"></role>
+	<role roleid="1" describle="系统管理员">
+		<grp name="日常工作">
+			<!-- 
+			<fun name="资料导入及分配" action="customer-importData.action" />
+			<fun name="客户资料管理" action="customer-query.action" />
+			<fun name="外呼任务管理" action="task-list.action" />
+	        <fun name="座席组监控" action="acdmonitor-list.action" />
+	        <fun name="座席分机监控" action="subtelmonitor-list.action" />
+			<fun name="座席组分配统计" action="acdanaly-list.action" />
+			<fun name="接听情况统计" action="agentanaly-list.action" />
+			<fun name="通话及录音查询" action="callrecord-list.action" />
+			<fun name="座席签系统查询" action="agentanaly-online.action" />
+			-->
+			<fun name="初始设置" action="sysparam-init.action" />
+		</grp>
+	    <grp name="维护管理">
+	      	<fun name="话务员资料维护" action="agent-list.action" />
+	      	<!--  
+	      	<fun name="座席组资料维护" action="acd-list.action" />
+	      	-->
+	      	<fun name="座席分机资料维护" action="subtel-list.action" />
+	      	<fun name="系统黑名单维护" action="black-list.action" />
+	      	<fun name="NTS服务器维护" action="nts-list.action" />
+	      	<fun name="系统参数设定" action="sysparam-list.action" />
+		</grp>
+	    <grp name="数据库">
+	      	<fun name="数据库维护" action="dbconfig.action" />
+	    </grp>
+	</role>
+	<role roleid="2" describle="业务管理员">
+	    <grp name="日常工作">
+	    	<fun name="资料导入及分配" action="customer-importData.action" />
+	    	<fun name="客户资料管理" action="customer-query.action" />
+	        <!--  
+	        <fun name="外呼任务管理" action="task-list.action" />
+	        -->
+	        <fun name="座席组监控" action="acdmonitor-list.action" />
+	        <fun name="座席分机监控" action="subtelmonitor-list.action" />
+			<!--
+			<fun name="座席组分配统计" action="acdanaly-list.action" />
+			-->
+			<fun name="接听情况统计" action="agentanaly-list.action" />
+			<fun name="通话及录音查询" action="callrecord-list.action" />
+			<fun name="座席签系统查询" action="agentanaly-online.action" />
+	    </grp>
+    	<grp name="维护管理">
+      		<fun name="系统黑名单维护" action="black-list.action" />
+    	</grp>
+	</role>
+	<role roleid="3" describle="话务员">
+		<grp name="日常工作">
+			<fun name="客户资料管理" action="customer-query.action" />
+			<fun name="通话记录查询" action="agentanaly-answer.action" />
+	    </grp>
+	</role>
+	
+	<list name="callstate" describle="呼叫状态">
+		<item id="0" name="未呼叫" />
+		<item id="1" name="呼叫成功" />
+		<item id="2" name="呼叫失败" />
+	</list>
+	<list name="workmode" describle="工作模式">
+		<item id="0" name="0:TTS合成语音播放" />
+		<item id="1" name="1:转入业务组" />
+	</list>
+	
+	<list name="taskkind" describle="队列业务类型">
+		<item id="0" name="0:标准" />
+		<item id="1" name="1:回访1" />
+		<item id="2" name="2:回访2" />
+		<item id="3" name="3:回访3" />
+	</list>
+	<list name="taskstate" describle="任务类型">
+		<item id="0" name="0:新建" />
+		<item id="1" name="1:激活" />
+		<item id="9" name="9:停止" />
+		<item id="10" name="10:呼叫完成" />
+	</list>
+	<!--  -->
+	<list name="sex" describle="性别">
+		<item id="1" name="男" />
+		<item id="0" name="女" />
+	</list>
+	<list name="manyi" describle="满意">
+		<item id="1" name="满意" />
+		<item id="0" name="不满意" />
+	</list>
+	<list name="jffs" describle="缴费方式">
+		<item id="1" name="1:营业厅" />
+		<item id="2" name="2:网上营业厅" />
+		<item id="3" name="3:手机营业厅" />
+	</list>
+	<list name="hfqk" describle="回访情况">
+		<item id="1" name="1:回访成功" />
+		<item id="2" name="2:回访失败" />
+	</list>
+	<list name="hfqk2" describle="回访情况">
+		<item id="1" name="A-全部成功" />
+		<item id="2" name="B-部分成功" />
+		<item id="3" name="C-失败拒绝" />
+		<item id="4" name="D-失败拒访" />
+		<item id="5" name="E-繁忙改约" />
+		<item id="6" name="F-无人接听" />
+		<item id="7" name="G-无法接通 " />
+		<item id="8" name="H-关机" />
+		<item id="9" name="I-占线" />
+		<item id="10" name="J-暂停使用" />
+		<item id="11" name="K-拒接" />
+	</list>
+	<list name="succfail" describle="外呼结果">
+		<item id="1" name="成功" />
+		<item id="0" name="失败" />
+	</list>
+</dot2014>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+	"http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+	<!-- 配置action的访问路径为.do的形式 -->
+	<constant name="struts.action.extension" value="action"></constant>
+	<!-- 配置struts的开发模式 -->
+	<constant name="struts.devMode" value="true"></constant>
+	<!-- 配置struts文件上传大小限制 -->
+	<constant name="struts.multipart.maxSize" value="1000000000"/>
+	<!-- 配置struts的简单模式 -->
+	<constant name="struts.ui.theme" value="simple"></constant>
+	<constant name="struts.multipart.saveDir" value="/tmp"></constant>
+	<package name="system" namespace="/" extends="struts-default">
+		<!-- 首页功能 -->
+		<action name="index" class="indexAction" method="index">
+			<result name="show_login">/WEB-INF/page/common/login.jsp</result>
+		</action>
+		<!-- 用户登录 -->
+		<action name="user-*" class="userAction" method="{1}">
+			<result name="show_home">/WEB-INF/page/common/home.jsp</result>
+			<!-- 处理验证登录失败, 跳转到login.jsp -->
+			<result name="show_error">/WEB-INF/page/common/login.jsp</result>
+		</action>
+		<!-- 数据库维护 -->
+		<action name="dbconfig" class="databaseConfigAction" method="home">
+			<result name="show_database">/WEB-INF/page/common/databaseConfig.jsp</result>
+		</action>
+		<!-- 系统日志查看 -->
+		<action name="syslog-*" class="systemLogAction" method="{1}">
+			<result name="show_log">/WEB-INF/page/common/systemLog.jsp</result>
+		</action>
+		<!-- 系统参数设定 -->
+		<action name="sysparam-*" class="sysParamAction" method="{1}">
+			<result name="sysInitPage">/WEB-INF/page/common/sysInit.jsp</result>
+			<result name="show_sysparam">/WEB-INF/page/common/sysparam.jsp</result>
+		</action>
+		
+		<!-- 客户资料管理 -->
+		<action name="customer-*" class="customerAction" method="{1}">
+			<result name="customerImportPage">/WEB-INF/page/system/customerImport.jsp</result>
+			<result name="allocAgentPage">/WEB-INF/page/system/allocAgent.jsp</result>
+			<result name="customerManagePage">/WEB-INF/page/system/customerManage.jsp</result>
+			<result name="customerDetailPage">/WEB-INF/page/system/customerDetail.jsp</result>
+			
+			<result name="tanpinPage">/WEB-INF/page/system/tanpin.jsp</result>
+		</action>
+
+
+		
+		
+		
+		<!-- 外呼任务管理 -->
+		<action name="task-*" class="taskAction" method="{1}">
+			<result name="show_task">/WEB-INF/page/manage/taskList.jsp</result>
+			<result name="show_telmanage">/WEB-INF/page/manage/telManage.jsp</result>
+		</action>
+		
+		<!-- 业务组调度统计 -->
+		<action name="acdanaly-*" class="acdAnalyAction" method="{1}">
+			<result name="show_acd_analy">/WEB-INF/page/manage/acdAnalyList.jsp</result>
+		</action>
+		
+		<!-- 业务组监控 -->
+		<action name="acdmonitor-*" class="acdMonitorAction" method="{1}">
+			<result name="show_acd_monitor">/WEB-INF/page/manage/acdMonitorList.jsp</result>
+		</action>
+		
+		<!-- 座席分机监控 -->
+		<action name="subtelmonitor-*" class="subTelMonitorAction" method="{1}">
+			<result name="show_subtel_monitor">/WEB-INF/page/manage/subTelMonitorList.jsp</result>
+		</action>
+		
+		<!-- 业务组档案管理 -->
+		<action name="acd-*" class="acdAction" method="{1}">
+			<result name="show_acd">/WEB-INF/page/manage/acdList.jsp</result>
+		</action>
+		
+		<!-- 话务员技能统计 -->
+		<action name="agentanaly-*" class="agentAnalyAction" method="{1}">
+			<result name="show_agent_analy">/WEB-INF/page/manage/agentAnalyList.jsp</result>
+			<result name="show_agent_answer">/WEB-INF/page/manage/agentAnswerList.jsp</result>
+			<result name="show_agent_online">/WEB-INF/page/manage/agentOnlineList.jsp</result>
+		</action>
+		
+		<!-- 话务员档案管理 -->
+		<action name="agent-*" class="agentAction" method="{1}">
+			<result name="show_agent">/WEB-INF/page/manage/agentList.jsp</result>
+		</action>
+		
+		<!-- 通话记录查询 -->
+		<action name="callrecord-*" class="callRecordAction" method="{1}">
+			<result name="show_call">/WEB-INF/page/manage/callRecordList.jsp</result>
+		</action>
+		
+		<!-- 座席分机管理 -->
+		<action name="subtel-*" class="subTelAction" method="{1}">
+			<result name="show_subtel">/WEB-INF/page/manage/subTelList.jsp</result>
+		</action>
+		
+		<!-- 呼叫黑名单 -->
+		<action name="black-*" class="blackAction" method="{1}">
+			<result name="show_blacklist">/WEB-INF/page/manage/blackList.jsp</result>
+		</action>
+		
+		<!-- NTS -->
+		<action name="nts-*" class="ntsAction" method="{1}">
+			<result name="show_nts">/WEB-INF/page/manage/ntsList.jsp</result>
+		</action>
+		
+		<action name="huifang-*" class="huiFangAction" method="{1}">
+			<!-- for 弹屏 -->
+			<result name="show_huifang1">/huifang1.jsp</result>
+			<result name="show_huifang2">/huifang2.jsp</result>
+			<result name="show_huifang3">/huifang3.jsp</result>
+			
+			<result name="show_hfedit1">/WEB-INF/page/huifang/huifang1edit.jsp</result>
+			<result name="show_hfedit2">/WEB-INF/page/huifang/huifang2edit.jsp</result>
+			<result name="show_hfedit3">/WEB-INF/page/huifang/huifang3edit.jsp</result>
+			<!-- for view -->
+			<result name="show_hfview1">/WEB-INF/page/huifang/huifang1view.jsp</result>
+			<result name="show_hfview2">/WEB-INF/page/huifang/huifang2view.jsp</result>
+			<result name="show_hfview3">/WEB-INF/page/huifang/huifang3view.jsp</result>
+			
+		</action>
+	</package>  
+	<package name="dot" namespace="/" extends="json-default">
+		<!-- login -->
+		<action name="ajaxlogin" class="userAction" method="ajaxlogin">
+			<result type="json"></result>
+		</action>
+		<action name="saveCTS" class="userAction" method="saveCTS">
+			<result type="json"></result>
+		</action>
+		
+		<!-- 清空数据库日志 -->
+		<action name="dbconfig-empty" class="databaseConfigAction" method="empty">
+			<result type="json"></result>
+		</action>
+		<!-- 备份数据库 -->
+		<action name="dbconfig-backup" class="databaseConfigAction" method="backup">
+			<result type="json"></result>
+		</action>
+
+		<action name="getAcdSelect" class="taskAction" method="getAcdSelectByTid">
+			<result type="json"></result>
+		</action>
+		
+		<!--  -->
+		<action name="huifangType" class="huiFangAction" method="getHuiFangType">
+			<result type="json"></result>
+		</action>
+		
+		<action name="setYuydt" class="customerAction" method="setYuydt">
+			<result type="json"></result>
+		</action>
+		
+		<action name="setDefaultAgent" class="customerAction" method="setDefaultAgent">
+			<result type="json"></result>
+		</action>
+		
+		<action name="setHideFlag" class="customerAction" method="setHideFlag">
+			<result type="json"></result>
+		</action>
+		
+	</package>
+</struts>
