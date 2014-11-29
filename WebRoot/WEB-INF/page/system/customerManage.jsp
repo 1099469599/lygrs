@@ -32,8 +32,8 @@
 	<div class="queryDiv_h80">
 	   	<ul class="queryWrap_ul">
 			<li><label>批次：</label><input type="text" name="q_pino" class="ipt100 inputDefault" value="${q_pino }" maxlength="20"/></li>
-			<li><label>车龄：</label><input type="text" name="q_caryear" class="ipt60 inputDefault" value="${q_caryear }" placeholder="如:&gt;2014,&lt;2014" maxlength="8"/></li>
-	        <li><label>出险次数：</label><input type="text" name="q_chuxcs" class="ipt60 inputDefault" value="${q_chuxcs }" placeholder="如:&gt;10,&lt;" maxlength="8"/></li>
+			<li><label>车龄：</label><input type="text" name="q_caryear" class="ipt60 inputDefault" value="${q_caryear }" placeholder="如:&gt;2014" maxlength="8"/></li>
+	        <li><label>出险次数：</label><input type="text" name="q_chuxcs" class="ipt60 inputDefault" value="${q_chuxcs }" placeholder="如:&gt;10" maxlength="8"/></li>
 	        <li><label>车牌号码：</label><input type="text" name="q_chephm" class="ipt100 inputDefault" value="${q_chephm }" maxlength="20"/></li>
 	        <li>
 	        	<c:if test="${sessionScope.vts.roleID eq 1 or sessionScope.vts.roleID eq 2}">
@@ -352,5 +352,32 @@ $(function(){
 <!-- ajax file upload -->
 <script type="text/javascript" src="<c:url value='js/jquery.form-3.46.0.js?v=5'/>"></script>
 <script type="text/javascript" src="<c:url value='js/cts.js?v=2'/>"></script>
+<!-- 解决IE placeholder -->
+<script type="text/javascript">   
+  if( !('placeholder' in document.createElement('input')) ){   
+    $('input[placeholder],textarea[placeholder]').each(function(){    
+      var that = $(this),    
+      text= that.attr('placeholder');    
+      if(that.val()===""){    
+        that.val(text).addClass('placeholder');    
+      }    
+      that.focus(function(){    
+        if(that.val()===text){    
+          that.val("").removeClass('placeholder');    
+        }    
+      })    
+      .blur(function(){    
+        if(that.val()===""){    
+          that.val(text).addClass('placeholder');    
+        }    
+      })    
+      .closest('form').submit(function(){    
+        if(that.val() === text){    
+          that.val('');    
+        }    
+      });    
+    });    
+  }   
+</script>
 </body>
 </html>
