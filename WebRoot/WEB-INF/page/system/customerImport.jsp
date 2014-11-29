@@ -128,7 +128,7 @@
 	    </div>
 		<div class="lab_ipt_item">
 			<span class="lab120"></span>
-			<div class="ipt-box"><input type="button" class="btn4" value="确定" onclick="savePiNoBtn('${page.currentPage }')"/></div>
+			<div class="ipt-box"><input type="button" class="btn4" value="确定" onclick="savePiNoBtn()"/></div>
 			<div class="ipt-box" style="margin-left:20px;"><input type="button" class="btn4" value="取消" onclick="layer.closeAll()"/></div>
 		</div>	
 	</form>
@@ -226,6 +226,15 @@ $(function(){
   		$("div.holder").jPages( page );
 	});
 });
+document.onkeydown = function(e) {   
+	var theEvent = e || window.event;   
+	var code = theEvent.keyCode || theEvent.which || theEvent.charCode; 
+	if (code == 13) {   
+		savePiNoBtn();
+		return false;   
+	}   
+	return true;
+}
 </script>
 
 <!-- layer 弹出插件 start -->
@@ -233,7 +242,7 @@ $(function(){
 <!-- layer 弹出插件 end -->
 <script type="text/javascript" src="<c:url value='js/changeTabColor.js'/>"></script>
 <script type="text/javascript" src="<c:url value='js/jquery.form-3.46.0.js'/>"></script>
-<script type="text/javascript" src="<c:url value='js/customer.js?v=17'/>"></script>
+<script type="text/javascript" src="<c:url value='js/customer.js?v=18'/>"></script>
 
 </body>
 </html>

@@ -54,7 +54,7 @@ function checkPino()
 	}
 }
 
-function savePiNoBtn(cp)
+function savePiNoBtn()
 {
 	if(!checkPino()) return false;
 	
