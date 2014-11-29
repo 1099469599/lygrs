@@ -25,7 +25,7 @@
 </head>
 <body>
 <div id="contentWrap">
-	<h3 class="h3_title">客户资料详情&nbsp;</h3>
+	<h3 class="h3_title">来电客户资料信息&nbsp;</h3>
 	<%-- 方便保存返回操作，回到客户资料管理页面 --%>
    	<form id="form1" name="form1" action="customer-query.action" method="post">
    		<input type="hidden" name="q_pino" value="${q_pino }"/>
@@ -38,7 +38,7 @@
    		<input type="hidden" id="pageflag" name="pageflag"/>
    	</form>
    	<div id="usual1" class="usual"> 
-  		<div id="tab1" class="tabson">
+  		<div id="tab1" class="tabson" style="padding-left:20px;">
   			<form id="form2" name="form2" action="<c:url value='customer-saveTanpinInfo.action'/>" method="post">
   			<input type="hidden" name="cid" value="${cid }"/>
   			
@@ -46,7 +46,7 @@
 			
 			<div class="formtitle"><span>车辆信息</span></div>
 			<div class="queryDiv_n">
-			   	<ul class="queryWrap_ul">
+			   	<ul class="queryWrap_ul" style="padding-left:70px;">
 					<li><label>车龄：</label><input type="text" id="caryearx" name="caryear" value="${caryear }" class="ipt50" maxlength="3"/></li>
 			        <li><label>出险次数：</label><input type="text" id="chuxcsx" name="chuxcs" value="${chuxcs }" class="ipt50" maxlength="3"/></li>
 			        <li><label>初登日期：</label><input type="text" name="chudrq" value="${fn:substring(chudrq,0,19) }" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="Wdate inputDefault" style="width:140px; height:20px" maxlength="22"/></li>
@@ -54,7 +54,7 @@
 				</ul>
 			</div>
 			<div class="queryDiv_n">
-			   	<ul class="queryWrap_ul">
+			   	<ul class="queryWrap_ul" style="padding-left:70px;">
 					<li><label>厂牌号码：</label><input type="text" name="changphm" value="${changphm }" class="ipt100" maxlength="30"/></li>
 			        <li><label>车牌号码：</label><input type="text" name="chephm" value="${chephm }" class="ipt100" maxlength="20"/></li>
 			        <li><label>车架号：</label><input type="text" name="chejh" value="${chejh }" class="ipt100" maxlength="30"/></li>
@@ -63,37 +63,37 @@
 			</div>
 			<div class="formtitle"><span>客户信息</span></div>
 			<div class="queryDiv_n">
-			   	<ul class="queryWrap_ul">
+			   	<ul class="queryWrap_ul" style="padding-left:70px;">
 					<li><label>客户姓名：</label><input type="text" name="uname" value="${uname }" class="ipt100" maxlength="20"/></li>
 			        <li><label>身份证号：</label><input type="text" id="idcardx" name="idcard" value="${idcard }" class="ipt155" maxlength="18"/></li>
 				</ul>
 			</div>
 			<div class="queryDiv_n">
-			   	<ul class="queryWrap_ul">
+			   	<ul class="queryWrap_ul" style="padding-left:70px;">
 					<li><label>手机：</label><input type="text" id="mobilex" name="mobile" value="${mobile }" maxlength="11" class="ipt100"/></li>
 			        <li><label>家庭电话：</label><input type="text" id="hometelx" name="hometel" value="${hometel }" maxlength="12" class="ipt100"/></li>
 			        <li><label>办公电话：</label><input type="text" id="officetelx" name="officetel" value="${officetel }" maxlength="12" class="ipt100"/></li>
 				</ul>
 			</div>
 			<div class="queryDiv_n">
-			   	<ul class="queryWrap_ul">
+			   	<ul class="queryWrap_ul" style="padding-left:70px;">
 					<li><label>派送地址：</label><input type="text" name="address" value="${address }"  maxlength="100" class="ipt500"/></li>
 				</ul>
 			</div>
 			<div class="queryDiv_n">
-			   	<ul class="queryWrap_ul">
+			   	<ul class="queryWrap_ul" style="padding-left:70px;">
 					<li><label style="vertical-align:top;">备注信息：</label><textarea name="noteinfo" class="ipt_area_w300">${noteinfo }</textarea></li>
 				</ul>
 			</div>
 			<div class="queryDiv_n">
-			   	<ul class="queryWrap_ul">
+			   	<ul class="queryWrap_ul" style="padding-left:70px;">
 					<li><label style="vertical-align:top;">来电记录：</label><textarea name="laidjl" class="ipt_area_w300">${laidjl }</textarea></li>
 				</ul>
 			</div>
 			<div class="queryDiv_n">
 			   	<ul class="queryWrap_ul_w600 left">
-			        <li style="text-indent:50px"><input type="button" onclick="saveTanpinBtn()" value="保&nbsp;&nbsp;存" class="btn4"/></li>
-			        <li style="text-indent:50px"><input type="button" onclick="document.form1.submit()" value="返&nbsp;&nbsp;回" class="btn4"/></li>
+			        <li style="padding-left:150px"><input type="button" onclick="saveTanpinBtn()" value="保&nbsp;&nbsp;存" class="btn4"/></li>
+			        <li style="padding-left:50px"><input type="button" onclick="document.form1.submit()" value="返&nbsp;&nbsp;回" class="btn4"/></li>
 				</ul>
 				<ul class="queryWrap_ul_w100 right">
 			        <li>
