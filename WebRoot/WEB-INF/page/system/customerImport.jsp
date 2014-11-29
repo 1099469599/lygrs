@@ -33,7 +33,7 @@
                      <th width="4%">客户数</th>
                      <th width="4%">未分配数</th>
                      <th width="14%">备注信息</th>
-                     <th width="14%" style="text-align:center">
+                     <th width="16%" style="text-align:center">
                      	<input type="button" onclick="savePiNo('add','','')" value="创建批次" class="btn btn-primary"/>
                      </th>
                  </tr>
@@ -79,6 +79,14 @@
 							</c:when>
 							<c:otherwise>
 							<label style="color:#808080;">清空批次&nbsp;&nbsp;</label>
+							</c:otherwise>
+						</c:choose>
+						<c:choose>
+							<c:when test="${ls.tn gt 0 }">
+								<a href="javascript:deletePino('${ls.ids }')">删除</a>&nbsp;&nbsp;	
+							</c:when>
+							<c:otherwise>
+							<label style="color:#808080;">删除&nbsp;&nbsp;</label>
 							</c:otherwise>
 						</c:choose>
 					</td>
@@ -162,7 +170,7 @@
 	<input type="hidden" name="pino" id="reset_pino"/>
 </form>
 
-<%-- 重置分配  --%>
+<%-- 分配  --%>
 <form id="form6" name="form6" action="<c:url value='customer-alloc.action'/>" method="post">
 	<input type="hidden" id="vpino" name="pino"/>
 	<input type="hidden" id="vnoalloc" name="noalloc"/>
@@ -179,6 +187,10 @@
 		document.form6.submit();
 	}
 </script>
+
+<form id="form7" name="form7" action="<c:url value='customer-deletePici.action'/>" method="post">
+	<input type="hidden" name="pino" id="delete_pino"/>
+</form>
 
 <script type="text/javascript">
 //split page task
@@ -221,7 +233,7 @@ $(function(){
 <!-- layer 弹出插件 end -->
 <script type="text/javascript" src="<c:url value='js/changeTabColor.js'/>"></script>
 <script type="text/javascript" src="<c:url value='js/jquery.form-3.46.0.js'/>"></script>
-<script type="text/javascript" src="<c:url value='js/customer.js?v=16'/>"></script>
+<script type="text/javascript" src="<c:url value='js/customer.js?v=17'/>"></script>
 
 </body>
 </html>

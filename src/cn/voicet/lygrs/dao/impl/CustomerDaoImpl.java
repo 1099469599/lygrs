@@ -280,6 +280,21 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 	}
 	
 	/**
+	 * 删除批次号
+	 */
+	public void deletePici(final CustomerForm customerForm) {
+		log.info("sp:web_lygrs_import_remove(?)");
+		this.getJdbcTemplate().execute("{call web_lygrs_import_remove(?)}", new CallableStatementCallback() {
+			public Object doInCallableStatement(CallableStatement cs)
+					throws SQLException, DataAccessException {
+				cs.setString("ids", customerForm.getPino());
+				cs.execute();
+				return null;
+			}
+		});
+	}
+	
+	/**
 	 * 连云港人寿--车辆信息列表查询
 	 */
 	public List<Map<String, Object>> queryCustomerInfo(final CustomerForm customerForm) {

@@ -156,3 +156,16 @@ function resetFenpei(ids)
 	    return false;	//not refresh page
 	});
 }
+
+function deletePino(ids)
+{
+	$("#delete_pino").val(ids);
+	layer.confirm("确定要删除吗？",function(){
+		$("#form7").ajaxSubmit({ 
+			success:function(data){ //提交成功的回调函数
+				document.form1.submit();
+	        }  
+		}); 
+	    return false;	//not refresh page
+	});
+}

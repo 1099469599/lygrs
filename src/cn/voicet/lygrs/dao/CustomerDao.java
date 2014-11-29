@@ -17,6 +17,7 @@ public interface CustomerDao{
 	void allocAgentByPino(CustomerForm customerForm);
 	void clearPino(CustomerForm customerForm);
 	void resetFenpei(CustomerForm customerForm);
+	void deletePici(CustomerForm customerForm);
 	//
 	List<Map<String, Object>> queryCustomerInfo(CustomerForm customerForm);
 	void exportCustomerData(CustomerForm customerForm, HttpServletResponse response);

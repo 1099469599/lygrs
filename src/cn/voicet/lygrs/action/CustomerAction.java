@@ -108,6 +108,13 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 		return null;
 	}
 	
+	public String deletePici()
+	{
+		customerDao.deletePici(customerForm);
+		log.info("删除批次["+customerForm.getPino()+"]完成");
+		return null;
+	}
+	
 	
 	/*************************************************************************************************/
 	/************************************** 客户资料管理页面  ******************************************/
