@@ -321,6 +321,8 @@
 	//get current time
 	var d = new Date().Format("yyyy-MM-dd hh:mm:ss");
 	//
+	//当子页面不是ocxlog页面时， 获取不到ocxTabId对象
+	/*
 	var tabId = window.frames["mainFrame"].document.getElementById("ocxTabId").insertRow(0);
 	if(null!=tabId)
 	{
@@ -330,7 +332,7 @@
 		dateCol.innerHTML="&nbsp;"+d;
 		infoCol.innerHTML="&nbsp;"+info;
 	}
-
+	*/
 	//显示OCX日志信息在弹出层
 	var ocxTab = document.getElementById("ocxLogTabId").insertRow(0);
 	var dtCol = ocxTab.insertCell(0);
@@ -503,6 +505,7 @@
 		
 		//呼我 ocx.AgentCallMe();
 		$("#line5").bind("click",function(){
+			//需要修改
 			ocx.AgentCallMe("8115");
 			callingTel.innerHTML=ing+"8115";
 		});
@@ -559,7 +562,7 @@
 	var imgnum = [0,1,2,3,4];
 	var img="images/phone_060";
 	//正在呼叫
-	var callingTel = document.getElementById("calling_num"); 
+	var callingTel = document.getElementById("calling_num");
 	//拔号
 	var line1 = document.getElementById("line1");
 	//重拔
