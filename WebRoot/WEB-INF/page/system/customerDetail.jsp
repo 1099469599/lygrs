@@ -187,6 +187,8 @@
 <script type="text/javascript" src="<c:url value='js/customer_info.js?v=16'/>"></script>
 <script type="text/javascript">
 	var ocx = $("#OCXPlugin",window.parent.document)[0];
+	var callingTel = $("#calling_num",window.parent.document)[0];
+	var ing = "正在呼叫：";
 	function callMember(tag)
 	{
 		var m = $("#mobilex").val();
@@ -205,6 +207,7 @@
 			{
 				if(!checkMobile()) return;
 				ocx.doDial(m);
+				callingTel.innerHTML=ing+m;
 			}
 		}
 		else if(tag=="h")
@@ -219,6 +222,7 @@
 			{
 				if(!checkHometel()) return;
 				ocx.doDial(h);
+				callingTel.innerHTML=ing+h;
 			}
 		}
 		else if(tag=="o")
@@ -233,6 +237,7 @@
 			{
 				if(!checkOfficetel()) return;
 				ocx.doDial(o);
+				callingTel.innerHTML=ing+o;
 			}
 		}
 	}
