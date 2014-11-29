@@ -413,7 +413,7 @@
 	<table>
 		<tr>
 			<td colspan="3">
-				<input type="text" id="nummessege" class="ipt_bohao_w190" maxlength="11"/>
+				<input type="text" id="nummessege" class="ipt_bohao_w190" maxlength="15"/>
 			</td>
 		</tr>
 		<tr>
@@ -528,9 +528,9 @@
 	function onclicknum(nums) { 
 		str = document.getElementById("nummessege"); 
 		str.value = str.value + nums;
-		if(str.value.length>11)
+		if(str.value.length>15)
 		{
-			str.value=(str.value).substring(0,11);
+			str.value=(str.value).substring(0,15);
 		}	 
 	} 
 	//拔号盘清除
