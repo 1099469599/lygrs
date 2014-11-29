@@ -56,10 +56,15 @@ public class UserAction extends BaseAction implements ModelDriven<UserForm>{
 		log.info("rand:"+request.getSession().getAttribute("rand"));
 		log.info("roleID:"+ds.roleID);
 		//
-		if(null!=ds.roleID && !ds.roleID.equals("0"))
+		if(ds.roleID.equals("1") || ds.roleID.equals("2") || ds.roleID.equals("3"))
 		{
 			json.put("status", "ok");
 			log.info("login complete");
+		}
+		else
+		{
+			json.put("status", "err");
+			log.info("login failure");
 		}
 		if(null!=request.getSession().getAttribute("rand") && !userForm.getVercode().trim().equals((String) request.getSession().getAttribute("rand")))
 		{

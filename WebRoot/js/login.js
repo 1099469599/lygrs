@@ -47,13 +47,17 @@ var responseLogin = function(data, textStatus, jqXHR)
 		}
 		window.location.href="user-home.action";
 	}
+	else if(data.status="err")
+	{
+		alert("您还没有权限，不能登录！");
+	}
 	else if(data.status=="vercodeerror")
 	{
-		layer.alert("验证码错误,请重新输入!",111);
+		alert("验证码错误,请重新输入!");
 	}
 	else
 	{
-		layer.alert("账号或密码错误",111);
+		alert("账号或密码错误");
 	}
 	verImg.src = "verCode?"+Math.random();
 }
