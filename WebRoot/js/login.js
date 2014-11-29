@@ -47,10 +47,6 @@ var responseLogin = function(data, textStatus, jqXHR)
 		}
 		window.location.href="user-home.action";
 	}
-	else if(data.status="err")
-	{
-		alert("您还没有权限，不能登录！");
-	}
 	else if(data.status=="vercodeerror")
 	{
 		alert("验证码错误,请重新输入!");

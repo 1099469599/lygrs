@@ -7,7 +7,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
  	<title>电话自动外呼系统</title>
-	<link type="text/css" href="<c:url value='css/common.css?v=1'/>" rel="stylesheet" />
+	<link type="text/css" href="<c:url value='css/common.css?v=2'/>" rel="stylesheet" />
 	<link type="text/css" href="<c:url value='css/layout.css?v=2'/>" rel="stylesheet" />
 
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -32,8 +32,8 @@
 	<div class="queryDiv_h80">
 	   	<ul class="queryWrap_ul">
 			<li><label>批次：</label><input type="text" name="q_pino" class="ipt100 inputDefault" value="${q_pino }" maxlength="20"/></li>
-			<li><label>车龄：</label><input type="text" name="q_caryear" class="ipt50 inputDefault" value="${q_caryear }" maxlength="3"/></li>
-	        <li><label>出险次数：</label><input type="text" name="q_chuxcs" class="ipt50 inputDefault" value="${q_chuxcs }" maxlength="4"/></li>
+			<li><label>车龄：</label><input type="text" name="q_caryear" class="ipt60 inputDefault" value="${q_caryear }" placeholder="如:&gt;2014,&lt;2014" maxlength="8"/></li>
+	        <li><label>出险次数：</label><input type="text" name="q_chuxcs" class="ipt60 inputDefault" value="${q_chuxcs }" placeholder="如:&gt;10,&lt;" maxlength="8"/></li>
 	        <li><label>车牌号码：</label><input type="text" name="q_chephm" class="ipt100 inputDefault" value="${q_chephm }" maxlength="20"/></li>
 	        <li>
 	        	<c:if test="${sessionScope.vts.roleID eq 1 or sessionScope.vts.roleID eq 2}">
@@ -161,9 +161,9 @@
 							</c:choose>				
 						</c:if>
 						<a href="javascript:viewDetail('${ls.ids }','${ls.cid }','${ls.byear }','${ls.ot }','${ls.odt }','${ls.edt }','${ls.pp }','${ls.cp }','${ls.cfif }','${ls.eid }','${ls.uname }','${ls.crid }','${ls.mobile }','${ls.home }','${ls.office }','${ls.addr }','${ls.noteinfo }','${ls.hideflag }','${fn:substring(ls.pdt,0,10) }','${fn:substring(ls.pdt,11,16) }','${q_pino }','${q_caryear }','${q_chuxcs }','${q_chephm }','${q_uname }','${q_mobile }','${q_agtacc }')">查看</a>&nbsp;&nbsp;
-						 
+						<%-- 
 						<a href="<c:url value='customer-tanpin.action'/>">弹屏</a>
-						
+						--%>
 					</td>
 				</tr>
 				</c:forEach>

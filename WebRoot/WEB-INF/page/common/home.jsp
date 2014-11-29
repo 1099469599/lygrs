@@ -16,8 +16,8 @@
 	<style type="text/css">
 		#zuojifenji{width:100px; height:280px; top:200px; border-radius:4px; background:#bbff77; right:20px; border:1px solid #3B9FFF; position:fixed;}
 		.com-ask-float-block0{cursor:pointer; border:0px; bottom:124px; min-width:40px; height:30px; width:65px; margin:0px; padding:0px; position:fixed; right:40px; border-radius:0; line-height:16px; font-weight:bold; color:#fff; text-align:center; line-height:28px;}
-		.com-ask-float-block{cursor: pointer; border: 0px; bottom: 124px; min-width: 40px; height: 30px; width: 60px; margin: 0px; padding: 0px; position: fixed; right: 40px; border-radius: 0; line-height: 16px; font-weight:bold; color: #fff; text-align:center; line-height:28px; background:url(images/common_float_telbg1.jpg);}
-		.com-ask-float-block:hover{ cursor:pointer; border:0px; bottom:124px; min-width:40px; height:30px; width:60px; margin:0px; padding:0px; position:fixed; right:40px; border-radius:0; line-height:16px; font-weight:bold; color:#fff; text-align:center; line-height:28px; background:url(images/common_float_telbg.jpg);}
+		.com-ask-float-block{cursor:pointer; border: 0px; bottom: 124px; min-width: 40px; height: 30px; width: 60px; margin: 0px; padding: 0px; position: fixed; right: 40px; border-radius: 0; line-height: 16px; font-weight:bold; color: #fff; text-align:center; line-height:28px; background:url(images/common_float_telbg1.jpg);}
+		.com-ask-float-block:hover{cursor:pointer; color:#fff; text-decoration:none;}
 		.bohaopan-fix{display:none; width:200px; height:280px; top:200px; border-radius:4px; background:#E0EEFB; right:130px;border:1px solid #3B9FFF; position:fixed;}
 	</style>
 	<!--[if IE 6]>
@@ -58,6 +58,15 @@
   	<div id="nav">
     	<div class="nav_left">
     		<div class="nav_left_wel">
+    		<c:choose>
+        		<c:when test="${sessionScope.vts.roleID eq 1 }">
+        			<c:set var="homePage" value="sysparam-init.action"/>
+        		</c:when>
+        		<c:otherwise>
+        			<c:set var="homePage" value="customer-query.action"/>
+        		</c:otherwise>
+        	</c:choose>
+        	<span><a href="<c:url value='${homePage }'/>" target="mainFrame" title="首页" style="color:#fff;">首页</a></span>
     		<span>欢迎：&nbsp;<s:property value="#session.vts.roleName"/></span><span><s:property value="#session.vts.username"/></span>
     		</div>
     		<div id="navigate" class="nav_left_path">
@@ -80,8 +89,7 @@
             </ul>
         </div>
         <div class="main_right">
-            <iframe id="mainFrame" name="mainFrame" src="main.jsp" class="mainFrame" scrolling="no" marginwidth="1" marginheight="1" frameborder="0">
-        		
+            <iframe id="mainFrame" name="mainFrame" src="<c:url value='${homePage }'/>" class="mainFrame" scrolling="no" marginwidth="1" marginheight="1" frameborder="0">
             </iframe>
         </div>
         <div class="clear"></div>
@@ -202,6 +210,9 @@
 <script type="text/javascript">
 	/*************** 弹屏   ***************/ 
 	function js_detectcall(line,ani,dnis,param){
+		$("#popHuifang")[0].href="customer-tanpin.action";
+		$("#popHuifang")[0].click();
+		/*
 		param = param.split(",");
 		if(param[0]=="a")
 		{
@@ -212,7 +223,7 @@
 				data: {tid: param[1]},
 				url: "huifangType.action",
 				success: function(data) {
-					$("#popHuifang")[0].href="huifang-list.action?flag="+data+"&tid="+param[1]+"&ttid="+param[2];
+					$("#popHuifang")[0].href="customer-tanpin.action?flag="+data+"&tid="+param[1]+"&ttid="+param[2];
 					$("#popHuifang")[0].click();
 				}
 			});
@@ -221,6 +232,7 @@
 		{
 			return false;
 		}
+		*/
 	}
 
 	/*************** 业务组监控   ***************/ 
@@ -324,14 +336,6 @@
 	//当子页面不是ocxlog页面时， 获取不到ocxTabId对象
 	/*
 	var tabId = window.frames["mainFrame"].document.getElementById("ocxTabId").insertRow(0);
-	if(null!=tabId)
-	{
-		//JS代码通过表格对象的insertRow方法动态向表格的最顶端添加新的行
-		var dateCol = tabId.insertCell(0);
-		var infoCol = tabId.insertCell(1);
-		dateCol.innerHTML="&nbsp;"+d;
-		infoCol.innerHTML="&nbsp;"+info;
-	}
 	*/
 	//显示OCX日志信息在弹出层
 	var ocxTab = document.getElementById("ocxLogTabId").insertRow(0);
@@ -364,9 +368,10 @@
 <script type="text/javascript">
 	$(function(){
 		//登录成功CheckIn
-		var agttel = "<s:property value='#session.vts.agttelnum'/>";
-		var ocx = document.getElementById("OCXPlugin");
-		ocx.AgentCheckIn(agttel,0);
+		//20141129取消checkIn
+		//var agttel = "<s:property value='#session.vts.agttelnum'/>";
+		//var ocx = document.getElementById("OCXPlugin");
+		//ocx.AgentCheckIn(agttel,0);
 		//判断OCX
 		if(document.all.OCXPlugin.object==null)
 		{
@@ -392,7 +397,7 @@
 	<h2 style="text-align:center">我的分机</h2>
 </div>
 <a class="com-ask-float-block0" id="line0" title="分机状态[点击播放提示音]" style="top:227px"><img id="tel_state" src="images/phone_0602.jpg"/></a>
-<a class="com-ask-float-block bohao1" id="line1" title="拔号" style="top:277px">拔号</a>
+<a class="com-ask-float-block bohao1" id="line1" title="拔号" style="top:277px; cursor:pointer;">拔号</a>
 <a class="com-ask-float-block bohao2" id="line2" title="重拔" style="top:317px">重拔</a>
 <a class="com-ask-float-block bohao3" id="line3" title="应答" style="top:357px">应答</a>
 <a class="com-ask-float-block bohao4" id="line4" title="挂断" style="top:397px;">挂机</a>
@@ -476,8 +481,6 @@
 	var ing = "正在呼叫：";
 	//正在呼叫号码
 	var callingTel = document.getElementById("calling_num"); 
-
-	var agttel = "<s:property value='#session.vts.agttelnum'/>";
 	//
 	$(function(){
 		//播放提示音 
@@ -505,9 +508,16 @@
 		
 		//呼我 ocx.AgentCallMe();
 		$("#line5").bind("click",function(){
-			//需要修改
-			ocx.AgentCallMe("8115");
-			callingTel.innerHTML=ing+"8115";
+			//获取绑定分机
+			var tel = ocx.GetBindTelnum();
+			if(tel)
+			{
+				ocx.AgentCallMe(tel);
+				callingTel.innerHTML=ing+tel;
+			}
+			else
+			{
+			}
 		});
 	});
 	//拔号盘按钮点击
@@ -554,7 +564,6 @@
 	}
 	
 </script>
-
 <%-- 4.1 指挥座席线路状态改变 --%>
 <script type="text/javascript" for="OCXPlugin" event="OnLineChange(line,state,desc)">
 	//分机状态
@@ -571,7 +580,7 @@
 	var line3 = document.getElementById("line3");
 	//挂断
 	var line4 = document.getElementById("line4");
-	
+	var backimg = "url(images/common_float_telbg2.jpg) no-repeat scroll 0 0 transparent"
 	//0:断开
 	if(state==0)
 	{
@@ -579,7 +588,8 @@
 		line1.style.display="";
 		line2.style.display="";
 		line3.style.display="";
-		line4.style.display="none";
+		line4.style.background=backimg;
+		line4.style.cursor="default";
 		//
 		callingTel.innerHTML="";
 	}
@@ -598,17 +608,24 @@
 	else if(state==2)
 	{
 		ts.src=img+imgnum[3]+".jpg";
-		line1.style.display="none";
-		line2.style.display="none";
-		line3.style.display="none";
+		line1.style.background=backimg;
+		line1.style.cursor="default";
+		line2.style.background=backimg;
+		line2.style.cursor="default";
+		line3.style.background=backimg;
+		line3.style.cursor="default";
 		line4.style.display="";
 	}
 	//3:振铃 
 	else if(state==3)
 	{
 		ts.src=img+imgnum[2]+".jpg";
-		line1.style.display="none";
-		line2.style.display="none";
+		line1.style.background=backimg;
+		line1.style.cursor="default";
+		//
+		line2.style.background=backimg;
+		line2.style.cursor="default";
+		//
 		line3.style.display="";
 		line4.style.display="";
 	}
@@ -618,16 +635,24 @@
 		ts.src=img+imgnum[3]+".jpg";
 		line1.style.display="";
 		line2.style.display="";
-		line3.style.display="none";
+		//
+		line3.style.background=backimg;
+		line3.style.cursor="default";
 		line4.style.display="";
 	}
 	//5:催挂
 	else if(state==5)
 	{
 		ts.src=img+imgnum[4]+".jpg";
-		line1.style.display="none";
-		line2.style.display="none";
-		line3.style.display="none";
+		line1.style.background=backimg;
+		line1.style.cursor="default";
+		//
+		line2.style.background=backimg;
+		line2.style.cursor="default";
+		//
+		line3.style.background=backimg;
+		line3.style.cursor="default";
+		//
 		line4.style.display="";
 	}
 	else

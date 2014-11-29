@@ -9,7 +9,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
  	<meta http-equiv="cache-control" content="no-cache"/>
  	<meta http-equiv="expires" content="0"/>
-	<link type="text/css" href="<c:url value='css/common.css'/>" rel="stylesheet" />
+	<link type="text/css" href="<c:url value='css/common.css?v=1'/>" rel="stylesheet" />
 	<link type="text/css" href="<c:url value='css/layout.css?v=3'/>" rel="stylesheet" />
 	<link type="text/css" href="<c:url value='layer/skin/layer.css'/>" rel="stylesheet" />
 	<script type="text/javascript" src="<c:url value='js/jquery-1.11.1.min.js'/>"></script>

@@ -10,7 +10,7 @@
 </head>
 <body style="background:#E0EEFB;">
 <div id="dbCon">
-	<h3 class="h3_title">初始设置</h3>
+	<h3 class="h3_title">系统参数设置</h3>
 	<div class="sys_init_info">
         <div class="lab_ipt_item">
 	    	<span class="lab120"></span>

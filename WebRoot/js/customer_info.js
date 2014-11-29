@@ -166,8 +166,6 @@ function saveCustomerBtn()
 	$("#form2").ajaxSubmit({ 
 		success:function(data){ //提交成功的回调函数
 			alert("保存成功");	
-			$("#pageflag").val("update");
-			document.form1.submit();
         }  
 	}); 
     return false;
@@ -271,8 +269,6 @@ function saveTanpinBtn()
 	$("#form2").ajaxSubmit({ 
 		success:function(data){ //提交成功的回调函数
 			alert("保存成功");	
-			$("#pageflag").val("update");
-			document.form1.submit();
         }  
 	}); 
     return false;

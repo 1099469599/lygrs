@@ -70,9 +70,9 @@
 			</div>
 			<div class="queryDiv_n">
 			   	<ul class="queryWrap_ul" style="padding-left:70px;">
-					<li><label>手机：</label><input type="text" id="mobilex" name="mobile" value="${mobile }" maxlength="11" class="ipt100"/></li>
-			        <li><label>家庭电话：</label><input type="text" id="hometelx" name="hometel" value="${hometel }" maxlength="12" class="ipt100"/></li>
-			        <li><label>办公电话：</label><input type="text" id="officetelx" name="officetel" value="${officetel }" maxlength="12" class="ipt100"/></li>
+					<li><label>手机：</label><input type="text" id="mobilex" name="mobile" value="${mobile }" maxlength="15" class="ipt100"/></li>
+			        <li><label>家庭电话：</label><input type="text" id="hometelx" name="hometel" value="${hometel }" maxlength="15" class="ipt100"/></li>
+			        <li><label>办公电话：</label><input type="text" id="officetelx" name="officetel" value="${officetel }" maxlength="15" class="ipt100"/></li>
 				</ul>
 			</div>
 			<div class="queryDiv_n">
