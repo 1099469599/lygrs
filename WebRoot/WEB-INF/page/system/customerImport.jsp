@@ -57,7 +57,7 @@
 						<a href="javascript:showSelFile('${ls.ids }')">导入</a>&nbsp;&nbsp;
 						<c:choose>
 							<c:when test="${ls.un gt 0 }">
-								<a href="<c:url value='customer-alloc.action?pino=${ls.ids }&noalloc=${ls.un }&cdt=${fn:substring(ls.cdt,0,19) }&noteinfo=${noteinfo }'/>">分配</a>&nbsp;&nbsp;	
+								<a href="javascript:alloc('${ls.ids }','${ls.un }','${fn:substring(ls.cdt,0,19) }','${ls.noteinfo }')">分配</a>&nbsp;&nbsp;	
 							</c:when>
 							<c:otherwise>
 								<label style="color:#808080;">分配&nbsp;&nbsp;</label>
@@ -161,6 +161,24 @@
 <form id="form5" name="form5" action="<c:url value='customer-resetFenpei.action'/>" method="post">
 	<input type="hidden" name="pino" id="reset_pino"/>
 </form>
+
+<%-- 重置分配  --%>
+<form id="form6" name="form6" action="<c:url value='customer-alloc.action'/>" method="post">
+	<input type="hidden" id="vpino" name="pino"/>
+	<input type="hidden" id="vnoalloc" name="noalloc"/>
+	<input type="hidden" id="vcdt" name="cdt"/>
+	<input type="hidden" id="vnoteinfo" name="noteinfo"/>
+</form>
+<script type="text/javascript">
+	function alloc(pino,noalloc,cdt,noteinfo)
+	{
+		$("#vpino").val(pino);
+		$("#vnoalloc").val(noalloc);
+		$("#vcdt").val(cdt);
+		$("#vnoteinfo").val(noteinfo);
+		document.form6.submit();
+	}
+</script>
 
 <script type="text/javascript">
 //split page task
