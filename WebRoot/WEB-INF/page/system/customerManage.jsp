@@ -160,10 +160,10 @@
 								</c:otherwise>
 							</c:choose>				
 						</c:if>
-						<a href="<c:url value='customer-viewDetail.action?pino=${ls.ids }&cid=${ls.cid }&caryear=${ls.byear }&chuxcs=${ls.ot }&chudrq=${ls.odt }&baoxdq=${ls.edt }&changphm=${ls.pp }&chephm=${ls.cp }&chejh=${ls.cfif }&fadjbh=${ls.eid }&uname=${ls.uname }&idcard=${ls.crid }&mobile=${ls.mobile }&hometel=${ls.home }&officetel=${ls.office }&address=${ls.addr }&noteinfo=${ls.noteinfo }&hideflag=${ls.hideflag }&yuydate=${fn:substring(ls.pdt,0,10) }&yuytime=${fn:substring(ls.pdt,10,16) }&q_pino=${q_pino }&q_caryear=${q_caryear }&q_chuxcs=${q_chuxcs }&q_chephm=${q_chephm }&q_uname=${q_uname }&q_mobile=${q_mobile }&q_agtacc=${q_agtacc }'/>">查看</a>&nbsp;&nbsp;
-						<!--  
+						<a href="<c:url value='customer-viewDetail.action?pino=${ls.ids }&cid=${ls.cid }&caryear=${ls.byear }&chuxcs=${ls.ot }&chudrq=${ls.odt }&baoxdq=${ls.edt }&changphm=${ls.pp }&chephm=${ls.cp }&chejh=${ls.cfif }&fadjbh=${ls.eid }&uname=${ls.uname }&idcard=${ls.crid }&mobile=${ls.mobile }&hometel=${ls.home }&officetel=${ls.office }&address=${ls.addr }&noteinfo=${ls.noteinfo }&hideflag=${ls.hideflag }&yuydate=${fn:substring(ls.pdt,0,10) }&yuytime=${fn:substring(ls.pdt,11,16) }&q_pino=${q_pino }&q_caryear=${q_caryear }&q_chuxcs=${q_chuxcs }&q_chephm=${q_chephm }&q_uname=${q_uname }&q_mobile=${q_mobile }&q_agtacc=${q_agtacc }'/>">查看</a>&nbsp;&nbsp;
+						 
 						<a href="<c:url value='customer-tanpin.action'/>">弹屏</a>
-						-->
+						
 					</td>
 				</tr>
 				</c:forEach>
