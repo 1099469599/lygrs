@@ -108,7 +108,7 @@
         <input type="hidden" id="curCusManagePage" value="1"/>
         <!-- 记录js分页当前页码 end -->
         </p>
-        <span>Copyright @ 2005-2014 All Rights Reserved 版权所有 · 南京威帝通讯科技有限公司&nbsp;&nbsp;V141125</span>
+        <span>2014 VoiceT&nbsp;&nbsp;V141125&nbsp;&nbsp;[建议使用IE8以上版本或360兼容模式浏览器]</span>
         <!--
         <div id="ocxLog" style="font-size:12px; text-align:left; text-indent:10px;">vtcx log</div>
         -->
