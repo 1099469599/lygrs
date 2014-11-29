@@ -82,7 +82,7 @@
 							</c:otherwise>
 						</c:choose>
 						<c:choose>
-							<c:when test="${ls.tn gt 0 }">
+							<c:when test="${ls.tn eq 0 }">
 								<a href="javascript:deletePino('${ls.ids }')">删除</a>&nbsp;&nbsp;	
 							</c:when>
 							<c:otherwise>
