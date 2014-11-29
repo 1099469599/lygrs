@@ -108,20 +108,22 @@ public class AgentDaoImpl extends BaseDaoImpl implements AgentDao {
 
 	
 	public String saveAgent(final AgentForm agentForm) {
-		log.info("sp:web_agent_update(?,?,?,?,?,?,?)");
-		return (String)this.getJdbcTemplate().execute("{call web_agent_update(?,?,?,?,?,?,?)}", new CallableStatementCallback() {
+		log.info("sp:web_agent_update(?,?,?,?,?,?,?,?,?)");
+		return (String)this.getJdbcTemplate().execute("{call web_agent_update(?,?,?,?,?,?,?,?,?)}", new CallableStatementCallback() {
 			public Object doInCallableStatement(CallableStatement cs)
 					throws SQLException, DataAccessException {
-				cs.setString(1, agentForm.getAgttxt()[0]);
-				cs.setString(2, agentForm.getAgttxt()[1]);
-				cs.setString(3, agentForm.getAgttxt()[2]);
-				cs.setString(4, agentForm.getAgttxt()[3]);
-				cs.setString(5, agentForm.getAgttxt()[4]);
-				cs.setString(6, agentForm.getAgttxt()[5]);
-				cs.registerOutParameter(7, Types.VARCHAR);
+				cs.setString("agtid", agentForm.getAgttxt()[0]);
+				cs.setString("account", agentForm.getAgttxt()[1]);
+				cs.setString("ismaster", agentForm.getAgttxt()[2]);
+				cs.setString("telnum", agentForm.getAgttxt()[3]);
+				cs.setString("agtname", agentForm.getAgttxt()[4]);
+				cs.setString("bdnumo", agentForm.getAgttxt()[5]);
+				cs.setString("bdnumt", agentForm.getAgttxt()[6]);
+				cs.setString("email", agentForm.getAgttxt()[7]);
+				cs.registerOutParameter("ret", Types.VARCHAR);
 				cs.execute();
-				log.info("ret:"+cs.getString(7));
-				return cs.getString(7);
+				log.info("ret:"+cs.getString("ret"));
+				return cs.getString("ret");
 			}
 		});
 	}

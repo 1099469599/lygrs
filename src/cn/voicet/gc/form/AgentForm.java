@@ -5,7 +5,7 @@ public class AgentForm {
 	private String sdt;	//统计开始日期
 	private String edt;	//统计结束日期
 	/*
-	 * agttxt[] addeidt,account,telnum,agtname,email
+	 * agttxt[] addeidt,account,telnum,agtname,bdnumo,bdnumt,email
 	 */
 	private String[] agttxt;	
 	
