@@ -14,11 +14,11 @@
 	<script type="text/javascript" src="<c:url value='js/menu.js?v=8'/>"></script>
 	<!-- menu plugin end -->
 	<style type="text/css">
-		#zuojifenji{width:100px; height:280px; top:200px; border-radius:4px; background:#bbff77; right:20px; border:1px solid #3B9FFF; position:fixed;}
+		#zuojifenji{width:100px; height:240px; top:200px; border-radius:4px; background:#bbff77; right:20px; border:1px solid #3B9FFF; position:fixed;}
 		.com-ask-float-block0{cursor:pointer; border:0px; bottom:124px; min-width:40px; height:30px; width:65px; margin:0px; padding:0px; position:fixed; right:40px; border-radius:0; line-height:16px; font-weight:bold; color:#fff; text-align:center; line-height:28px;}
 		.com-ask-float-block{cursor:pointer; border: 0px; bottom: 124px; min-width: 40px; height: 30px; width: 60px; margin: 0px; padding: 0px; position: fixed; right: 40px; border-radius: 0; line-height: 16px; font-weight:bold; color: #fff; text-align:center; line-height:28px; background:url(images/common_float_telbg1.jpg);}
 		.com-ask-float-block:hover{cursor:pointer; color:#fff; text-decoration:none;}
-		.bohaopan-fix{display:none; width:200px; height:280px; top:200px; border-radius:4px; background:#E0EEFB; right:130px;border:1px solid #3B9FFF; position:fixed;}
+		.bohaopan-fix{display:none; width:200px; height:240px; top:200px; border-radius:4px; background:#E0EEFB; right:130px;border:1px solid #3B9FFF; position:fixed;}
 	</style>
 	<!--[if IE 6]>
 	<style type="text/css">
@@ -401,9 +401,11 @@
 <a class="com-ask-float-block bohao2" id="line2" title="重拔" style="top:317px">重拔</a>
 <a class="com-ask-float-block bohao3" id="line3" title="应答" style="top:357px">应答</a>
 <a class="com-ask-float-block bohao4" id="line4" title="挂断" style="top:397px;">挂机</a>
+<%-- 
 <a class="com-ask-float-block bohao5" id="line5" title="呼我" style="top:437px;">呼我</a>
+--%>
 <style type="text/css">
-	#bohaopan table{text-align:center; height:280px; width:200px; background:#bbff77; border:0;}
+	#bohaopan table{text-align:center; height:240px; width:200px; background:#bbff77; border:0;}
 	#bohaopan .num_input{color:#000; width:100%; height:40px;}
 	#bohaopan .num_input1{color:#000; width:40%; height:60px;}
 </style>
@@ -505,7 +507,8 @@
 			ocx.doOnHook();
 			callingTel.innerHTML="";
 		});
-		
+
+		/*
 		//呼我 ocx.AgentCallMe();
 		$("#line5").bind("click",function(){
 			//获取绑定分机
@@ -519,6 +522,7 @@
 			{
 			}
 		});
+		*/
 	});
 	//拔号盘按钮点击
 	function onclicknum(nums) { 
