@@ -160,7 +160,7 @@
 								</c:otherwise>
 							</c:choose>				
 						</c:if>
-						<a href="<c:url value='customer-viewDetail.action?pino=${ls.ids }&cid=${ls.cid }&caryear=${ls.byear }&chuxcs=${ls.ot }&chudrq=${ls.odt }&baoxdq=${ls.edt }&changphm=${ls.pp }&chephm=${ls.cp }&chejh=${ls.cfif }&fadjbh=${ls.eid }&uname=${ls.uname }&idcard=${ls.crid }&mobile=${ls.mobile }&hometel=${ls.home }&officetel=${ls.office }&address=${ls.addr }&noteinfo=${ls.noteinfo }&hideflag=${ls.hideflag }&yuydate=${fn:substring(ls.pdt,0,10) }&yuytime=${fn:substring(ls.pdt,11,16) }&q_pino=${q_pino }&q_caryear=${q_caryear }&q_chuxcs=${q_chuxcs }&q_chephm=${q_chephm }&q_uname=${q_uname }&q_mobile=${q_mobile }&q_agtacc=${q_agtacc }'/>">查看</a>&nbsp;&nbsp;
+						<a href="javascript:viewDetail('${ls.ids }','${ls.cid }','${ls.byear }','${ls.ot }','${ls.odt }','${ls.edt }','${ls.pp }','${ls.cp }','${ls.cfif }','${ls.eid }','${ls.uname }','${ls.crid }','${ls.mobile }','${ls.home }','${ls.office }','${ls.addr }','${ls.noteinfo }','${ls.hideflag }','${fn:substring(ls.pdt,0,10) }','${fn:substring(ls.pdt,11,16) }','${q_pino }','${q_caryear }','${q_chuxcs }','${q_chephm }','${q_uname }','${q_mobile }','${q_agtacc }')">查看</a>&nbsp;&nbsp;
 						 
 						<a href="<c:url value='customer-tanpin.action'/>">弹屏</a>
 						
@@ -189,6 +189,36 @@
     <%-- 删除客户资料 --%>
     <form id="form3" action="<c:url value='/customer-deleteCustomerInfo.action'/>" method="post">
 		<input type="hidden" id="del_cidx" name="cid"/>
+	</form>
+	
+	<form id="form4" name="form4" action="<c:url value='customer-viewDetail.action'/>" method="post">
+		<input type="hidden" id="vpino" name="pino"/>
+		<input type="hidden" id="vcid" name="cid"/>
+		<input type="hidden" id="vcaryear" name="caryear"/>
+		<input type="hidden" id="vchuxcs" name="chuxcs"/>
+		<input type="hidden" id="vchudrq" name="chudrq"/>
+		<input type="hidden" id="vbaoxdq" name="baoxdq"/>
+		<input type="hidden" id="vchangphm" name="changphm"/>
+		<input type="hidden" id="vchephm" name="chephm"/>
+		<input type="hidden" id="vchejh" name="chejh"/>
+		<input type="hidden" id="vfadjbh" name="fadjbh"/>
+		<input type="hidden" id="vuname" name="uname"/>
+		<input type="hidden" id="vidcard" name="idcard"/>
+		<input type="hidden" id="vmobile" name="mobile"/>
+		<input type="hidden" id="vhometel" name="hometel"/>
+		<input type="hidden" id="vofficetel" name="officetel"/>
+		<input type="hidden" id="vaddress" name="address"/>
+		<input type="hidden" id="vnoteinfo" name="noteinfo"/>
+		<input type="hidden" id="vhideflag" name="hideflag"/>
+		<input type="hidden" id="vyuydate" name="yuydate"/>
+		<input type="hidden" id="vyuytime" name="yuytime"/>
+		<input type="hidden" id="vq_pino" name="q_pino"/>
+		<input type="hidden" id="vq_caryear" name="q_caryear"/>
+		<input type="hidden" id="vq_chuxcs" name="q_chuxcs"/>
+		<input type="hidden" id="vq_chephm" name="q_chephm"/>
+		<input type="hidden" id="vq_uname" name="q_uname"/>
+		<input type="hidden" id="vq_mobile" name="q_mobile"/>
+		<input type="hidden" id="vq_agtacc" name="q_agtacc"/>
 	</form>
     
 </div>
@@ -228,6 +258,39 @@ $(function(){
 });
 </script>
 <script type="text/javascript">
+	function viewDetail(pino,cid,caryear,chuxcs,chudrq,baoxdq,changphm,chephm,chejh,fadjbh,uname,idcard,mobile,hometel,officetel,address,noteinfo,hideflag,yuydate,yuytime,q_pino,q_caryear,q_chuxcs,q_chephm,q_uname,q_mobile,q_agtacc)
+	{
+		$("#vpino").val(pino);
+		$("#vcid").val(cid);
+		$("#vcaryear").val(caryear);
+		$("#vchuxcs").val(chuxcs);
+		$("#vchudrq").val(chudrq);
+		$("#vbaoxdq").val(baoxdq);
+		$("#vchangphm").val(changphm);
+		$("#vchephm").val(chephm);
+		$("#vchejh").val(chejh);
+		$("#vfadjbh").val(fadjbh);
+		$("#vuname").val(uname);
+		$("#vidcard").val(idcard);
+		$("#vmobile").val(mobile);
+		$("#vhometel").val(hometel);
+		$("#vofficetel").val(officetel);
+		$("#vaddress").val(address);
+		$("#vnoteinfo").val(noteinfo);
+		$("#vhideflag").val(hideflag);
+		$("#vyuydate").val(yuydate);
+		$("#vyuytime").val(yuytime);
+		$("#vq_pino").val(q_pino);
+		$("#vq_caryear").val(q_caryear);
+		$("#vq_chuxcs").val(q_chuxcs);
+		$("#vq_chephm").val(q_chephm);
+		$("#vq_uname").val(q_uname);
+		$("#vq_mobile").val(q_mobile);
+		$("#vq_agtacc").val(q_agtacc);
+		document.form4.submit();
+	}
+
+
 	function deleteCustomerInfo(cid)
 	{
 		layer.confirm("确定要删除吗？",function(){

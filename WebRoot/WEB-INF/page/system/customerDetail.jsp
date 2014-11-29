@@ -58,7 +58,9 @@
   		<div id="tab1" class="tabson" style="padding-left:20px;">
   			<form id="form2" name="form2" action="<c:url value='customer-saveCustomerInfo.action'/>" method="post">
   			<input type="hidden" name="cid" value="${cid }"/>
+  			<!--  
   			<div class="formtitle"><span>批次信息</span></div>
+  			-->
   			<div class="queryDiv" style="border:0">
 			   	<ul class="queryWrap_ul" style="padding-left:70px;">
 					<li><label>导入批次：</label><input type="text" id="pinox" name="pino" value="${pino }" class="ipt100" maxlength="100"/></li>
@@ -123,7 +125,7 @@
 			</div>
 			<div class="queryDiv_h">
 			   	<ul class="queryWrap_ul_w600 left">
-			        <li style="text-indent:140px"><input type="button" onclick="saveCustomerBtn()" value="保&nbsp;&nbsp;存" class="btn4"/></li>
+			        <li style="padding-left:140px"><input type="button" onclick="saveCustomerBtn()" value="保&nbsp;&nbsp;存" class="btn4"/></li>
 				</ul>
 				<ul class="queryWrap_ul_w100 right">
 			        <li></li>
