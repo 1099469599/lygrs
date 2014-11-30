@@ -34,7 +34,7 @@
                      <th width="15%">姓名</th>
                      <th width="15%">电子邮箱</th>
                      <th width="20%">
-                     	<input type="button" class="btn btn-primary" onclick="saveAgent('add','0','','0','','','','','','')" value="添加"/>
+                     	<input type="button" class="btn btn-primary" onclick="saveAgent('add','0','','0','','','','')" value="添加"/>
                      </th>
                  </tr>
              </thead>
@@ -51,7 +51,7 @@
 					<td>
 						<!-- a to button 解决ajax submit提交问题 -->
 						<a href="javascript:initAgentpwd('${agtid }')">密码初始化</a>&nbsp;&nbsp;
-						<a href="javascript:saveAgent('edit','${agtid }','${account }','${ismaster }','${telnum }','${agtname }','${bdnumo }','${bdnumt }','${email }')">修改</a>&nbsp;&nbsp;
+						<a href="javascript:saveAgent('edit','${agtid }','${account }','${ismaster }','${telnum }','${agtname }','${bdnumo }','${email }')">修改</a>&nbsp;&nbsp;
 						<a href="javascript:deleteAgent('${agtid }')">删除</a>
 					</td>
 				</tr>
@@ -107,13 +107,6 @@
 	    	<span class="lab120">绑定号码1：</span>
 	        <div class="ipt-box">
 	        	<input type="text" id="bdnumox" name="agttxt" class="ipt_text_w150 inputDefault"  maxlength="10"/>
-	            <span class="asterisk"></span>
-	        </div>
-	    </div>
-	    <div class="lab_ipt_item">
-	    	<span class="lab120">绑定号码2：</span>
-	        <div class="ipt-box">
-	        	<input type="text" id="bdnumtx" name="agttxt" class="ipt_text_w150 inputDefault"  maxlength="10"/>
 	            <span class="asterisk"></span>
 	        </div>
 	    </div>
@@ -188,7 +181,7 @@ document.onkeydown = function(e) {
 <!-- layer 弹出插件 start -->
 <script type="text/javascript" src="<c:url value='layer/layer.min.js'/>"></script>
 <!-- layer 弹出插件 end -->
-<script type="text/javascript" src="<c:url value='js/agent.js?v=17'/>"></script>
+<script type="text/javascript" src="<c:url value='js/agent.js?v=19'/>"></script>
 <!-- ajax file upload -->
 <script type="text/javascript" src="<c:url value='js/jquery.form-3.46.0.js'/>"></script>
 </body>

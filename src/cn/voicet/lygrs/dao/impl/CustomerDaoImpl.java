@@ -30,6 +30,7 @@ import org.springframework.jdbc.core.ConnectionCallback;
 import org.springframework.stereotype.Repository;
 
 import cn.voicet.common.dao.impl.BaseDaoImpl;
+import cn.voicet.common.util.DotSession;
 import cn.voicet.common.util.VTJime;
 import cn.voicet.lygrs.dao.CustomerDao;
 import cn.voicet.lygrs.form.CustomerForm;
@@ -413,8 +414,59 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 		});
 	}
 
+	public void queryDetailInfo(final DotSession ds, final CustomerForm customerForm) {
+		this.getJdbcTemplate().execute("{call [web_lygrs_userdata_look](?,?)}", new CallableStatementCallback() {
+			public Object doInCallableStatement(CallableStatement cs)
+					throws SQLException, DataAccessException {
+				//客户编号,查看详情时telnum = null
+				cs.setInt("cid", customerForm.getCid());
+				cs.setString("telnum", null);
+				cs.execute();
+				ResultSet rs = cs.getResultSet();
+				int rid = 0;
+				int updateCount = -1;
+				do
+				{
+					updateCount = cs.getUpdateCount();
+					if(updateCount != -1)
+					{	
+						cs.getMoreResults();
+						continue;
+					}
+					rs = cs.getResultSet();
+					if(null != rs)
+					{
+						while(rs.next())
+						{
+							if(rid == 0)
+							{
+								Map map = new HashMap();
+								VTJime.putMapDataByColName(map, rs);
+								ds.map = map;
+							}
+							else if(rid ==1)
+							{
+								Map map = new HashMap();
+								VTJime.putMapDataByColName(map, rs);
+				        		ds.list.add(map);
+							}
+						}
+					}
+					if(rs != null)
+					{
+						cs.getMoreResults();
+						rid++;
+						continue;
+					}
+				}
+				while(!(updateCount == -1 && rs == null));
+				return null;
+			}
+		});
+	}
+	
 	/**
-	 * 根据客户ID查询通话记录
+	 * 根据客户ID查询通话记录  delete
 	 */
 	public List<Map<String, Object>> queryCallRecordByCid(final CustomerForm customerForm) {
 		log.info("sp:web_lygrs_userdata_look(?)");
@@ -518,6 +570,60 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 				//预约日期时间
 				cs.setInt("hideflag", customerForm.getHideflag());
 				cs.execute();
+				return null;
+			}
+		});
+	}
+
+	/**
+	 * 获取弹屏信息
+	 */
+	public void queryTanpinInfo(final DotSession ds, final CustomerForm customerForm) {
+		this.getJdbcTemplate().execute("{call [web_lygrs_userdata_look](?,?)}", new CallableStatementCallback() {
+			public Object doInCallableStatement(CallableStatement cs)
+					throws SQLException, DataAccessException {
+				//客户编号,查看详情时telnum = null
+				cs.setString("cid", null);
+				cs.setString("telnum", customerForm.getAni());
+				cs.execute();
+				ResultSet rs = cs.getResultSet();
+				int rid = 0;
+				int updateCount = -1;
+				do
+				{
+					updateCount = cs.getUpdateCount();
+					if(updateCount != -1)
+					{	
+						cs.getMoreResults();
+						continue;
+					}
+					rs = cs.getResultSet();
+					if(null != rs)
+					{
+						while(rs.next())
+						{
+							if(rid == 0)
+							{
+								Map map = new HashMap();
+								VTJime.putMapDataByColName(map, rs);
+								ds.map = map;
+							}
+							else if(rid ==1)
+							{
+								Map map = new HashMap();
+								VTJime.putMapDataByColName(map, rs);
+				        		ds.list.add(map);
+							}
+						}
+					}
+					if(rs != null)
+					{
+						cs.getMoreResults();
+						rid++;
+						continue;
+					}
+				}
+				while(!(updateCount == -1 && rs == null));
 				return null;
 			}
 		});

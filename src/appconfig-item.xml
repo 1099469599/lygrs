@@ -5,12 +5,10 @@
 	<role roleid="0" describle="未登录"></role>
 	<role roleid="1" describle="系统管理员">
 		<grp name="日常工作">
-	        <fun name="座席组监控" action="acdmonitor-list.action" />
 			<fun name="系统参数设置" action="sysparam-init.action" />
 		</grp>
 	    <grp name="维护管理">
 	      	<fun name="话务员资料维护" action="agent-list.action" />
-	      	<fun name="NTS服务器维护" action="nts-list.action" />
 		</grp>
 	    <grp name="数据库">
 	      	<fun name="数据库维护" action="dbconfig.action" />
@@ -18,12 +16,15 @@
 	</role>
 	<role roleid="2" describle="业务管理员">
 	    <grp name="日常工作">
-	    	<fun name="资料导入及分配" action="customer-importData.action" />
 	    	<fun name="客户资料管理" action="customer-query.action" />
-			<fun name="接听情况统计" action="agentanaly-list.action" />
 			<fun name="通话及录音查询" action="callrecord-list.action" />
-			<fun name="座席签系统查询" action="agentanaly-online.action" />
 	    </grp>
+	    <grp name="维护管理">
+			<fun name="资料导入及分配" action="customer-importData.action" />
+	      	<fun name="客户资料管理" action="customer-query.action?f=all" />
+			<fun name="接听情况统计" action="agentanaly-list.action" />
+			<fun name="座席签系统查询" action="agentanaly-online.action" />
+		</grp>
 	</role>
 	<role roleid="3" describle="话务员">
 		<grp name="日常工作">

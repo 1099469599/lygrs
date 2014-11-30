@@ -160,7 +160,7 @@
 								</c:otherwise>
 							</c:choose>				
 						</c:if>
-						<a href="javascript:viewDetail('${ls.ids }','${ls.cid }','${ls.byear }','${ls.ot }','${ls.odt }','${ls.edt }','${ls.pp }','${ls.cp }','${ls.cfif }','${ls.eid }','${ls.uname }','${ls.crid }','${ls.mobile }','${ls.home }','${ls.office }','${ls.addr }','${ls.noteinfo }','${ls.hideflag }','${fn:substring(ls.pdt,0,10) }','${fn:substring(ls.pdt,11,16) }','${q_pino }','${q_caryear }','${q_chuxcs }','${q_chephm }','${q_uname }','${q_mobile }','${q_agtacc }')">查看</a>&nbsp;&nbsp;
+						<a href="javascript:viewDetail('${ls.cid }','${q_pino }','${q_caryear }','${q_chuxcs }','${q_chephm }','${q_uname }','${q_mobile }','${q_agtacc }')">查看</a>&nbsp;&nbsp;
 						<%-- 
 						<a href="<c:url value='customer-tanpin.action'/>">弹屏</a>
 						--%>
@@ -192,26 +192,7 @@
 	</form>
 	
 	<form id="form4" name="form4" action="<c:url value='customer-viewDetail.action'/>" method="post">
-		<input type="hidden" id="vpino" name="pino"/>
 		<input type="hidden" id="vcid" name="cid"/>
-		<input type="hidden" id="vcaryear" name="caryear"/>
-		<input type="hidden" id="vchuxcs" name="chuxcs"/>
-		<input type="hidden" id="vchudrq" name="chudrq"/>
-		<input type="hidden" id="vbaoxdq" name="baoxdq"/>
-		<input type="hidden" id="vchangphm" name="changphm"/>
-		<input type="hidden" id="vchephm" name="chephm"/>
-		<input type="hidden" id="vchejh" name="chejh"/>
-		<input type="hidden" id="vfadjbh" name="fadjbh"/>
-		<input type="hidden" id="vuname" name="uname"/>
-		<input type="hidden" id="vidcard" name="idcard"/>
-		<input type="hidden" id="vmobile" name="mobile"/>
-		<input type="hidden" id="vhometel" name="hometel"/>
-		<input type="hidden" id="vofficetel" name="officetel"/>
-		<input type="hidden" id="vaddress" name="address"/>
-		<input type="hidden" id="vnoteinfo" name="noteinfo"/>
-		<input type="hidden" id="vhideflag" name="hideflag"/>
-		<input type="hidden" id="vyuydate" name="yuydate"/>
-		<input type="hidden" id="vyuytime" name="yuytime"/>
 		<input type="hidden" id="vq_pino" name="q_pino"/>
 		<input type="hidden" id="vq_caryear" name="q_caryear"/>
 		<input type="hidden" id="vq_chuxcs" name="q_chuxcs"/>
@@ -258,28 +239,9 @@ $(function(){
 });
 </script>
 <script type="text/javascript">
-	function viewDetail(pino,cid,caryear,chuxcs,chudrq,baoxdq,changphm,chephm,chejh,fadjbh,uname,idcard,mobile,hometel,officetel,address,noteinfo,hideflag,yuydate,yuytime,q_pino,q_caryear,q_chuxcs,q_chephm,q_uname,q_mobile,q_agtacc)
+	function viewDetail(cid,q_pino,q_caryear,q_chuxcs,q_chephm,q_uname,q_mobile,q_agtacc)
 	{
-		$("#vpino").val(pino);
 		$("#vcid").val(cid);
-		$("#vcaryear").val(caryear);
-		$("#vchuxcs").val(chuxcs);
-		$("#vchudrq").val(chudrq);
-		$("#vbaoxdq").val(baoxdq);
-		$("#vchangphm").val(changphm);
-		$("#vchephm").val(chephm);
-		$("#vchejh").val(chejh);
-		$("#vfadjbh").val(fadjbh);
-		$("#vuname").val(uname);
-		$("#vidcard").val(idcard);
-		$("#vmobile").val(mobile);
-		$("#vhometel").val(hometel);
-		$("#vofficetel").val(officetel);
-		$("#vaddress").val(address);
-		$("#vnoteinfo").val(noteinfo);
-		$("#vhideflag").val(hideflag);
-		$("#vyuydate").val(yuydate);
-		$("#vyuytime").val(yuytime);
 		$("#vq_pino").val(q_pino);
 		$("#vq_caryear").val(q_caryear);
 		$("#vq_chuxcs").val(q_chuxcs);

@@ -63,6 +63,9 @@ public class CustomerForm {
 	private String q_agtacc;
 	//
 	
+	//来电弹屏主叫号码 
+	private String ani;
+	
 	public String getPino() {
 		return pino;
 	}
@@ -292,4 +295,11 @@ public class CustomerForm {
 	public void setDefaultAgent(String defaultAgent) {
 		this.defaultAgent = defaultAgent;
 	}
+	public String getAni() {
+		return ani;
+	}
+	public void setAni(String ani) {
+		this.ani = ani;
+	}
+	
 }

@@ -1,5 +1,5 @@
 //pop save agent
-function saveAgent(t,agtid,account,master,telnum,agtname,bdnumo,bdnumt,email)
+function saveAgent(t,agtid,account,master,telnum,agtname,bdnumo,email)
 {
 	$(".asterisk").each(function(){
 		this.innerHTML="*";
@@ -7,7 +7,6 @@ function saveAgent(t,agtid,account,master,telnum,agtname,bdnumo,bdnumt,email)
 	//
 	$(".asterisk")[3].innerHTML="";
 	$(".asterisk")[4].innerHTML="";
-	$(".asterisk")[5].innerHTML="";
 	$("#ismasterchk")[0].checked=false;
 	//
 	var tit;
@@ -36,7 +35,6 @@ function saveAgent(t,agtid,account,master,telnum,agtname,bdnumo,bdnumt,email)
 	$("#telnumx").val(telnum);
 	$("#agtnamex").val(agtname);
 	$("#bdnumox").val(bdnumo);
-	$("#bdnumtx").val(bdnumt);
 	$("#emailx").val(email);
 	
 	$.layer({
@@ -57,7 +55,6 @@ $(function(){
 	$("#telnumx").bind("blur",checkTelnum);
 	$("#agtnamex").bind("blur",checkAgtname);
 	$("#bdnumox").bind("blur",checkBdnumo);
-	$("#bdnumtx").bind("blur",checkBdnumt);
 	$("#emailx").bind("blur",checkEmail);
 });
 
@@ -125,33 +122,18 @@ function checkBdnumo()
 		return true;
 	}
 }
-function checkBdnumt()
-{
-	var bdt = $("#bdnumtx").val();
-	var regexp=/^([0-9]|[-])+$/g;
-	if(bdt!="" && !regexp.exec(bdt))
-	{
-		$(".asterisk")[4].innerHTML="请输入合法的电话号码";
-		return false;
-	}
-	else
-	{
-		$(".asterisk")[4].innerHTML="";
-		return true;
-	}
-}
 function checkEmail()
 {
 	var email = $("#emailx").val();
 	var regexp=/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
 	if(email!="" && !regexp.exec(email))
 	{
-		$(".asterisk")[5].innerHTML="请输入合法的邮箱";
+		$(".asterisk")[4].innerHTML="请输入合法的邮箱";
 		return false;
 	}
 	else
 	{
-		$(".asterisk")[5].innerHTML="";
+		$(".asterisk")[4].innerHTML="";
 		return true;
 	}
 }
@@ -176,7 +158,6 @@ function saveAgentBtn()
 	if(!checkTelnum()) return false;
 	if(!checkAgtname()) return false;
 	if(!checkBdnumo()) return false;
-	if(!checkBdnumt()) return false;
 	if(!checkEmail()) return false;
 	
 	$("#form2").ajaxSubmit({ 

@@ -44,8 +44,9 @@
   		<div class="tit1"><s:property value="#application.vta.product"/></div>
   		<div class="tit2"><s:property value="#application.vta.customer"/>
   			<!-- js 客户端测试 -->
-  			<!-- 
+  			 
   			<input type="button" onclick="js_detectcall('callin','ani=808;dnis=10086;param=a,1,1;')" value="测试弹屏"/>
+  			<!--
   			<input type="button" onclick="js_monitor_acdgrp('5,933300,呼叫,0,0,0,0.00%,0/0')" value="测试业务组监控"/>
   			<input type="button" onclick="js_seat_minitor('0,正常,来电,*9000#,agt000')" value="测试分机监控"/>
   			<input id="button1" type="button" value="Button" onclick="changeOCX()"/>
@@ -210,7 +211,7 @@
 <script type="text/javascript">
 	/*************** 弹屏   ***************/ 
 	function js_detectcall(line,ani,dnis,param){
-		$("#popHuifang")[0].href="customer-tanpin.action";
+		$("#popHuifang")[0].href="customer-tanpin.action?ani="+ani;
 		$("#popHuifang")[0].click();
 		/*
 		param = param.split(",");
@@ -484,36 +485,53 @@
 	//正在呼叫号码
 	var callingTel = document.getElementById("calling_num"); 
 	//
+	
+	//播放提示音
+	function playInfo()
+	{
+		ocx.doPlayInfo();
+	}
+
+	//播放
+	function showDial()
+	{
+		bohp.style.display="block";
+	}
+
+	//重播
+	function reDial()
+	{
+		var recalltel = ocx.GetLastCallee();
+		ocx.doDial(recalltel);
+		callingTel.innerHTML=ing+recalltel;
+	}
+
+	//应答 
+	function answer()
+	{
+		ocx.doAnswer("***");
+	}
+
+	//挂断
+	function hook()
+	{
+		ocx.doOnHook();
+		callingTel.innerHTML="";
+	}
+	
+	//
 	$(function(){
+		// init
 		//播放提示音 
-		$("#line0").bind("click",function(){
-			ocx.doPlayInfo();
-		});
-
-		//拔号
-		$("#line1").bind("click",function(){
-			bohp.style.display="block";
-		});
-
-		//重拔
-		$("#line2").bind("click",function(){
-			var recalltel = ocx.GetLastCallee();
-			ocx.doDial(recalltel);
-			callingTel.innerHTML=ing+recalltel;
-		});
-
-		//应答
-		$("#line3").bind("click",function(){
-			//
-			ocx.doAnswer("***");
-		});
-		
-		//挂断
-		$("#line4").bind("click",function(){
-			ocx.doOnHook();
-			callingTel.innerHTML="";
-		});
-
+		$("#line0").bind("click",playInfo);
+		$("#line1").bind("click",showDial);
+		var backimg = "url(images/common_float_telbg2.jpg) no-repeat scroll 0 0 transparent"
+		var line2 = document.getElementById("line2");
+		var line3 = document.getElementById("line3");
+		line2.style.background=backimg;
+		line2.style.cursor="default";
+		line3.style.background=backimg;
+		line3.style.cursor="default";
 		/*
 		//呼我 ocx.AgentCallMe();
 		$("#line5").bind("click",function(){
@@ -576,6 +594,7 @@
 </script>
 <%-- 4.1 指挥座席线路状态改变 --%>
 <script type="text/javascript" for="OCXPlugin" event="OnLineChange(line,state,desc)">
+	alert(state);
 	//分机状态
 	var ts = document.getElementById("tel_state");
 	var imgnum = [0,1,2,3,4];
@@ -645,6 +664,12 @@
 		ts.src=img+imgnum[3]+".jpg";
 		line1.style.display="";
 		line2.style.display="";
+
+		//拔号
+		$("#line1").bind("click",showDial);
+		//重拔
+		$("#line2").bind("click",reDial);
+		
 		//
 		line3.style.background=backimg;
 		line3.style.cursor="default";

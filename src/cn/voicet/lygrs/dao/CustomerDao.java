@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import cn.voicet.common.util.DotSession;
 import cn.voicet.lygrs.form.CustomerForm;
 
 public interface CustomerDao{
@@ -23,9 +24,12 @@ public interface CustomerDao{
 	void exportCustomerData(CustomerForm customerForm, HttpServletResponse response);
 	void deleteCustomerInfo(CustomerForm customerForm);
 	void allocOneAgent(CustomerForm customerForm);
-	List<Map<String, Object>> queryCallRecordByCid(CustomerForm customerForm);
+	void queryDetailInfo(DotSession ds, CustomerForm customerForm);
+	//
 	void saveCustomerInfo(CustomerForm customerForm);
 	void setYuyueDateTime(CustomerForm customerForm);
 	void setHideFlag(CustomerForm customerForm);
+	//
+	void queryTanpinInfo(DotSession ds, CustomerForm customerForm);
 	
 }

@@ -66,7 +66,6 @@
 </div>	
 <script type="text/javascript">
 	$(function(){
-		
 		//获取链接服务器ip
 		$("#ipx").val($("#OCXPlugin",window.parent.document)[0].GetServerIP());
 		//获取端口号

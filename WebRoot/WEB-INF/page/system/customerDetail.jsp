@@ -26,11 +26,11 @@
 </head>
 <body>
 <div id="contentWrap">
-	<h3 class="h3_title">客户&nbsp;[${uname }]&nbsp;的资料详情&nbsp;[批次号${pino }]
+	<h3 class="h3_title">客户&nbsp;[${tpMap.uname }]&nbsp;的资料详情&nbsp;[批次号${tpMap.ids }]
 		<span>
 			<input type="button" class="btn btn-primary" value="返回" onclick="document.form1.submit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
 			<c:if test="${sessionScope.vts.roleID eq 3 }">
-			<input type="checkbox" id="hideflagx" <c:if test="${hideflag eq 1}"> checked="checked"</c:if> onclick="setHideFlag(this,'${cid }')"/><label for="hideflagx">隐藏</label>
+			<input type="checkbox" id="hideflagx" <c:if test="${tpMap.hideflag eq 1}"> checked="checked"</c:if> onclick="setHideFlag(this,'${tpMap.cid }')"/><label for="hideflagx">隐藏</label>
 			</c:if>
 		</span>
 	</h3>
@@ -63,7 +63,7 @@
   			-->
   			<div class="queryDiv" style="border:0">
 			   	<ul class="queryWrap_ul" style="padding-left:70px;">
-					<li><label>导入批次：</label><input type="text" id="pinox" name="pino" value="${pino }" class="ipt100" maxlength="100"/></li>
+					<li><label>导入批次：</label><input type="text" id="pinox" name="pino" value="${tpMap.ids }" class="ipt100" maxlength="100"/></li>
 				</ul>
 			</div>
 			<div id="error_msg" class="error_msg"></div>
@@ -71,11 +71,12 @@
 			<div class="formtitle"><span>预约信息</span></div>
 			<div class="queryDiv_n">
 			   	<ul class="queryWrap_ul" style="padding-left:70px;">
-					<li><label>预约日期：</label><input type="text" id="yuydatex" name="yuydate" value="${yuydate }" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'%y-%M-%d'})" class="Wdate inputDefault" style="width:90px; height:20px"/></li>
-			        <li><label>预约时间：</label><input type="text" id="yuytimex" name="yuytime" value="${yuytime }" onclick="WdatePicker({dateFmt:'HH:mm',minDate:'%H:%m'})" class="Wdate inputDefault" style="width:90px; height:20px"/></li>
+					<li><label>预约日期：</label><input type="text" id="yuydatex" name="yuydate" value="${fn:substring(tpMap.pdt,0,10) }" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'%y-%M-%d'})" class="Wdate inputDefault" style="width:90px; height:20px"/></li>
+			        <li><label>预约时间：</label><input type="text" id="yuytimex" name="yuytime" value="${fn:substring(tpMap.pdt,11,16) }" onclick="WdatePicker({dateFmt:'HH:mm',minDate:'%H:%m'})" class="Wdate inputDefault" style="width:90px; height:20px"/></li>
 			        <li><input type="button" class="btn4" value="设&nbsp;&nbsp;置" onclick="setYuyDateTime('${cid }','1')"/></li>
 			        <li>
-			        	<c:if test="${fn:length(yuydate) gt 0}">
+			        	<c:set var="yuyueriqi" value="${fn:substring(tpMap.pdt,0,10) }"></c:set>
+			        	<c:if test="${fn:length(yuyueriqi) gt 0}">
 			        	<input type="button" class="btn4" value="取&nbsp;&nbsp;消" onclick="cancelYuyDateTime('${cid }','0')"/>
 			        	</c:if>
 			        </li>
@@ -85,42 +86,42 @@
 			<div class="formtitle"><span>车辆信息</span></div>
 			<div class="queryDiv_n">
 			   	<ul class="queryWrap_ul" style="padding-left:70px;">
-					<li><label>车龄：</label><input type="text" id="caryearx" name="caryear" value="${caryear }" class="ipt50" maxlength="4"/></li>
-			        <li><label>出险次数：</label><input type="text" id="chuxcsx" name="chuxcs" value="${chuxcs }" class="ipt50" maxlength="3"/></li>
-			        <li><label>初登日期：</label><input type="text" name="chudrq" value="${fn:substring(chudrq,0,10) }" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" class="Wdate inputDefault" style="width:90px; height:20px" maxlength="22"/></li>
-			        <li><label>保险到期：</label><input type="text" name="baoxdq" value="${fn:substring(baoxdq,0,10) }" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" class="Wdate inputDefault" style="width:90px; height:20px" maxlength="22"/></li>
+					<li><label>车龄：</label><input type="text" id="caryearx" name="caryear" value="${tpMap.byear }" class="ipt50" maxlength="4"/></li>
+			        <li><label>出险次数：</label><input type="text" id="chuxcsx" name="chuxcs" value="${tpMap.ot }" class="ipt50" maxlength="3"/></li>
+			        <li><label>初登日期：</label><input type="text" name="chudrq" value="${fn:substring(tpMap.odt,0,10) }" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" class="Wdate inputDefault" style="width:90px; height:20px" maxlength="22"/></li>
+			        <li><label>保险到期：</label><input type="text" name="baoxdq" value="${fn:substring(tpMap.edt,0,10) }" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" class="Wdate inputDefault" style="width:90px; height:20px" maxlength="22"/></li>
 				</ul>
 			</div>
 			<div class="queryDiv_n">
 			   	<ul class="queryWrap_ul" style="padding-left:70px;">
-					<li><label>厂牌号码：</label><input type="text" name="changphm" value="${changphm }" class="ipt100" maxlength="30"/></li>
-			        <li><label>车牌号码：</label><input type="text" name="chephm" value="${chephm }" class="ipt80" maxlength="20"/></li>
-			        <li><label>车架号：</label><input type="text" name="chejh" value="${chejh }" class="ipt100" maxlength="30"/></li>
-			        <li><label>发动机编号：</label><input type="text" name="fadjbh" value="${fadjbh }" class="ipt100" maxlength="30"/></li>
+					<li><label>厂牌号码：</label><input type="text" name="changphm" value="${tpMap.pp }" class="ipt100" maxlength="30"/></li>
+			        <li><label>车牌号码：</label><input type="text" name="chephm" value="${tpMap.cp }" class="ipt80" maxlength="20"/></li>
+			        <li><label>车架号：</label><input type="text" name="chejh" value="${tpMap.cfid }" class="ipt100" maxlength="30"/></li>
+			        <li><label>发动机编号：</label><input type="text" name="fadjbh" value="${tpMap.eid }" class="ipt100" maxlength="30"/></li>
 				</ul>
 			</div>
 			<div class="formtitle"><span>客户信息</span></div>
 			<div class="queryDiv_n">
 			   	<ul class="queryWrap_ul" style="padding-left:70px;">
-					<li><label>客户姓名：</label><input type="text" name="uname" value="${uname }" class="ipt100" maxlength="20"/></li>
-			        <li><label>身份证号：</label><input type="text" id="idcardx" name="idcard" value="${idcard }" class="ipt155" maxlength="18"/></li>
+					<li><label>客户姓名：</label><input type="text" name="uname" value="${tpMap.uname }" class="ipt100" maxlength="20"/></li>
+			        <li><label>身份证号：</label><input type="text" id="idcardx" name="idcard" value="${tpMap.crid }" class="ipt155" maxlength="18"/></li>
 				</ul>
 			</div>
 			<div class="queryDiv_n">
 			   	<ul class="queryWrap_ul" style="padding-left:70px;">
-					<li><label>手机：</label><input type="text" id="mobilex" name="mobile" value="${mobile }" maxlength="15" class="ipt100"/>&nbsp;<img src="images/call_phone.jpg" title="呼叫" alt="呼叫" onclick="callMember('m')"/></li>
-			        <li><label>家庭电话：</label><input type="text" id="hometelx" name="hometel" value="${hometel }" maxlength="15" class="ipt100"/>&nbsp;<img src="images/call_tel.jpg" title="呼叫" alt="呼叫" onclick="callMember('h')"/></li>
-			        <li><label>办公电话：</label><input type="text" id="officetelx" name="officetel" value="${officetel }" maxlength="15" class="ipt100"/>&nbsp;<img src="images/call_tel.jpg" title="呼叫" alt="呼叫" onclick="callMember('o')"/></li>
+					<li><label>手机：</label><input type="text" id="mobilex" name="mobile" value="${tpMap.mobile }" maxlength="15" class="ipt100"/>&nbsp;<img src="images/call_phone.jpg" title="呼叫" alt="呼叫" onclick="callMember('m')"/></li>
+			        <li><label>家庭电话：</label><input type="text" id="hometelx" name="hometel" value="${tpMap.home }" maxlength="15" class="ipt100"/>&nbsp;<img src="images/call_tel.jpg" title="呼叫" alt="呼叫" onclick="callMember('h')"/></li>
+			        <li><label>办公电话：</label><input type="text" id="officetelx" name="officetel" value="${tpMap.office }" maxlength="15" class="ipt100"/>&nbsp;<img src="images/call_tel.jpg" title="呼叫" alt="呼叫" onclick="callMember('o')"/></li>
 				</ul>
 			</div>
 			<div class="queryDiv_n">
 			   	<ul class="queryWrap_ul" style="padding-left:70px;">
-					<li><label>派送地址：</label><input type="text" name="address" value="${address }"  maxlength="100" class="ipt500"/></li>
+					<li><label>派送地址：</label><input type="text" name="address" value="${tpMap.addr }"  maxlength="100" class="ipt500"/></li>
 				</ul>
 			</div>
 			<div class="queryDiv_n">
 			   	<ul class="queryWrap_ul" style="padding-left:70px;">
-					<li><label style="vertical-align:top;">备注信息：</label><textarea name="noteinfo" class="ipt_area_w300">${noteinfo }</textarea></li>
+					<li><label style="vertical-align:top;">备注信息：</label><textarea name="noteinfo" class="ipt_area_w300">${tpMap.noteinfo }</textarea></li>
 				</ul>
 			</div>
 			<div class="queryDiv_h">

@@ -126,9 +126,11 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 	public String query()
 	{
 		DotSession ds = DotSession.getVTSession(request);
-		if(ds.roleID.equals("3"))
+		customerForm.setQ_agtacc(ds.agttelnum);
+		String findAll = request.getParameter("f");
+		if(null!=findAll && findAll.equals("all"))
 		{
-			customerForm.setQ_agtacc(ds.agttelnum);
+			customerForm.setQ_agtacc(null);
 		}
 		log.info("q_pino:"+customerForm.getQ_pino()+", q_caryear:"+customerForm.getQ_caryear()+", q_chuxcs:"+customerForm.getQ_chuxcs()+", q_chephm:"+customerForm.getQ_chephm()+", q_uname:"+customerForm.getQ_uname()+", q_mobile:"+customerForm.getQ_mobile()+", q_agtacc:"+customerForm.getQ_agtacc());
 		List<Map<String, Object>> list = customerDao.queryCustomerInfo(customerForm);
@@ -190,8 +192,12 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 	public String viewDetail()
 	{
 		log.info("cid:"+customerForm.getCid());
-		List<Map<String, Object>> list = customerDao.queryCallRecordByCid(customerForm);
-		request.setAttribute("callRecordList", list);
+		DotSession ds = DotSession.getVTSession(request);
+		customerDao.queryDetailInfo(ds, customerForm);
+		request.setAttribute("tpMap", ds.map);
+		request.setAttribute("callRecordList", ds.list);
+		log.info("tpMap:"+ds.map+", list:"+ds.list);
+		ds.list=null;
 		return "customerDetailPage";
 	}
 	
@@ -232,17 +238,24 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 		return null;
 	}
 	
-	/**
-	 * 查询客户资料通话记录
-	 */
-	public String viewCall()
-	{
-		return "customerCallPage";
-	}
-	
 	public String tanpin()
 	{
+		/*
+		 * 来电弹屏，根据主叫号码【mobile,hometel,officetel】查询客户资料
+		 * 当有多条记录时，只提取第一条记录【peeknum=1】
+		 */
+		log.info("telnum:"+customerForm.getAni());
+		DotSession ds = DotSession.getVTSession(request);
+		customerDao.queryTanpinInfo(ds, customerForm);
 		
+		//
+		request.setAttribute("tpMap", ds.map);
+		request.setAttribute("callRecordList", ds.list);
+		
+		//clear
+		ds.list=null;
+		ds.map=null;
+		//
 		return "tanpinPage";
 	}
 	
