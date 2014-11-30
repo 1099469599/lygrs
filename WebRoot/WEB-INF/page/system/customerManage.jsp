@@ -95,7 +95,7 @@
              </thead>
              <tbody class="tab_tbody" id="movies">
 				<c:forEach items="${cList }" var="ls" varStatus="status">
-				<tr>
+				<tr id="rowIndex_${status.count }">
 					<c:if test="${ls.pdt_l eq 2}">
 						<c:set var="ispdt" value="color:#DC143C; font-weight:bold;"></c:set>
 						<c:set var="gqtxt" value="已过期"></c:set>
@@ -147,7 +147,7 @@
 					</c:if>
 					<td>
 						<c:if test="${sessionScope.vts.roleID eq 1 or sessionScope.vts.roleID eq 2 }">
-							<a href="javascript:deleteCustomerInfo('${ls.cid }')">删除</a>&nbsp;&nbsp;
+							<a href="javascript:deleteCustomerInfo('${ls.cid }','${status.count }')">删除</a>&nbsp;&nbsp;
 							<a href="javascript:fenPeiAgt('${ls.cid }','${status.count }')">分配</a>&nbsp;&nbsp;
 						</c:if>
 						<c:if test="${sessionScope.vts.roleID eq 3 }">	
@@ -291,18 +291,45 @@ $(function(){
 	}
 
 
-	function deleteCustomerInfo(cid)
+	function deleteCustomerInfo(cid,index)
 	{
+		//tbody
+		var tab = document.getElementById("movies");
+		//tr 
+		var row = document.getElementById("rowIndex_"+index);
+		//
+		/*
 		layer.confirm("确定要删除吗？",function(){
 			$("#del_cidx").val(cid);
 			$("#form3").ajaxSubmit({ 
 				success:function(data){ //提交成功的回调函数
-					$("#pageflag").val("update");
-					document.form1.submit();		
+					//$("#pageflag").val("update");
+					//document.form1.submit();
+					tab.deleteRow(row.sectionRowIndex);	
+					layer.closeAll();	
 		        }  
 			}); 
 		    return false;
 		});
+		*/
+		var m=confirm("你确定要删除吗?"); 
+		if(m==true)
+		{ 
+			$.ajax({
+				cache:false,
+				async:false,
+				type:"post",
+				data:{cid:cid},
+				url:" customer-deleteCustomerInfo.action",
+				success: function(data) {
+					tab.deleteRow(row.sectionRowIndex);
+				}
+			});
+		} 
+		else
+		{ 
+			
+		} 
 	}
 	function selectAgent(obj)
 	{
