@@ -195,9 +195,9 @@
 	//logout
 	function logout()
 	{
-		var ocx = document.getElementById("OCXPlugin");
+		//var ocx = document.getElementById("OCXPlugin");
 		layer.confirm("确定要注销吗？",function(){
-			ocx.AgentCheckOut();
+			//ocx.AgentCheckOut();
 			$("#form2").ajaxSubmit({ 
 				success:function(data){ //提交成功的回调函数
 					location.href="index.action";
@@ -500,6 +500,12 @@
 			var recalltel = ocx.GetLastCallee();
 			ocx.doDial(recalltel);
 			callingTel.innerHTML=ing+recalltel;
+		});
+
+		//应答
+		$("#line3").bind("click",function(){
+			//
+			ocx.doAnswer("***");
 		});
 		
 		//挂断
