@@ -6,7 +6,6 @@
 	<role roleid="1" describle="系统管理员">
 		<grp name="日常工作">
 	        <fun name="座席组监控" action="acdmonitor-list.action" />
-	        <fun name="座席分机监控" action="subtelmonitor-list.action" />
 			<fun name="系统参数设置" action="sysparam-init.action" />
 		</grp>
 	    <grp name="维护管理">
