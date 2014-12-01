@@ -117,10 +117,7 @@
         <input type="hidden" id="curCusManagePage" value="1"/>
         <!-- 记录js分页当前页码 end -->
         </p>
-        <span>2014 VoiceT&nbsp;&nbsp;V141125&nbsp;&nbsp;[建议使用IE8以上版本或360兼容模式浏览器]</span>
-        <!--
-        <div id="ocxLog" style="font-size:12px; text-align:left; text-indent:10px;">vtcx log</div>
-        -->
+        <span>2014 VoiceT&nbsp;&nbsp;V141125&nbsp;&nbsp;[建议使用IE8以上版本或360兼容模式浏览器,显示器辨率1280*1024]</span>
     </div>
     <!-- print window -->
 	<div style="height:0px;">
@@ -825,6 +822,7 @@
 		$("#form3").ajaxSubmit({ 
 			success:function(data){ //提交成功的回调函数
 				layer.closeAll();
+				alert("保存成功！");
 	        }  
 		}); 
 	    return false;	//not refresh page

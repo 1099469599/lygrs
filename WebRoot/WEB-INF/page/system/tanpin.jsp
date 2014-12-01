@@ -36,7 +36,6 @@
 			</c:otherwise>
 		</c:choose>
 		
-		
 		<span>
 			<input type="button" class="btn btn-primary" value="返回" onclick="document.form1.submit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
 			<c:if test="${sessionScope.vts.roleID eq 3 }">
