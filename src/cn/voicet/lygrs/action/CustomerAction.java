@@ -264,7 +264,7 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 	 */
 	public String saveTalk()
 	{
-		log.info("cid"+"talkdt:"+"talkresult:"+"content:");
+		log.info("cid"+customerForm.getCid()+", talkdt:"+customerForm.getTalkdt()+", talkresult:"+customerForm.getTalkresult()+", content:"+customerForm.getNoteinfo());
 		customerDao.saveTalkContent(customerForm);
 		return null;
 	}

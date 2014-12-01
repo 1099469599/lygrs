@@ -14,11 +14,11 @@
 	<script type="text/javascript" src="<c:url value='js/menu.js?v=8'/>"></script>
 	<!-- menu plugin end -->
 	<style type="text/css">
-		#zuojifenji{width:100px; height:240px; top:200px; border-radius:4px; background:#bbff77; right:20px; border:1px solid #3B9FFF; position:fixed;}
+		#zuojifenji{width:100px; height:280px; top:200px; border-radius:4px; background:#bbff77; right:20px; border:1px solid #3B9FFF; position:fixed;}
 		.com-ask-float-block0{cursor:pointer; border:0px; bottom:124px; min-width:40px; height:30px; width:65px; margin:0px; padding:0px; position:fixed; right:40px; border-radius:0; line-height:16px; font-weight:bold; color:#fff; text-align:center; line-height:28px;}
 		.com-ask-float-block{cursor:pointer; border: 0px; bottom: 124px; min-width: 40px; height: 30px; width: 60px; margin: 0px; padding: 0px; position: fixed; right: 40px; border-radius: 0; line-height: 16px; font-weight:bold; color: #fff; text-align:center; line-height:28px; background:url(images/common_float_telbg1.jpg);}
 		.com-ask-float-block:hover{cursor:pointer; color:#fff; text-decoration:none;}
-		.bohaopan-fix{display:none; width:200px; height:240px; top:200px; border-radius:4px; background:#E0EEFB; right:130px;border:1px solid #3B9FFF; position:fixed;}
+		.bohaopan-fix{display:none; width:200px; height:280px; top:200px; border-radius:4px; background:#E0EEFB; right:130px;border:1px solid #3B9FFF; position:fixed;}
 	</style>
 	<!--[if IE 6]>
 	<style type="text/css">
@@ -44,7 +44,6 @@
   		<div class="tit1"><s:property value="#application.vta.product"/></div>
   		<div class="tit2"><s:property value="#application.vta.customer"/>
   			<!-- js 客户端测试 -->
-  			
   			<input type="button" onclick="showTalk()" value="通话小结"/>
   			<!--
   			<input type="button" onclick="js_detectcall('callin','ani=808;dnis=10086;param=a,1,1;')" value="测试弹屏"/>
@@ -403,11 +402,10 @@
 <a class="com-ask-float-block bohao2" id="line2" title="重拔" style="top:317px">重拔</a>
 <a class="com-ask-float-block bohao3" id="line3" title="应答" style="top:357px">应答</a>
 <a class="com-ask-float-block bohao4" id="line4" title="挂断" style="top:397px;">挂机</a>
-<%-- 
-<a class="com-ask-float-block bohao5" id="line5" title="呼我" style="top:437px;">呼我</a>
---%>
+<a class="com-ask-float-block bohao5" id="line5" title="通话小结" style="top:437px;">通话小结</a>
+
 <style type="text/css">
-	#bohaopan table{text-align:center; height:240px; width:200px; background:#bbff77; border:0;}
+	#bohaopan table{text-align:center; height:280px; width:200px; background:#bbff77; border:0;}
 	#bohaopan .num_input{color:#000; width:100%; height:40px;}
 	#bohaopan .num_input1{color:#000; width:40%; height:60px;}
 </style>
@@ -493,7 +491,7 @@
 		ocx.doPlayInfo();
 	}
 
-	//播放
+	//播号
 	function showDial()
 	{
 		bohp.style.display="block";
@@ -529,10 +527,14 @@
 		var backimg = "url(images/common_float_telbg2.jpg) no-repeat scroll 0 0 transparent"
 		var line2 = document.getElementById("line2");
 		var line3 = document.getElementById("line3");
+		var line5 = document.getElementById("line5");
 		line2.style.background=backimg;
 		line2.style.cursor="default";
 		line3.style.background=backimg;
 		line3.style.cursor="default";
+		line5.style.background=backimg;
+		line5.style.cursor="default";
+		//
 		/*
 		//呼我 ocx.AgentCallMe();
 		$("#line5").bind("click",function(){
@@ -595,7 +597,6 @@
 </script>
 <%-- 4.1 指挥座席线路状态改变 --%>
 <script type="text/javascript" for="OCXPlugin" event="OnLineChange(line,state,desc)">
-	alert(state);
 	//分机状态
 	var ts = document.getElementById("tel_state");
 	var imgnum = [0,1,2,3,4];
@@ -610,86 +611,153 @@
 	var line3 = document.getElementById("line3");
 	//挂断
 	var line4 = document.getElementById("line4");
-	var backimg = "url(images/common_float_telbg2.jpg) no-repeat scroll 0 0 transparent"
+	//通话小结
+	var line5 = document.getElementById("line5");
+	//可用状态背景图片
+	var backimg1 = "url(images/common_float_telbg2.jpg) no-repeat scroll 0 0 transparent"
+	//不可用状态背景图片
+	var backimg2 = "url(images/common_float_telbg2.jpg) no-repeat scroll 0 0 transparent"
+	//鼠标状态
+	var ms_p = "pointer";
+	var ms_d = "default";
+	
 	//0:断开
 	if(state==0)
 	{
 		ts.src=img+imgnum[0]+".jpg";
-		line1.style.display="";
-		line2.style.display="";
-		line3.style.display="";
-		line4.style.background=backimg;
-		line4.style.cursor="default";
+		//
+		line1.style.background=backimg1;
+		line1.style.cursor=ms_p;
+		line2.style.background=backimg1;
+		line2.style.cursor=ms_p;
+		line3.style.background=backimg1;
+		line3.style.cursor=ms_p;
+		line4.style.background=backimg1;
+		line4.style.cursor=ms_p;
+		line5.style.background=backimg2;
+		line5.style.cursor=ms_d;
 		//
 		callingTel.innerHTML="";
+		//
+		line1.bind("click", showDial);
+		line2.bind("click", reDial);
+		line3.bind("click", answer);
+		line4.bind("click", hook);
+		line5.unbind("click");
 	}
 	//1:空闲
 	else if(state==1)
 	{
 		ts.src=img+imgnum[1]+".jpg";
-		line1.style.display="";
-		line2.style.display="";
-		line3.style.display="";
-		line4.style.display="";
+		//
+		line1.style.background=backimg1;
+		line1.style.cursor=ms_p;
+		line2.style.background=backimg1;
+		line2.style.cursor=ms_p;
+		line3.style.background=backimg1;
+		line3.style.cursor=ms_p;
+		line4.style.background=backimg1;
+		line4.style.cursor=ms_p;
+		line5.style.background=backimg2;
+		line5.style.cursor=ms_d;
 		//
 		callingTel.innerHTML="";
+		//
+		line1.bind("click", showDial);
+		line2.bind("click", reDial);
+		line3.bind("click", answer);
+		line4.bind("click", hook);
+		line5.unbind("click");
 	}
 	//2:通话 
 	else if(state==2)
 	{
 		ts.src=img+imgnum[3]+".jpg";
-		line1.style.background=backimg;
-		line1.style.cursor="default";
-		line2.style.background=backimg;
-		line2.style.cursor="default";
-		line3.style.background=backimg;
-		line3.style.cursor="default";
-		line4.style.display="";
+		//
+		line1.style.background=backimg2;
+		line1.style.cursor=ms_d;
+		line2.style.background=backimg2;
+		line2.style.cursor=ms_d;
+		line3.style.background=backimg2;
+		line3.style.cursor=ms_d;
+		line4.style.background=backimg1;
+		line4.style.cursor=ms_p;
+		line5.style.background=backimg1;
+		line5.style.cursor=ms_p;
+		//
+		line1.unbind("click");
+		line2.unbind("click");
+		line3.unbind("click");
+		line4.bind("click", hook);
+		line5.bind("click",showTalk);
 	}
 	//3:振铃 
 	else if(state==3)
 	{
 		ts.src=img+imgnum[2]+".jpg";
-		line1.style.background=backimg;
-		line1.style.cursor="default";
 		//
-		line2.style.background=backimg;
-		line2.style.cursor="default";
+		line1.style.background=backimg2;
+		line1.style.cursor=ms_d;
+		line2.style.background=backimg2;
+		line2.style.cursor=ms_d;
+		line3.style.background=backimg1;
+		line3.style.cursor=ms_p;
+		line4.style.background=backimg1;
+		line4.style.cursor=ms_p;
+		line5.style.background=backimg2;
+		line5.style.cursor=ms_d;
 		//
-		line3.style.display="";
-		line4.style.display="";
+		line1.unbind("click");
+		line2.unbind("click");
+		line3.bind("click", answer);
+		line4.bind("click", hook);
+		line5.unbind("click");
 	}
 	//4:拨号 
 	else if(state==4)
 	{
 		ts.src=img+imgnum[3]+".jpg";
-		line1.style.display="";
-		line2.style.display="";
-
-		//拔号
-		$("#line1").bind("click",showDial);
-		//重拔
-		$("#line2").bind("click",reDial);
-		
 		//
-		line3.style.background=backimg;
-		line3.style.cursor="default";
-		line4.style.display="";
+		line1.style.background=backimg1;
+		line1.style.cursor=ms_p;
+		line2.style.background=backimg1;
+		line2.style.cursor=ms_p;
+		line3.style.background=backimg2;
+		line3.style.cursor=ms_d;
+		line4.style.background=backimg1;
+		line4.style.cursor=ms_p;
+		line5.style.background=backimg2;
+		line5.style.cursor=ms_d;
+		//
+		line1.bind("click", showDial);
+		line2.bind("click", reDial);
+		line3.unbind("click");
+		line4.bind("click", hook);
+		line5.unbind("click");
+		
+		
 	}
 	//5:催挂
 	else if(state==5)
 	{
 		ts.src=img+imgnum[4]+".jpg";
-		line1.style.background=backimg;
-		line1.style.cursor="default";
 		//
-		line2.style.background=backimg;
-		line2.style.cursor="default";
+		line1.style.background=backimg2;
+		line1.style.cursor=ms_d;
+		line2.style.background=backimg2;
+		line2.style.cursor=ms_d;
+		line3.style.background=backimg2;
+		line3.style.cursor=ms_d;
+		line4.style.background=backimg1;
+		line4.style.cursor=ms_p;
+		line5.style.background=backimg2;
+		line5.style.cursor=ms_d;
 		//
-		line3.style.background=backimg;
-		line3.style.cursor="default";
-		//
-		line4.style.display="";
+		line1.unbind("click");
+		line2.unbind("click");
+		line3.unbind("click");
+		line4.bind("click", hook);
+		line5.unbind("click");
 	}
 	else
 	{
@@ -700,7 +768,7 @@
 
 <!--POP PLAYER START-->
 <div id="popTalkDiv" style="display:none;"> 
-	<form id="form2" name="form2" action="<c:url value='/customer-saveTalk.action'/>" method="post">
+	<form id="form3" name="form3" action="<c:url value='/customer-saveTalk.action'/>" method="post">
 	    <!--
 	    <div class="lab_ipt_item">
 	    	<span class="lab120">通话时间：</span>
@@ -711,19 +779,20 @@
 	        </div>
 	    </div>
 	    -->
+	    <input type="hidden" id="talk_cid" name="cid" value="1"/>
+	    <input type="hidden" id="talk_time" name="talkdt" value="2014"/>
 	    <div class="lab_ipt_item">
 	    	<span class="lab120">通话结果：</span>
 	        <div class="ipt-box">
-	        	<input type="radio" name="talkresult" value="1" style="margin-top:6px;"/>成功
-	        	<input type="radio" name="talkresult" value="0" style="margin-top:6px;"/>失败
-	        	<input type="hidden" id="ismasterx" name="agttxt" value="0"/>
+	        	<input type="radio" id="tr1" name="talkresult" value="1" checked/><label for="tr1">成功</label>
+	        	<input type="radio" id="tr2" name="talkresult" value="0"/><label for="tr2">失败</label>
 	            <span class=""></span>
 	        </div>
 	    </div>
 	    <div class="h132">
 	    	<span class="lab120">备注信息：</span>
 	        <div class="h132 ipt-box">
-	        	<textarea id="noteinfox" name="noteinfo" class="ipt_textarea_w300 inputDefault" style="font-size:12px;"></textarea>
+	        	<textarea id="talk_noteinfo" name="noteinfo" class="ipt_textarea_w300 inputDefault" style="font-size:12px;"></textarea>
 	            <span></span>
 	        </div>
 	    </div>
@@ -736,6 +805,7 @@
 </div>
 <!--POP PLAYER END-->
 <script type="text/javascript">
+	//显示通话小结 
 	function showTalk()
 	{
 		$.layer({
@@ -748,6 +818,16 @@
 			bgcolor: '#EEF1F8',
 			page:{dom:'#popTalkDiv'}
 		});
+	}
+	//保存通话小结
+	function saveTalkBtn()
+	{
+		$("#form3").ajaxSubmit({ 
+			success:function(data){ //提交成功的回调函数
+				layer.closeAll();
+	        }  
+		}); 
+	    return false;	//not refresh page
 	}
 </script>
 </body>
