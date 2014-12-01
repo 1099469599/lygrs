@@ -153,7 +153,7 @@
 						<c:if test="${sessionScope.vts.roleID eq 3 }">	
 							<c:choose>
 								<c:when test="${!empty(ls.mobile) }">
-									<a href="javascript:callCustomer('${ls.mobile }')">呼叫</a>&nbsp;&nbsp;								
+									<a href="javascript:callCustomer('${ls.mobile }','${ls.cid }')">呼叫</a>&nbsp;&nbsp;								
 								</c:when>
 								<c:otherwise>
 									<label style="color:#808080;">呼叫&nbsp;&nbsp;</label>
@@ -161,9 +161,6 @@
 							</c:choose>				
 						</c:if>
 						<a href="javascript:viewDetail('${ls.cid }','${q_pino }','${q_caryear }','${q_chuxcs }','${q_chephm }','${q_uname }','${q_mobile }','${q_agtacc }')">查看</a>&nbsp;&nbsp;
-						<%-- 
-						<a href="<c:url value='customer-tanpin.action'/>">弹屏</a>
-						--%>
 					</td>
 				</tr>
 				</c:forEach>
@@ -323,11 +320,13 @@ $(function(){
 		}
 	}
 	//呼叫
-	function callCustomer(mobile)
+	function callCustomer(mobile,cid)
 	{
 		var ocx = $("#OCXPlugin",window.parent.document)[0];
 		var callingTel = $("#calling_num",window.parent.document)[0];
-		ocx.doDial(mobile);
+		//ocx.doDial(mobile);
+		var callid = ocx.GetCallID();
+		ocx.doDialEx(mobile,"b,"+cid+","+callid);
 		callingTel.innerHTML="正在呼叫："+mobile;
 	}
 	

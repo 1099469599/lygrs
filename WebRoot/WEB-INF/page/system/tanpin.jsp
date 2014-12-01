@@ -278,7 +278,7 @@
 	        offset: [($(window).height() - 290)/2+'px', ''],
 	        border : [5, 0.5, '#666'],
 	        area: ['450px','280px'],
-	        shadeClose: false,
+	        shadeClose: true,
 			bgcolor: '#EEF1F8',
 			page:{dom:'#popTalkDiv'}
 		});

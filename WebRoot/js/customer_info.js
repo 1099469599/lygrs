@@ -98,9 +98,10 @@ function checkIdcard()
 //手机
 function checkMobile()
 {
-	var reg = /0?(13|14|15|18)[0-9]{9}/;
+	//var reg = /0?(13|14|15|18)[0-9]{9}/;
+	var reg = /^[0-9]*$/;
 	var m = $("#mobilex").val();
-	if(!reg.exec(m) && m)
+	if(!reg.exec(m) && m && m.length<20)
 	{
 		$("#error_msg").css("display","block");
 		$("#error_msg")[0].innerHTML="请输入合理的手机号！";
@@ -117,9 +118,10 @@ function checkMobile()
 //家庭电话
 function checkHometel()
 {
-	var reg = /^([0-9]|[-])+$/g;
+	//var reg = /^([0-9]|[-])+$/g;
+	var reg = /^[0-9]*$/;
 	var h = $("#hometelx").val();
-	if(!reg.exec(h) && h)
+	if(!reg.exec(h) && h && h.length<20)
 	{
 		$("#error_msg").css("display","block");
 		$("#error_msg")[0].innerHTML="请输入合理的家庭电话！";
@@ -136,9 +138,10 @@ function checkHometel()
 //办公电话
 function checkOfficetel()
 {
-	var reg = /^([0-9]|[-])+$/g;
+	//var reg = /^([0-9]|[-])+$/g;
+	var reg = /^[0-9]*$/;
 	var h = $("#officetelx").val();
-	if(!reg.exec(h) && h)
+	if(!reg.exec(h) && h && h.length<20)
 	{
 		$("#error_msg").css("display","block");
 		$("#error_msg")[0].innerHTML="请输入合理的办公电话！";

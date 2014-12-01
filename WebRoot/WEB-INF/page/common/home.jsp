@@ -497,7 +497,9 @@
 	function reDial()
 	{
 		var recalltel = ocx.GetLastCallee();
-		ocx.doDial(recalltel);
+		var callid = ocx.GetCallID();
+		ocx.doDialEx(recalltel,"b,,"+callid);
+		//ocx.doDial(recalltel);
 		callingTel.innerHTML=ing+recalltel;
 	}
 
@@ -588,7 +590,9 @@
 		}
 		else
 		{
-			ocx.doDial(tel);
+			var callid = ocx.GetCallID();
+			ocx.doDialEx(tel,"b,,"+callid);
+			//ocx.doDial(tel);
 			callingTel.innerHTML=ing+tel;
 		}
 	}
@@ -734,6 +738,25 @@
 		//
 		line1.unbind("click");
 		line2.unbind("click");
+		line3.unbind("click");
+		line4.bind("click", hook);
+	}
+	//6:在线
+	else if(state==6)
+	{
+		ts.src=img+imgnum[1]+".jpg";
+		//
+		line1.style.background=backimg1;
+		line1.style.cursor=ms_p;
+		line2.style.background=backimg1;
+		line2.style.cursor=ms_p;
+		line3.style.background=backimg2;
+		line3.style.cursor=ms_d;
+		line4.style.background=backimg1;
+		line4.style.cursor=ms_p;
+		//
+		line1.bind("click", showDial);
+		line2.bind("click", reDial);
 		line3.unbind("click");
 		line4.bind("click", hook);
 	}

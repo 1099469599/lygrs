@@ -109,9 +109,9 @@
 			</div>
 			<div class="queryDiv_n">
 			   	<ul class="queryWrap_ul" style="padding-left:70px;">
-					<li><label>手机：</label><input type="text" id="mobilex" name="mobile" value="${tpMap.mobile }" maxlength="15" class="ipt100"/>&nbsp;<img src="images/call_phone.jpg" title="呼叫" alt="呼叫" onclick="callMember('m')"/></li>
-			        <li><label>家庭电话：</label><input type="text" id="hometelx" name="hometel" value="${tpMap.home }" maxlength="15" class="ipt100"/>&nbsp;<img src="images/call_tel.jpg" title="呼叫" alt="呼叫" onclick="callMember('h')"/></li>
-			        <li><label>办公电话：</label><input type="text" id="officetelx" name="officetel" value="${tpMap.office }" maxlength="15" class="ipt100"/>&nbsp;<img src="images/call_tel.jpg" title="呼叫" alt="呼叫" onclick="callMember('o')"/></li>
+					<li><label>手机：</label><input type="text" id="mobilex" name="mobile" value="${tpMap.mobile }" maxlength="20" class="ipt100"/>&nbsp;<img src="images/call_phone.jpg" title="呼叫" alt="呼叫" onclick="callMember('m')"/></li>
+			        <li><label>家庭电话：</label><input type="text" id="hometelx" name="hometel" value="${tpMap.home }" maxlength="20" class="ipt100"/>&nbsp;<img src="images/call_tel.jpg" title="呼叫" alt="呼叫" onclick="callMember('h')"/></li>
+			        <li><label>办公电话：</label><input type="text" id="officetelx" name="officetel" value="${tpMap.office }" maxlength="20" class="ipt100"/>&nbsp;<img src="images/call_tel.jpg" title="呼叫" alt="呼叫" onclick="callMember('o')"/></li>
 				</ul>
 			</div>
 			<div class="queryDiv_n">
@@ -195,11 +195,13 @@
 <!--POP PLAYER END-->
 <script type="text/javascript" src="<c:url value='js/jquery.form-3.46.0.js?v=5'/>"></script>
 <script type="text/javascript" src="<c:url value='js/cts.js?v=2'/>"></script>
-<script type="text/javascript" src="<c:url value='js/customer_info.js?v=19'/>"></script>
+<script type="text/javascript" src="<c:url value='js/customer_info.js?v=21'/>"></script>
 <script type="text/javascript">
 	var ocx = $("#OCXPlugin",window.parent.document)[0];
 	var callingTel = $("#calling_num",window.parent.document)[0];
 	var ing = "正在呼叫：";
+	var cid="<s:property value='cid'/>";
+	var callid = ocx.GetCallID();
 	function callMember(tag)
 	{
 		var m = $("#mobilex").val();
@@ -217,7 +219,8 @@
 			else
 			{
 				if(!checkMobile()) return;
-				ocx.doDial(m);
+				//ocx.doDial(m);
+				ocx.doDialEx(m,"b,"+cid+","+callid);
 				callingTel.innerHTML=ing+m;
 			}
 		}
@@ -232,7 +235,8 @@
 			else
 			{
 				if(!checkHometel()) return;
-				ocx.doDial(h);
+				//ocx.doDial(h);
+				ocx.doDialEx(h,"b,"+cid+","+callid);
 				callingTel.innerHTML=ing+h;
 			}
 		}
@@ -247,7 +251,8 @@
 			else
 			{
 				if(!checkOfficetel()) return;
-				ocx.doDial(o);
+				//ocx.doDial(o);
+				ocx.doDialEx(o,"b,"+cid+","+callid);
 				callingTel.innerHTML=ing+o;
 			}
 		}
