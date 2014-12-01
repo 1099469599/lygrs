@@ -66,6 +66,9 @@ public class CustomerForm {
 	//来电弹屏主叫号码 
 	private String ani;
 	
+	private int talkresult;
+	private String talkdt;
+	
 	public String getPino() {
 		return pino;
 	}
@@ -301,5 +304,16 @@ public class CustomerForm {
 	public void setAni(String ani) {
 		this.ani = ani;
 	}
-	
+	public int getTalkresult() {
+		return talkresult;
+	}
+	public void setTalkresult(int talkresult) {
+		this.talkresult = talkresult;
+	}
+	public String getTalkdt() {
+		return talkdt;
+	}
+	public void setTalkdt(String talkdt) {
+		this.talkdt = talkdt;
+	}
 }

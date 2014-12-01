@@ -161,9 +161,9 @@
 						<td>${ls.talk }</td>
 						<td>${ls.content }</td>
 						<td>
-							<a href="">修改</a>&nbsp;&nbsp;
-							<a href="">播放</a>&nbsp;&nbsp;
-							<a href="">下载</a>&nbsp;&nbsp;
+							<a href="javascript:showTalk()">修改</a>&nbsp;&nbsp;
+							<a href="javascript:play('<s:property value="#session.vts.getIpWithCTS(#session.vts.curCTS)"/>','${fn:substring(ls.recflag,26,fn:length(ls.recflag)) }','${fn:replace(fn:substring(ls.recflag,12,fn:length(ls.recflag)),'\\','/') }')">播放</a>&nbsp;&nbsp;
+							<a href="${pageContext.request.contextPath }/customer-downloadNet.action?wavFile=${fn:replace(fn:substring(ls.recflag,12,fn:length(ls.recflag)),'\\','/') }">下载</a>
 						</td>
 					</tr>
 					</c:forEach>
@@ -243,6 +243,59 @@
 				callingTel.innerHTML=ing+o;
 			}
 		}
+	}
+</script>
+
+<!--POP PLAYER START-->
+<div id="popTalkDiv" style="display:none;"> 
+	<form id="form2" name="form2" action="<c:url value='/customer-saveTalk.action'/>" method="post">
+	    <!--
+	    <div class="lab_ipt_item">
+	    	<span class="lab120">通话时间：</span>
+	        <div class="ipt-box">
+	        	<input type="text" id="pinox" name="pino" class="ipt_text_w150 inputDefault" />
+	        	<span id="pinolabel"></span>
+	            <span class="asterisk">*</span>
+	        </div>
+	    </div>
+	    -->
+	    <div class="lab_ipt_item">
+	    	<span class="lab120">通话结果：</span>
+	        <div class="ipt-box">
+	        	<input type="radio" name="talkresult" value="1" style="margin-top:6px;"/>成功
+	        	<input type="radio" name="talkresult" value="0" style="margin-top:6px;"/>失败
+	        	<input type="hidden" id="ismasterx" name="agttxt" value="0"/>
+	            <span class=""></span>
+	        </div>
+	    </div>
+	    <div class="h132">
+	    	<span class="lab120">备注信息：</span>
+	        <div class="h132 ipt-box">
+	        	<textarea id="noteinfox" name="noteinfo" class="ipt_textarea_w300 inputDefault" style="font-size:12px;"></textarea>
+	            <span></span>
+	        </div>
+	    </div>
+		<div class="lab_ipt_item">
+			<span class="lab120"></span>
+			<div class="ipt-box"><input type="button" class="btn4" value="确定" onclick="saveTalkBtn()"/></div>
+			<div class="ipt-box" style="margin-left:20px;"><input type="button" class="btn4" value="取消" onclick="layer.closeAll()"/></div>
+		</div>	
+	</form>
+</div>
+<!--POP PLAYER END-->
+<script type="text/javascript">
+	function showTalk()
+	{
+		$.layer({
+			type: 1,
+	        title: '通话小结',
+	        offset: [($(window).height() - 290)/2+'px', ''],
+	        border : [5, 0.5, '#666'],
+	        area: ['450px','300px'],
+	        shadeClose: false,
+			bgcolor: '#EEF1F8',
+			page:{dom:'#popTalkDiv'}
+		});
 	}
 </script>
 </body>

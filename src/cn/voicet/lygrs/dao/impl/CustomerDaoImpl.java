@@ -628,4 +628,23 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 			}
 		});
 	}
+
+	public void saveTalkContent(final CustomerForm customerForm) {
+		log.info("sp:web_lygrs_talk_content(?,?,?,?)");
+		this.getJdbcTemplate().execute("{call web_lygrs_talk_content(?,?,?,?)}", new CallableStatementCallback() {
+			public Object doInCallableStatement(CallableStatement cs)
+					throws SQLException, DataAccessException {
+				//客户编号
+				cs.setInt("cid", customerForm.getCid());
+				//通话时间
+				cs.setString("tdt", customerForm.getTalkdt());
+				//通话结果
+				cs.setInt("result", customerForm.getTalkresult());
+				//通话内容
+				cs.setString("noteinfo", customerForm.getNoteinfo());
+				cs.execute();
+				return null;
+			}
+		});
+	}
 }

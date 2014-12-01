@@ -4,17 +4,17 @@ function login(){
 	var vercode = $("#vercode").val();
 	if(!account)
 	{
-		layer.alert("账号不能为空",111);
+		alert("账号不能为空",111);
 		return false;
 	}
 	if(!password)
 	{
-		layer.alert("密码不能为空",111);
+		alert("密码不能为空",111);
 		return false;
 	}
 	if(!vercode)
 	{
-		layer.alert("请输入验证码",111);
+		alert("请输入验证码",111);
 		return false;
 	}
 	var datajson = {"account":account, "password":password,"vercode":vercode};

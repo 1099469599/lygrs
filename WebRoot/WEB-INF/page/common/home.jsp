@@ -44,6 +44,8 @@
   		<div class="tit1"><s:property value="#application.vta.product"/></div>
   		<div class="tit2"><s:property value="#application.vta.customer"/>
   			<!-- js 客户端测试 -->
+  			
+  			<input type="button" onclick="showTalk()" value="通话小结"/>
   			<!--
   			<input type="button" onclick="js_detectcall('callin','ani=808;dnis=10086;param=a,1,1;')" value="测试弹屏"/>
   			<input type="button" onclick="js_monitor_acdgrp('5,933300,呼叫,0,0,0,0.00%,0/0')" value="测试业务组监控"/>
@@ -696,5 +698,57 @@
 	
 </script>
 
+<!--POP PLAYER START-->
+<div id="popTalkDiv" style="display:none;"> 
+	<form id="form2" name="form2" action="<c:url value='/customer-saveTalk.action'/>" method="post">
+	    <!--
+	    <div class="lab_ipt_item">
+	    	<span class="lab120">通话时间：</span>
+	        <div class="ipt-box">
+	        	<input type="text" id="pinox" name="pino" class="ipt_text_w150 inputDefault" />
+	        	<span id="pinolabel"></span>
+	            <span class="asterisk">*</span>
+	        </div>
+	    </div>
+	    -->
+	    <div class="lab_ipt_item">
+	    	<span class="lab120">通话结果：</span>
+	        <div class="ipt-box">
+	        	<input type="radio" name="talkresult" value="1" style="margin-top:6px;"/>成功
+	        	<input type="radio" name="talkresult" value="0" style="margin-top:6px;"/>失败
+	        	<input type="hidden" id="ismasterx" name="agttxt" value="0"/>
+	            <span class=""></span>
+	        </div>
+	    </div>
+	    <div class="h132">
+	    	<span class="lab120">备注信息：</span>
+	        <div class="h132 ipt-box">
+	        	<textarea id="noteinfox" name="noteinfo" class="ipt_textarea_w300 inputDefault" style="font-size:12px;"></textarea>
+	            <span></span>
+	        </div>
+	    </div>
+		<div class="lab_ipt_item">
+			<span class="lab120"></span>
+			<div class="ipt-box"><input type="button" class="btn4" value="确定" onclick="saveTalkBtn()"/></div>
+			<div class="ipt-box" style="margin-left:20px;"><input type="button" class="btn4" value="取消" onclick="layer.closeAll()"/></div>
+		</div>	
+	</form>
+</div>
+<!--POP PLAYER END-->
+<script type="text/javascript">
+	function showTalk()
+	{
+		$.layer({
+			type: 1,
+	        title: '通话小结',
+	        offset: [($(window).height() - 290)/2+'px', ''],
+	        border : [5, 0.5, '#666'],
+	        area: ['450px','300px'],
+	        shadeClose: false,
+			bgcolor: '#EEF1F8',
+			page:{dom:'#popTalkDiv'}
+		});
+	}
+</script>
 </body>
 </html>

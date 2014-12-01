@@ -31,5 +31,6 @@ public interface CustomerDao{
 	void setHideFlag(CustomerForm customerForm);
 	//
 	void queryTanpinInfo(DotSession ds, CustomerForm customerForm);
+	void saveTalkContent(CustomerForm customerForm);
 	
 }

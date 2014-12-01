@@ -259,6 +259,15 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 		return "tanpinPage";
 	}
 	
+	/**
+	 * 通话小结
+	 */
+	public String saveTalk()
+	{
+		log.info("cid"+"talkdt:"+"talkresult:"+"content:");
+		customerDao.saveTalkContent(customerForm);
+		return null;
+	}
 	
 	
 	// 下载网络文件
