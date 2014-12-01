@@ -37,6 +37,7 @@
 		</c:choose>
 		
 		<span>
+			<input type="button" class="btn4" value="通话小结" onclick="showTalk()"/>&nbsp;&nbsp;
 			<input type="button" class="btn btn-primary" value="返回" onclick="document.form1.submit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
 			<c:if test="${sessionScope.vts.roleID eq 3 }">
 			<input type="checkbox" id="hideflagx" <c:if test="${tpMap.hideflag eq 1}"> checked="checked"</c:if> onclick="setHideFlag(this,'${tpMap.cid }')"/><label for="hideflagx">隐藏</label>
@@ -238,5 +239,62 @@
 		}
 	}
 </script>
+
+
+<!--POP PLAYER START-->
+<div id="popTalkDiv" style="display:none;"> 
+	<form id="form3" name="form3" action="<c:url value='/customer-saveTalk.action'/>" method="post">
+	    <input type="hidden" id="talk_cid" name="cid" value="${cid }"/>
+	    <input type="hidden" id="talk_time" name="talkdt" value=""/>
+	    <div class="lab_ipt_item">
+	    	<span class="lab120">通话结果：</span>
+	        <div class="ipt-box">
+	        	<input type="radio" id="tr1" name="talkresult" value="1" checked/><label for="tr1">成功</label>
+	        	<input type="radio" id="tr2" name="talkresult" value="0"/><label for="tr2">失败</label>
+	            <span class=""></span>
+	        </div>
+	    </div>
+	    <div class="h132">
+	    	<span class="lab120">通话小结：</span>
+	        <div class="h132 ipt-box">
+	        	<textarea id="talk_noteinfo" name="noteinfo" class="ipt_textarea_w300 inputDefault" style="font-size:12px;"></textarea>
+	            <span></span>
+	        </div>
+	    </div>
+		<div class="lab_ipt_item">
+			<span class="lab120"></span>
+			<div class="ipt-box"><input type="button" class="btn4" value="确定" onclick="saveTalkBtn()"/></div>
+			<div class="ipt-box" style="margin-left:20px;"><input type="button" class="btn4" value="取消" onclick="layer.closeAll()"/></div>
+		</div>	
+	</form>
+</div>
+<!--POP PLAYER END-->
+<script type="text/javascript">
+	function showTalk()
+	{
+		$.layer({
+			type: 1,
+	        title: '通话小结',
+	        offset: [($(window).height() - 290)/2+'px', ''],
+	        border : [5, 0.5, '#666'],
+	        area: ['450px','280px'],
+	        shadeClose: false,
+			bgcolor: '#EEF1F8',
+			page:{dom:'#popTalkDiv'}
+		});
+	}
+	//保存通话小结
+	function saveTalkBtn()
+	{
+		$("#form3").ajaxSubmit({ 
+			success:function(data){ //提交成功的回调函数
+				layer.closeAll();
+				alert("保存成功！");
+	        }  
+		}); 
+	    return false;	//not refresh page
+	}
+</script>
+
 </body>
 </html>

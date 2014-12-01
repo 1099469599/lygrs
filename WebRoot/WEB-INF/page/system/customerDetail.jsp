@@ -142,26 +142,34 @@
   			<table cellpadding="0" cellspacing="0" class="tab_border">
 				<thead class="tab_head">
 	                 <tr>
-	                     <th width="4%">日期时间</th>
+	                 	
 	                     <th width="6%">联系号码</th>
+	                     <th width="10%">通话时间</th>
 	                     <th width="4%">呼叫方向</th>
 	                     <th width="8%">接通情况</th>
-	                     <th width="6%">通话时长</th>
-	                     <th width="10%">备注</th>
+	                     <th width="6%">通话</th>
+	                     <th width="10%">通话小结</th>
 	                     <th width="12%">操作</th>
 	                 </tr>
 	             </thead>
 	             <tbody class="tab_tbody">
-	             	<c:forEach items="${callRecordList }" var="ls">
+	             	<c:forEach items="${callRecordList }" var="ls" varStatus="status">
 					<tr>
-						<td>${ls.answer }</td>
 						<td>${ls.ani }</td>
+						<td>${fn:substring(ls.onhook,0,19) }</td>
 						<td>${ls.callio }</td>
 						<td>${ls.callret }</td>
 						<td>${ls.talk }</td>
-						<td>${ls.content }</td>
+						<td id="ctIndex_${ls.cid }">
+							<c:set var="ctlen" value="${fn:length(ls.content) }"></c:set>
+							<c:choose>
+								<c:when test="${ctlen gt 10}">${fn:substring(ls.content,0,10)}</c:when>
+								<c:otherwise>${ls.content }</c:otherwise>
+							</c:choose>
+						</td>
 						<td>
-							<a href="javascript:showTalk()">修改</a>&nbsp;&nbsp;
+							<input type="hidden" id="trIndex_${ls.cid }" value="${ls.tr }"/>
+							<a href="javascript:showTalk('${ls.cid }','${ls.tdt }')">小结查看</a>&nbsp;&nbsp;
 							<a href="javascript:play('<s:property value="#session.vts.getIpWithCTS(#session.vts.curCTS)"/>','${fn:substring(ls.recflag,26,fn:length(ls.recflag)) }','${fn:replace(fn:substring(ls.recflag,12,fn:length(ls.recflag)),'\\','/') }')">播放</a>&nbsp;&nbsp;
 							<a href="${pageContext.request.contextPath }/customer-downloadNet.action?wavFile=${fn:replace(fn:substring(ls.recflag,12,fn:length(ls.recflag)),'\\','/') }">下载</a>
 						</td>
@@ -248,30 +256,21 @@
 
 <!--POP PLAYER START-->
 <div id="popTalkDiv" style="display:none;"> 
-	<form id="form2" name="form2" action="<c:url value='/customer-saveTalk.action'/>" method="post">
-	    <!--
-	    <div class="lab_ipt_item">
-	    	<span class="lab120">通话时间：</span>
-	        <div class="ipt-box">
-	        	<input type="text" id="pinox" name="pino" class="ipt_text_w150 inputDefault" />
-	        	<span id="pinolabel"></span>
-	            <span class="asterisk">*</span>
-	        </div>
-	    </div>
-	    -->
+	<form id="form3" name="form3" action="<c:url value='/customer-saveTalk.action'/>" method="post">
+	    <input type="hidden" id="talk_cid" name="cid" value="${cid }"/>
+	    <input type="hidden" id="talk_time" name="talkdt" value=""/>
 	    <div class="lab_ipt_item">
 	    	<span class="lab120">通话结果：</span>
 	        <div class="ipt-box">
-	        	<input type="radio" name="talkresult" value="1" style="margin-top:6px;"/>成功
-	        	<input type="radio" name="talkresult" value="0" style="margin-top:6px;"/>失败
-	        	<input type="hidden" id="ismasterx" name="agttxt" value="0"/>
+	        	<input type="radio" id="tr1" name="talkresult" value="1"/><label for="tr1">成功</label>
+	        	<input type="radio" id="tr2" name="talkresult" value="0"/><label for="tr2">失败</label>
 	            <span class=""></span>
 	        </div>
 	    </div>
 	    <div class="h132">
-	    	<span class="lab120">备注信息：</span>
+	    	<span class="lab120">通话小结：</span>
 	        <div class="h132 ipt-box">
-	        	<textarea id="noteinfox" name="noteinfo" class="ipt_textarea_w300 inputDefault" style="font-size:12px;"></textarea>
+	        	<textarea id="talk_noteinfo" name="noteinfo" class="ipt_textarea_w300 inputDefault" style="font-size:12px;"></textarea>
 	            <span></span>
 	        </div>
 	    </div>
@@ -284,18 +283,52 @@
 </div>
 <!--POP PLAYER END-->
 <script type="text/javascript">
-	function showTalk()
+	function showTalk(cid,tdt)
 	{
+		var tr = $("#trIndex_"+cid).val();
+		var ct = $("#ctIndex_"+cid)[0].innerHTML;
+		//
+		if(tr==1)
+		{
+			$("#tr1")[0].checked=true;
+		}
+		else if(tr==0)
+		{
+			$("#tr2")[0].checked=true;
+		}
+		else
+		{
+			alert("error:"+tr);
+		}
+		$("#talk_time").val(tdt);
+		$("#talk_noteinfo").val(ct);
 		$.layer({
 			type: 1,
 	        title: '通话小结',
 	        offset: [($(window).height() - 290)/2+'px', ''],
 	        border : [5, 0.5, '#666'],
-	        area: ['450px','300px'],
+	        area: ['450px','280px'],
 	        shadeClose: false,
 			bgcolor: '#EEF1F8',
 			page:{dom:'#popTalkDiv'}
 		});
+	}
+	//保存通话小结
+	function saveTalkBtn()
+	{
+		$("#form3").ajaxSubmit({ 
+			success:function(data){ //提交成功的回调函数
+				layer.closeAll();
+				var d = eval( '(' + data + ')' );
+				var cid=d.cid;
+				var tr=d.tr;
+				var ct=d.ct;
+				$("#trIndex_"+cid).val(tr);
+				$("#ctIndex_"+cid)[0].innerHTML=ct;
+				alert("保存成功！");
+	        }  
+		}); 
+	    return false;	//not refresh page
 	}
 </script>
 </body>

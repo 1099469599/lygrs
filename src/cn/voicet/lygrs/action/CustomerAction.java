@@ -11,6 +11,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import net.sf.json.JSONObject;
+
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -261,11 +263,24 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 	
 	/**
 	 * 通话小结
+	 * @throws IOException 
 	 */
-	public String saveTalk()
+	public String saveTalk() throws IOException
 	{
-		log.info("cid"+customerForm.getCid()+", talkdt:"+customerForm.getTalkdt()+", talkresult:"+customerForm.getTalkresult()+", content:"+customerForm.getNoteinfo());
+		String tdt = customerForm.getCurDate()+" "+customerForm.getCurTime();
+		if(null==customerForm.getTalkdt())
+		{
+			customerForm.setTalkdt(tdt);
+			log.info("tdt:"+customerForm.getTalkdt());
+		}
+		log.info("cid:"+customerForm.getCid()+", talkdt:"+customerForm.getTalkdt()+", talkresult:"+customerForm.getTalkresult()+", content:"+customerForm.getNoteinfo());
 		customerDao.saveTalkContent(customerForm);
+		JSONObject json = new JSONObject();
+		json.put("cid", customerForm.getCid());
+		json.put("tr", customerForm.getTalkresult());
+		json.put("ct", customerForm.getNoteinfo());
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(json);
 		return null;
 	}
 	

@@ -425,6 +425,7 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 				ResultSet rs = cs.getResultSet();
 				int rid = 0;
 				int updateCount = -1;
+				ds.list = new ArrayList();
 				do
 				{
 					updateCount = cs.getUpdateCount();
