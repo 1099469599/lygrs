@@ -13,3 +13,7 @@
 picc_db
 piccadmin
 Picc20141201
+
+==========
+1.清空多余的表
+2.拷贝sqlserver2008
