@@ -1,4 +1,4 @@
-lygrs
+﻿lygrs
 =====
 
 连云港人寿保险呼叫中心系统
@@ -7,3 +7,9 @@ lygrs
 <script charset="Shift_JIS" src="http://chabudai.sakura.ne.jp/blogparts/honehoneclock/honehone_clock_tr.js"></script>
 
 ====
+
+32.113.61.8
+5566
+picc_db
+piccadmin
+Picc20141201
