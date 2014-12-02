@@ -4,10 +4,14 @@
 工控机IP：32.113.61.6
 ------
 数据库,WEB服务器IP：32.113.61.8
+Administrator Picc3207
 端口：5566
 别名：picc_db
 用户名：piccadmin
 密码：Picc20141201
+------
+probe
+piccadmin / Picc20141201
 
 =======================
 2014-12-02
