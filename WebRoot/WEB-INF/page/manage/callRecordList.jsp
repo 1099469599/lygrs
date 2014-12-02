@@ -63,8 +63,8 @@
                  <tr>
                      <th width="4%">编号</th>
                      <th width="6%">平台名称</th>
-                     <th width="10%">主叫号码</th>
-                     <th width="8%">被叫号码</th>
+                     <th width="9%">主叫号码</th>
+                     <th width="9%">被叫号码</th>
                      <th width="6%">呼叫方向</th>
                      <th width="10%">振铃/摘机</th>
                      <th width="6%">应答</th>
