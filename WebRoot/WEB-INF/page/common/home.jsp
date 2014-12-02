@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>电话自动外呼系统</title>
+	<title>呼叫中心系统</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link type="text/css" href="<c:url value='css/common.css'/>" rel="stylesheet" />
 	<link type="text/css" href="<c:url value='css/layout.css'/>" rel="stylesheet" />
@@ -116,7 +116,7 @@
         <input type="hidden" id="curCusManagePage" value="1"/>
         <!-- 记录js分页当前页码 end -->
         </p>
-        <span>2014 VoiceT&nbsp;&nbsp;V141125&nbsp;&nbsp;[建议使用IE8以上版本或360兼容模式浏览器,显示器辨率1280*1024]</span>
+        <span>2014 VoiceT&nbsp;&nbsp;V141125&nbsp;&nbsp;[建议使用IE8以上版本或360兼容模式浏览器,&nbsp;显示器分辨率1280*1024]</span>
     </div>
     <!-- print window -->
 	<div style="height:0px;">
@@ -718,8 +718,6 @@
 		line2.bind("click", reDial);
 		line3.unbind("click");
 		line4.bind("click", hook);
-		
-		
 	}
 	//5:催挂
 	else if(state==5)
