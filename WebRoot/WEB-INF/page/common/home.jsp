@@ -32,7 +32,6 @@
 		.bohao2{position:absolute; _top:317px;}
 		.bohao3{position:absolute; _top:357px;}
 		.bohao4{position:absolute; _top:497px;}
-		.bohao5{position:absolute; _top:537px;}
 	</style>
 	<![endif]-->
 </head>
@@ -44,9 +43,10 @@
   		<div class="tit1"><s:property value="#application.vta.product"/></div>
   		<div class="tit2"><s:property value="#application.vta.customer"/>
   			<!-- js 客户端测试 -->
-  			<!--
+  			
   			<input type="button" onclick="showTalk()" value="通话小结"/>
   			<input type="button" onclick="js_detectcall('callin','ani=808;dnis=10086;param=a,1,1;')" value="测试弹屏"/>
+  			<!--
   			<input type="button" onclick="js_monitor_acdgrp('5,933300,呼叫,0,0,0,0.00%,0/0')" value="测试业务组监控"/>
   			<input type="button" onclick="js_seat_minitor('0,正常,来电,*9000#,agt000')" value="测试分机监控"/>
   			<input id="button1" type="button" value="Button" onclick="changeOCX()"/>

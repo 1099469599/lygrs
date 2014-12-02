@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
  	<title>电话自动外呼系统</title>
-	<link type="text/css" href="<c:url value='css/common.css?v=7'/>" rel="stylesheet" />
+	<link type="text/css" href="<c:url value='css/common.css?v=8'/>" rel="stylesheet" />
 	<link type="text/css" href="<c:url value='css/layout.css?v=6'/>" rel="stylesheet" />
 
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -37,7 +37,7 @@
 		</c:choose>
 		
 		<span>
-			<input type="button" class="btn4" value="通话小结" onclick="showTalk()"/>&nbsp;&nbsp;
+			<input type="button" class="btn4" value="通话小结" onclick="showTalk()"/>&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="button" class="btn btn-primary" value="返回" onclick="document.form1.submit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
 			<c:if test="${sessionScope.vts.roleID eq 3 }">
 			<input type="checkbox" id="hideflagx" <c:if test="${tpMap.hideflag eq 1}"> checked="checked"</c:if> onclick="setHideFlag(this,'${tpMap.cid }')"/><label for="hideflagx">隐藏</label>
