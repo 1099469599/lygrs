@@ -209,6 +209,8 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 	 */
 	public String saveCustomerInfo()
 	{
+		log.info("ids,cid,byear,ot,cp,pp,cfid,eid,odt,edt,uname,crid,mobile,home,office,addr,noteinfo");
+		log.info(customerForm.getPino()+","+customerForm.getCid()+","+customerForm.getChuxcs()+","+customerForm.getChephm()+","+customerForm.getChangphm()+","+customerForm.getChejh()+","+customerForm.getFadjbh()+","+customerForm.getChudrq()+","+customerForm.getBaoxdq()+","+customerForm.getUname()+","+customerForm.getIdcard()+","+customerForm.getMobile()+","+customerForm.getHometel()+","+customerForm.getOfficetel()+","+customerForm.getAddress()+","+customerForm.getNoteinfo());
 		customerDao.saveCustomerInfo(customerForm);
 		rebtnflag = rebtnflag + 1;
 		log.info("rebtnflag:"+rebtnflag);

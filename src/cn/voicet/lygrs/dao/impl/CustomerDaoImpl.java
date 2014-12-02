@@ -502,7 +502,15 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 				//批次号
 				cs.setString("ids", customerForm.getPino());
 				//车辆编号,为空表示创建,否则表示更新
-				cs.setInt("cid",customerForm.getCid());
+				if(customerForm.getCid()==0)
+				{
+					cs.setString("cid",null);
+				}
+				else
+				{
+					cs.setInt("cid",customerForm.getCid());	
+				}
+				
 				//车龄
 				cs.setString("byear", customerForm.getCaryear());
 				//出险次数
