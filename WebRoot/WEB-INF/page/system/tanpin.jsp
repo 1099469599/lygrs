@@ -136,28 +136,34 @@
   			<table cellpadding="0" cellspacing="0" class="tab_border">
 				<thead class="tab_head">
 	                 <tr>
-	                     <th width="4%">日期时间</th>
 	                     <th width="6%">联系号码</th>
+	                     <th width="10%">通话时间</th>
 	                     <th width="4%">呼叫方向</th>
 	                     <th width="8%">接通情况</th>
 	                     <th width="6%">通话时长</th>
-	                     <th width="10%">备注</th>
+	                     <th width="10%">通话小结</th>
 	                     <th width="12%">操作</th>
 	                 </tr>
 	             </thead>
 	             <tbody class="tab_tbody">
 	             	<c:forEach items="${callRecordList }" var="ls">
 					<tr>
-						<td>${ls.answer }</td>
+						<td>${ls.ani }</td>
+						<td>${fn:substring(ls.onhook,0,19) }</td>
 						<td>${ls.ani }</td>
 						<td>${ls.callio }</td>
 						<td>${ls.callret }</td>
 						<td>${ls.talk }</td>
-						<td>${ls.content }</td>
+						<td title="${ls.content }">
+							<c:set var="ctlen" value="${fn:length(ls.content) }"></c:set>
+							<c:choose>
+								<c:when test="${ctlen gt 10}">${fn:substring(ls.content,0,10)}</c:when>
+								<c:otherwise>${ls.content }</c:otherwise>
+							</c:choose>
+						</td>
 						<td>
-							<a href="">修改</a>&nbsp;&nbsp;
-							<a href="">播放</a>&nbsp;&nbsp;
-							<a href="">下载</a>&nbsp;&nbsp;
+							<a href="javascript:play('<s:property value="#session.vts.getIpWithCTS(#session.vts.curCTS)"/>','${fn:substring(ls.recflag,26,fn:length(ls.recflag)) }','${fn:replace(fn:substring(ls.recflag,12,fn:length(ls.recflag)),'\\','/') }')">播放</a>&nbsp;&nbsp;
+							<a href="${pageContext.request.contextPath }/customer-downloadNet.action?wavFile=${fn:replace(fn:substring(ls.recflag,12,fn:length(ls.recflag)),'\\','/') }">下载</a>
 						</td>
 					</tr>
 					</c:forEach>
@@ -295,6 +301,9 @@
 	    return false;	//not refresh page
 	}
 </script>
-
+<!--POP PLAYER START-->
+<div id="popMusicDiv" style="display:none;"></div>
+<!--POP PLAYER END-->
+<script type="text/javascript" src="<c:url value='js/CM.play.js?v=1'/>"></script>
 </body>
 </html>

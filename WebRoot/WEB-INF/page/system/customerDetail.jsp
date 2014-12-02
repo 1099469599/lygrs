@@ -160,7 +160,7 @@
 						<td>${ls.callio }</td>
 						<td>${ls.callret }</td>
 						<td>${ls.talk }</td>
-						<td id="ctIndex_${ls.cid }">
+						<td id="ctIndex_${ls.cid }" title="${ls.content }">
 							<c:set var="ctlen" value="${fn:length(ls.content) }"></c:set>
 							<c:choose>
 								<c:when test="${ctlen gt 10}">${fn:substring(ls.content,0,10)}</c:when>
@@ -336,5 +336,9 @@
 	    return false;	//not refresh page
 	}
 </script>
+<!--POP PLAYER START-->
+<div id="popMusicDiv" style="display:none;"></div>
+<!--POP PLAYER END-->
+<script type="text/javascript" src="<c:url value='js/CM.play.js?v=1'/>"></script>
 </body>
 </html>

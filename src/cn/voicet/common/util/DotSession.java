@@ -359,8 +359,8 @@ public class DotSession {
 	}
 
 	
-	public static final String ONE_IP = "http://192.168.1.114";	//cts100
-	public static final String TWO_IP = "http://192.168.1.10";	//cts200
+	public static final String ONE_IP = "http://32.113.61.6";	//cts100
+	public static final String TWO_IP = "http://32.113.61.6";	//cts200
 	
 	public String getIpWithCTS(String icts)
 	{
