@@ -69,6 +69,9 @@ public class CustomerForm {
 	private int talkresult;
 	private String talkdt;
 	
+	//appconfig.xml中配置
+	private String f;
+	
 	public String getPino() {
 		return pino;
 	}
@@ -315,5 +318,11 @@ public class CustomerForm {
 	}
 	public void setTalkdt(String talkdt) {
 		this.talkdt = talkdt;
+	}
+	public String getF() {
+		return f;
+	}
+	public void setF(String f) {
+		this.f = f;
 	}
 }
