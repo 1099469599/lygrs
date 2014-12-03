@@ -55,7 +55,7 @@
    		<input type="hidden" name="q_agtacc" value="${q_agtacc }"/>
    		<input type="hidden" id="pageflag" name="pageflag"/>
    	</form>
-   	<div id="usual1" class="usual"> 
+   	<div id="usual1" class="usual">
 	    <%-- tabs start --%>
 	    <div class="itab">
 		  	<ul> 
@@ -278,10 +278,14 @@
 <script type="text/javascript">
 	function showTalk()
 	{
+		//获取通话小结时间
+		//ocx.GetTalkDT();
+		$("#talk_time").val();
 		$.layer({
 			type: 1,
 	        title: '通话小结',
 	        offset: [($(window).height() - 290)/2+'px', ''],
+	        shade : [0],	//不显示遮罩
 	        border : [5, 0.5, '#666'],
 	        area: ['450px','280px'],
 	        shadeClose: true,
@@ -297,7 +301,7 @@
 				layer.closeAll();
 				alert("保存成功！");
 	        }  
-		}); 
+		});
 	    return false;	//not refresh page
 	}
 </script>

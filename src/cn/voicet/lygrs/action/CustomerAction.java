@@ -269,12 +269,6 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 	 */
 	public String saveTalk() throws IOException
 	{
-		String tdt = customerForm.getCurDate()+" "+customerForm.getCurTime();
-		if(null==customerForm.getTalkdt())
-		{
-			customerForm.setTalkdt(tdt);
-			log.info("tdt:"+customerForm.getTalkdt());
-		}
 		log.info("cid:"+customerForm.getCid()+", talkdt:"+customerForm.getTalkdt()+", talkresult:"+customerForm.getTalkresult()+", content:"+customerForm.getNoteinfo());
 		customerDao.saveTalkContent(customerForm);
 		JSONObject json = new JSONObject();

@@ -101,7 +101,7 @@
         <a href="#">设为首页</a>&nbsp;|&nbsp;
         <a href="#">收藏本站</a>&nbsp;|&nbsp;
         <a href="#">联系我们</a>&nbsp;|&nbsp;
-        <a href="#">帮助中心</a>&nbsp;|&nbsp;
+        <a href="help.jsp" target="_blank">帮助中心</a>&nbsp;|&nbsp;
         <a href="#">常见问题</a>
         <!-- 记录js分页当前页码 start -->
         <input type="hidden" id="curTaskPage" value="1"/>
@@ -346,6 +346,7 @@
 
 <script type="text/javascript" for="OCXPlugin" event="OnRing(line,ani,dnis,param)">
 	//$("#ocxLog")[0].innerHTML=param;
+	alert(ani);
 	js_detectcall(line,ani,dnis,param);
 </script>
 
@@ -395,10 +396,10 @@
 	<h2 style="text-align:center">我的分机</h2>
 </div>
 <a class="com-ask-float-block0" id="line0" title="分机状态[点击播放提示音]" style="top:227px"><img id="tel_state" src="images/phone_0602.jpg"/></a>
-<a class="com-ask-float-block bohao1" id="line1" name="1" title="拔号" style="top:277px; cursor:pointer;">拔号</a>
-<a class="com-ask-float-block bohao2" id="line2" name="1" title="重拔" style="top:317px">重拔</a>
-<a class="com-ask-float-block bohao3" id="line3" name="1" title="应答" style="top:357px">应答</a>
-<a class="com-ask-float-block bohao4" id="line4" name="1" title="挂断" style="top:397px;">挂机</a>
+<a class="com-ask-float-block bohao1" id="line1" name="0" title="拔号" style="top:277px; cursor:pointer;">拔号</a>
+<a class="com-ask-float-block bohao2" id="line2" name="0" title="重拔" style="top:317px">重拔</a>
+<a class="com-ask-float-block bohao3" id="line3" name="0" title="应答" style="top:357px">应答</a>
+<a class="com-ask-float-block bohao4" id="line4" name="0" title="挂断" style="top:397px;">挂机</a>
 
 <style type="text/css">
 	#bohaopan table{text-align:center; height:240px; width:200px; background:#bbff77; border:0;}
@@ -483,6 +484,10 @@
 	
 	var backimg0 = "url(images/common_float_telbg.jpg) no-repeat scroll 0 0 transparent"
 	var backimg1 = "url(images/common_float_telbg1.jpg) no-repeat scroll 0 0 transparent"
+	var backimg2 = "url(images/common_float_telbg2.jpg) no-repeat scroll 0 0 transparent"//鼠标状态
+	var ms_p = "pointer";
+	var ms_d = "default";
+	
 	var line1 = document.getElementById("line1");
 	var line2 = document.getElementById("line2");
 	var line3 = document.getElementById("line3");
@@ -522,6 +527,7 @@
 		if(line3.name==1)
 		{
 			ocx.doAnswer("***");
+			callingTel.innerHTML="通话中";
 		}
 	}
 
@@ -544,17 +550,51 @@
 		$("#line2").bind("click",reDial);
 		$("#line3").bind("click",answer);
 		$("#line4").bind("click",hook);
-		
-		line1.style.background=backimg1;
-		line1.style.cursor="pointer";
-		line2.style.background=backimg1;
-		line2.style.cursor="pointer";
-		line3.style.background=backimg1;
-		line3.style.cursor="pointer";
-		line4.style.background=backimg1;
-		line4.style.cursor="pointer";
 
-
+		if(line1.name=1)
+		{
+			line1.style.background=backimg1;
+			line1.style.cursor=ms_p;
+		}
+		else
+		{
+			line1.style.background=backimg2;
+			line1.style.cursor=ms_d;
+		}
+		//
+		if(line2.name=1)
+		{
+			line2.style.background=backimg1;
+			line2.style.cursor=ms_p;
+		}
+		else
+		{
+			line2.style.background=backimg2;
+			line2.style.cursor=ms_d;
+		}
+		//
+		if(line3.name=1)
+		{
+			line3.style.background=backimg1;
+			line3.style.cursor=ms_p;
+		}
+		else
+		{
+			line3.style.background=backimg2;
+			line3.style.cursor=ms_d;
+		}
+		//
+		if(line4.name=1)
+		{
+			line4.style.background=backimg1;
+			line4.style.cursor=ms_p;
+		}
+		else
+		{
+			line4.style.background=backimg2;
+			line4.style.cursor=ms_d;
+		}
+		//
 		$("#line1").bind("mouseover",function(){
 			if(line1.name==1)
 			{
@@ -754,6 +794,8 @@
 		line4.style.cursor=ms_p;
 		line4.name="1";
 		//
+		callingTel.innerHTML="通话中";
+		//
 		//line1.unbind("click");
 		//line2.unbind("click");
 		//line3.unbind("click");
@@ -799,6 +841,8 @@
 		line4.style.background=backimg1;
 		line4.style.cursor=ms_p;
 		line4.name="1";
+		//
+		callingTel.innerHTML="";
 		//
 		//line1.bind("click", showDial);
 		//line2.bind("click", reDial);
@@ -864,6 +908,8 @@
 		line4.style.background=backimg1;
 		line4.style.cursor=ms_p;
 		line4.name="1";
+		//
+		callingTel.innerHTML="";
 		//
 		//line1.bind("click", showDial);
 		//line2.bind("click", reDial);
