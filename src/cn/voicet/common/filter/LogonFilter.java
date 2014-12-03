@@ -26,6 +26,7 @@ public class LogonFilter implements Filter{
 		list.add("/index.action");
 		list.add("/ajaxlogin.action");
 		list.add("/404.jsp");
+		list.add("/ihelp.jsp");
 		//
 	}
 
