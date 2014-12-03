@@ -17,8 +17,9 @@
 		#zuojifenji{width:100px; height:240px; top:200px; border-radius:4px; background:#bbff77; right:20px; border:1px solid #3B9FFF; position:fixed;}
 		.com-ask-float-block0{cursor:pointer; border:0px; bottom:124px; min-width:40px; height:30px; width:65px; margin:0px; padding:0px; position:fixed; right:40px; border-radius:0; line-height:16px; font-weight:bold; color:#fff; text-align:center; line-height:28px;}
 		.com-ask-float-block{cursor:pointer; border: 0px; bottom: 124px; min-width: 40px; height: 30px; width: 60px; margin: 0px; padding: 0px; position: fixed; right: 40px; border-radius: 0; line-height: 16px; font-weight:bold; color: #fff; text-align:center; line-height:28px; background:url(images/common_float_telbg1.jpg);}
-		.com-ask-float-block:hover{cursor:pointer; color:#fff; text-decoration:none;}
+		.com-ask-float-block:hover{cursor:pointer; border: 0px; bottom: 124px; min-width: 40px; height: 30px; width: 60px; margin: 0px; padding: 0px; position: fixed; right: 40px; border-radius: 0; line-height: 16px; font-weight:bold; color: #fff; text-align:center; line-height:28px; background:url(images/common_float_telbg.jpg);color:#fff; text-decoration:none;}
 		.bohaopan-fix{display:none; width:200px; height:240px; top:200px; border-radius:4px; background:#E0EEFB; right:130px;border:1px solid #3B9FFF; position:fixed;}
+		.com-ask-down{cursor:pointer; border: 0px; bottom: 124px; min-width: 40px; height: 30px; width: 60px; margin: 0px; padding: 0px; position: fixed; right: 40px; border-radius: 0; line-height: 16px; font-weight:bold; color: #fff; text-align:center; line-height:28px; background:url(images/common_float_telbg.jpg);color:#fff; text-decoration:none;}
 	</style>
 	<!--[if IE 6]>
 	<style type="text/css">
@@ -394,10 +395,10 @@
 	<h2 style="text-align:center">我的分机</h2>
 </div>
 <a class="com-ask-float-block0" id="line0" title="分机状态[点击播放提示音]" style="top:227px"><img id="tel_state" src="images/phone_0602.jpg"/></a>
-<a class="com-ask-float-block bohao1" id="line1" title="拔号" style="top:277px; cursor:pointer;">拔号</a>
-<a class="com-ask-float-block bohao2" id="line2" title="重拔" style="top:317px">重拔</a>
-<a class="com-ask-float-block bohao3" id="line3" title="应答" style="top:357px">应答</a>
-<a class="com-ask-float-block bohao4" id="line4" title="挂断" style="top:397px;">挂机</a>
+<a class="com-ask-float-block bohao1" id="line1" name="1" title="拔号" style="top:277px; cursor:pointer;">拔号</a>
+<a class="com-ask-float-block bohao2" id="line2" name="1" title="重拔" style="top:317px">重拔</a>
+<a class="com-ask-float-block bohao3" id="line3" name="1" title="应答" style="top:357px">应答</a>
+<a class="com-ask-float-block bohao4" id="line4" name="1" title="挂断" style="top:397px;">挂机</a>
 
 <style type="text/css">
 	#bohaopan table{text-align:center; height:240px; width:200px; background:#bbff77; border:0;}
@@ -480,6 +481,13 @@
 	var callingTel = document.getElementById("calling_num"); 
 	//
 	
+	var backimg0 = "url(images/common_float_telbg.jpg) no-repeat scroll 0 0 transparent"
+	var backimg1 = "url(images/common_float_telbg1.jpg) no-repeat scroll 0 0 transparent"
+	var line1 = document.getElementById("line1");
+	var line2 = document.getElementById("line2");
+	var line3 = document.getElementById("line3");
+	var line4 = document.getElementById("line4");
+	
 	//播放提示音
 	function playInfo()
 	{
@@ -489,30 +497,42 @@
 	//播号
 	function showDial()
 	{
-		bohp.style.display="block";
+		if(line1.name==1)
+		{
+			bohp.style.display="block";
+		}
 	}
 
 	//重播
 	function reDial()
 	{
-		var recalltel = ocx.GetLastCallee();
-		var callid = ocx.GetCallID();
-		ocx.doDialEx(recalltel,"b,,"+callid);
-		//ocx.doDial(recalltel);
-		callingTel.innerHTML=ing+recalltel;
+		if(line2.name==1)
+		{
+			var recalltel = ocx.GetLastCallee();
+			var callid = ocx.GetCallID();
+			ocx.doDialEx(recalltel,"b,,"+callid);
+			//ocx.doDial(recalltel);
+			callingTel.innerHTML=ing+recalltel;
+		}
 	}
 
 	//应答 
 	function answer()
 	{
-		ocx.doAnswer("***");
+		if(line3.name==1)
+		{
+			ocx.doAnswer("***");
+		}
 	}
 
 	//挂断
 	function hook()
 	{
-		ocx.doOnHook();
-		callingTel.innerHTML="";
+		if(line4.name==1)
+		{
+			ocx.doOnHook();
+			callingTel.innerHTML="";
+		}
 	}
 	
 	//
@@ -521,11 +541,10 @@
 		//播放提示音 
 		$("#line0").bind("click",playInfo);
 		$("#line1").bind("click",showDial);
-		var backimg1 = "url(images/common_float_telbg1.jpg) no-repeat scroll 0 0 transparent"
-		var line1 = document.getElementById("line1");
-		var line2 = document.getElementById("line2");
-		var line3 = document.getElementById("line3");
-		var line4 = document.getElementById("line4");
+		$("#line2").bind("click",reDial);
+		$("#line3").bind("click",answer);
+		$("#line4").bind("click",hook);
+		
 		line1.style.background=backimg1;
 		line1.style.cursor="pointer";
 		line2.style.background=backimg1;
@@ -534,6 +553,53 @@
 		line3.style.cursor="pointer";
 		line4.style.background=backimg1;
 		line4.style.cursor="pointer";
+
+
+		$("#line1").bind("mouseover",function(){
+			if(line1.name==1)
+			{
+				line1.style.background=backimg0;
+			}
+		}).bind("mouseout",function(){
+			if(line1.name==1)
+			{
+				line1.style.background=backimg1;
+			}
+		});
+		$("#line2").bind("mouseover",function(){
+			if(line2.name==1)
+			{
+				line2.style.background=backimg0;
+			}
+		}).bind("mouseout",function(){
+			if(line2.name==1)
+			{
+				line2.style.background=backimg1;
+			}
+		});
+		$("#line3").bind("mouseover",function(){
+			if(line3.name==1)
+			{
+				line3.style.background=backimg0;
+			}
+		}).bind("mouseout",function(){
+			if(line3.name==1)
+			{
+				line3.style.background=backimg1;
+			}
+		});
+		$("#line4").bind("mouseover",function(){
+			if(line4.name==1)
+			{
+				line4.style.background=backimg0;
+			}
+		}).bind("mouseout",function(){
+			if(line4.name==1)
+			{
+				line4.style.background=backimg1;
+			}
+		});
+		
 		//
 		/*
 		//呼我 ocx.AgentCallMe();
@@ -625,21 +691,25 @@
 	{
 		ts.src=img+imgnum[0]+".jpg";
 		//
-		line1.style.background=backimg1;
-		line1.style.cursor=ms_p;
-		line2.style.background=backimg1;
-		line2.style.cursor=ms_p;
-		line3.style.background=backimg1;
-		line3.style.cursor=ms_p;
-		line4.style.background=backimg1;
-		line4.style.cursor=ms_p;
+		line1.style.background=backimg2;
+		line1.style.cursor=ms_d;
+		line1.name="0";
+		line2.style.background=backimg2;
+		line2.style.cursor=ms_d;
+		line2.name="0";
+		line3.style.background=backimg2;
+		line3.style.cursor=ms_d;
+		line3.name="0";
+		line4.style.background=backimg2;
+		line4.style.cursor=ms_d;
+		line4.name="0";
 		//
 		callingTel.innerHTML="";
 		//
-		line1.bind("click", showDial);
-		line2.bind("click", reDial);
-		line3.bind("click", answer);
-		line4.bind("click", hook);
+		//line1.bind("click", showDial);
+		//line2.bind("click", reDial);
+		//line3.bind("click", answer);
+		//line4.bind("click", hook);
 	}
 	//1:空闲
 	else if(state==1)
@@ -648,19 +718,23 @@
 		//
 		line1.style.background=backimg1;
 		line1.style.cursor=ms_p;
+		line1.name="1";
 		line2.style.background=backimg1;
 		line2.style.cursor=ms_p;
+		line2.name="1";
 		line3.style.background=backimg2;
 		line3.style.cursor=ms_d;
+		line3.name="0";
 		line4.style.background=backimg2;
 		line4.style.cursor=ms_d;
+		line4.name="0";
 		//
 		callingTel.innerHTML="";
 		//
-		line1.bind("click", showDial);
-		line2.bind("click", reDial);
-		line3.unbind("click");
-		line4.unbind("click");
+		//line1.bind("click", showDial);
+		//line2.bind("click", reDial);
+		//line3.unbind("click");
+		//line4.unbind("click");
 	}
 	//2:通话 
 	else if(state==2)
@@ -669,17 +743,21 @@
 		//
 		line1.style.background=backimg2;
 		line1.style.cursor=ms_d;
+		line1.name="0";
 		line2.style.background=backimg2;
 		line2.style.cursor=ms_d;
+		line2.name="0";
 		line3.style.background=backimg2;
 		line3.style.cursor=ms_d;
+		line3.name="0";
 		line4.style.background=backimg1;
 		line4.style.cursor=ms_p;
+		line4.name="1";
 		//
-		line1.unbind("click");
-		line2.unbind("click");
-		line3.unbind("click");
-		line4.bind("click", hook);
+		//line1.unbind("click");
+		//line2.unbind("click");
+		//line3.unbind("click");
+		//line4.bind("click", hook);
 	}
 	//3:振铃 
 	else if(state==3)
@@ -688,17 +766,21 @@
 		//
 		line1.style.background=backimg2;
 		line1.style.cursor=ms_d;
+		line1.name="0";
 		line2.style.background=backimg2;
 		line2.style.cursor=ms_d;
+		line2.name="0";
 		line3.style.background=backimg1;
 		line3.style.cursor=ms_p;
+		line3.name="1";
 		line4.style.background=backimg1;
 		line4.style.cursor=ms_p;
+		line4.name="1";
 		//
-		line1.unbind("click");
-		line2.unbind("click");
-		line3.bind("click", answer);
-		line4.bind("click", hook);
+		//line1.unbind("click");
+		//line2.unbind("click");
+		//line3.bind("click", answer);
+		//line4.bind("click", hook);
 	}
 	//4:拨号 
 	else if(state==4)
@@ -707,55 +789,86 @@
 		//
 		line1.style.background=backimg1;
 		line1.style.cursor=ms_p;
+		line1.name="1";
 		line2.style.background=backimg1;
 		line2.style.cursor=ms_p;
+		line2.name="1";
 		line3.style.background=backimg2;
 		line3.style.cursor=ms_d;
+		line3.name="0";
 		line4.style.background=backimg1;
 		line4.style.cursor=ms_p;
+		line4.name="1";
 		//
-		line1.bind("click", showDial);
-		line2.bind("click", reDial);
-		line3.unbind("click");
-		line4.bind("click", hook);
+		//line1.bind("click", showDial);
+		//line2.bind("click", reDial);
+		//line3.unbind("click");
+		//line4.bind("click", hook);
 	}
-	//5:催挂
+	//5:回铃
 	else if(state==5)
 	{
 		ts.src=img+imgnum[4]+".jpg";
 		//
 		line1.style.background=backimg2;
 		line1.style.cursor=ms_d;
+		line1.name="0";
 		line2.style.background=backimg2;
 		line2.style.cursor=ms_d;
+		line2.name="0";
 		line3.style.background=backimg2;
 		line3.style.cursor=ms_d;
+		line3.name="0";
 		line4.style.background=backimg1;
 		line4.style.cursor=ms_p;
+		line4.name="1";
 		//
-		line1.unbind("click");
-		line2.unbind("click");
-		line3.unbind("click");
-		line4.bind("click", hook);
 	}
-	//6:在线
+	//6:催挂
 	else if(state==6)
+	{
+		ts.src=img+imgnum[4]+".jpg";
+		//
+		line1.style.background=backimg2;
+		line1.style.cursor=ms_d;
+		line1.name="0";
+		line2.style.background=backimg2;
+		line2.style.cursor=ms_d;
+		line2.name="0";
+		line3.style.background=backimg2;
+		line3.style.cursor=ms_d;
+		line3.name="0";
+		line4.style.background=backimg1;
+		line4.style.cursor=ms_p;
+		line4.name="1";
+		//
+		//line1.unbind("click");
+		//line2.unbind("click");
+		//line3.unbind("click");
+		//line4.bind("click", hook);
+	}
+	//7:在线
+	else if(state==7)
 	{
 		ts.src=img+imgnum[1]+".jpg";
 		//
 		line1.style.background=backimg1;
 		line1.style.cursor=ms_p;
+		line1.name="1";
 		line2.style.background=backimg1;
 		line2.style.cursor=ms_p;
+		line2.name="1";
 		line3.style.background=backimg2;
 		line3.style.cursor=ms_d;
+		line3.name="0";
 		line4.style.background=backimg1;
 		line4.style.cursor=ms_p;
+		line4.name="1";
 		//
-		line1.bind("click", showDial);
-		line2.bind("click", reDial);
-		line3.unbind("click");
-		line4.bind("click", hook);
+		//line1.bind("click", showDial);
+		//line2.bind("click", reDial);
+		//line3.unbind("click");
+		//line4.bind("click", hook);
 	}
 	else
 	{
