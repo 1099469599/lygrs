@@ -208,8 +208,13 @@
 <script type="text/javascript">
 	/*************** 弹屏   ***************/ 
 	function js_detectcall(line,ani,dnis,param){
-		$("#popHuifang")[0].href="customer-tanpin.action?ani="+ani;
-		$("#popHuifang")[0].click();
+		///param=b,1752,20141203162018170 [b,cid,talkdt]
+		param = param.split(",");
+		if(param[0]=="b")
+		{
+			$("#popHuifang")[0].href="customer-tanpin.action?ani="+ani+"&cid="+param[1]+"&talkdt="+param[2];
+			$("#popHuifang")[0].click();
+		}
 		/*
 		param = param.split(",");
 		if(param[0]=="a")
@@ -346,7 +351,6 @@
 
 <script type="text/javascript" for="OCXPlugin" event="OnRing(line,ani,dnis,param)">
 	//$("#ocxLog")[0].innerHTML=param;
-	alert(ani);
 	js_detectcall(line,ani,dnis,param);
 </script>
 

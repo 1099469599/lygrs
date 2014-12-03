@@ -150,7 +150,6 @@
 					<tr>
 						<td>${ls.ani }</td>
 						<td>${fn:substring(ls.onhook,0,19) }</td>
-						<td>${ls.ani }</td>
 						<td>${ls.callio }</td>
 						<td>${ls.callret }</td>
 						<td>${ls.talk }</td>
@@ -251,7 +250,7 @@
 <div id="popTalkDiv" style="display:none;"> 
 	<form id="form3" name="form3" action="<c:url value='/customer-saveTalk.action'/>" method="post">
 	    <input type="hidden" id="talk_cid" name="cid" value="${cid }"/>
-	    <input type="hidden" id="talk_time" name="talkdt" value=""/>
+	    <input type="hidden" id="talk_time" name="talkdt" value="${talkdt }"/>
 	    <div class="lab_ipt_item">
 	    	<span class="lab120">通话结果：</span>
 	        <div class="ipt-box">
@@ -278,9 +277,7 @@
 <script type="text/javascript">
 	function showTalk()
 	{
-		//获取通话小结时间
-		//ocx.GetTalkDT();
-		$("#talk_time").val();
+		//从弹屏事件中的param[b,cid,talkdt]
 		$.layer({
 			type: 1,
 	        title: '通话小结',
