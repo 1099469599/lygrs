@@ -597,6 +597,8 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 				cs.execute();
 				ResultSet rs = cs.getResultSet();
 				int rid = 0;
+				ds.list = new ArrayList();
+				ds.map = new HashMap();
 				int updateCount = -1;
 				do
 				{
@@ -617,7 +619,7 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 								VTJime.putMapDataByColName(map, rs);
 								ds.map = map;
 							}
-							else if(rid ==1)
+							else if(rid == 1)
 							{
 								Map map = new HashMap();
 								VTJime.putMapDataByColName(map, rs);

@@ -248,7 +248,7 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 		 * 来电弹屏，根据主叫号码【mobile,hometel,officetel】查询客户资料
 		 * 当有多条记录时，只提取第一条记录【peeknum=1】
 		 */
-		log.info("telnum:"+customerForm.getAni());
+		log.info("ani:"+customerForm.getAni());
 		DotSession ds = DotSession.getVTSession(request);
 		customerDao.queryTanpinInfo(ds, customerForm);
 		
