@@ -26,7 +26,7 @@
 </head>
 <body>
 <div id="contentWrap">
-	<h3 class="h3_title">客户&nbsp;[${tpMap.uname }]&nbsp;的资料详情&nbsp;[批次号${tpMap.ids }]
+	<h3 class="h3_title">客户&nbsp;[${tpMap.uname }]&nbsp;的资料详情&nbsp;&nbsp;批次号&nbsp;[${tpMap.ids }]
 		<span>
 			<input type="button" class="btn btn-primary" value="返回" onclick="document.form1.submit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
 			<c:if test="${sessionScope.vts.roleID eq 3 }">
@@ -143,12 +143,12 @@
 				<thead class="tab_head">
 	                 <tr>
 	                 	
-	                     <th width="6%">联系号码</th>
+	                     <th width="8%">联系号码</th>
 	                     <th width="10%">通话时间</th>
-	                     <th width="4%">呼叫方向</th>
-	                     <th width="8%">接通情况</th>
-	                     <th width="6%">通话</th>
-	                     <th width="10%">通话小结</th>
+	                     <th width="6%">呼叫方向</th>
+	                     <th width="6%">接通情况</th>
+	                     <th width="4%">通话</th>
+	                     <th width="12%">通话小结</th>
 	                     <th width="12%">操作</th>
 	                 </tr>
 	             </thead>

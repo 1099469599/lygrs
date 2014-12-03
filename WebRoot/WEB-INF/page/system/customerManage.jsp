@@ -77,12 +77,12 @@
 		<table cellpadding="0" cellspacing="0" class="tab_border">
 			<thead class="tab_head">
                  <tr>
-                     <th width="3%">批次</th>
+                     <th width="6%">批次</th>
                      <th width="6%">车牌号码</th>
                      <th width="4%">车龄</th>
-                     <th width="6%">出险次数</th>
+                     <th width="4%">出险次数</th>
                      <c:if test="${sessionScope.vts.roleID eq 3 }">
-                     <th width="8%">预约时间</th>
+                     <th width="6%">预约时间</th>
                      </c:if>
                      <th width="6%">客户姓名</th>
                      <th width="6%">手机</th>
@@ -109,7 +109,13 @@
 						<c:set var="gqtxt" value="未设置"></c:set>
 					</c:if>
 					
-					<td>${ls.ids }</td>
+					<td title="${ls.ids }">
+						<c:set var="idslen" value="${fn:length(ls.ids) }"/>
+						<c:choose>
+							<c:when test="${idslen gt 6 }">${fn:substring(ls.ids,0,5) }..</c:when>
+							<c:otherwise>${ls.ids }</c:otherwise>
+						</c:choose>
+					</td>
 					<td>${ls.cp }</td>
 					<td>${ls.byear }</td>
 					<td>${ls.ot }</td>

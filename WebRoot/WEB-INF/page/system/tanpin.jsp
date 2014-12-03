@@ -136,12 +136,12 @@
   			<table cellpadding="0" cellspacing="0" class="tab_border">
 				<thead class="tab_head">
 	                 <tr>
-	                     <th width="6%">联系号码</th>
+	                     <th width="8%">联系号码</th>
 	                     <th width="10%">通话时间</th>
-	                     <th width="4%">呼叫方向</th>
-	                     <th width="8%">接通情况</th>
-	                     <th width="6%">通话时长</th>
-	                     <th width="10%">通话小结</th>
+	                     <th width="6%">呼叫方向</th>
+	                     <th width="6%">接通情况</th>
+	                     <th width="4%">通话时长</th>
+	                     <th width="12%">通话小结</th>
 	                     <th width="12%">操作</th>
 	                 </tr>
 	             </thead>
