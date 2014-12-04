@@ -47,8 +47,8 @@
 		<table cellpadding="0" cellspacing="0" class="tab_border">
 			<thead class="tab_head2">
                  <tr>
-                     <th width="6%">分机号码</th>
-                     <th width="10%">账号</th>
+                     <th width="8%">分机号码</th>
+                     <th width="8%">账号</th>
                      <th width="8%">姓名</th>
                      <th width="6%">请求<br/>次数</th>
                      <th width="6%">接听<br/>次数</th>

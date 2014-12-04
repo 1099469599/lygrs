@@ -170,8 +170,16 @@
 						<td>
 							<input type="hidden" id="trIndex_${status.count }" value="${ls.tr }"/>
 							<a href="javascript:showTalk('${ls.cid }','${ls.tdt }','${status.count }')">小结查看</a>&nbsp;&nbsp;
-							<a href="javascript:play('<s:property value="#session.vts.getIpWithCTS(#session.vts.curCTS)"/>','${fn:substring(ls.recflag,26,fn:length(ls.recflag)) }','${fn:replace(fn:substring(ls.recflag,12,fn:length(ls.recflag)),'\\','/') }')">播放</a>&nbsp;&nbsp;
-							<a href="${pageContext.request.contextPath }/customer-downloadNet.action?wavFile=${fn:replace(fn:substring(ls.recflag,12,fn:length(ls.recflag)),'\\','/') }">下载</a>
+							<c:choose>
+								<c:when test="${empty ls.recflag}">
+									<label style="color:#808080;">播放&nbsp;&nbsp;</label>
+									<label style="color:#808080;">下载</label>
+								</c:when>
+								<c:otherwise>
+									<a href="javascript:play('<s:property value="#session.vts.getIpWithCTS(#session.vts.curCTS)"/>','${fn:substring(ls.recflag,26,fn:length(ls.recflag)) }','${fn:replace(fn:substring(ls.recflag,12,fn:length(ls.recflag)),'\\','/') }')">播放</a>&nbsp;&nbsp;
+									<a href="${pageContext.request.contextPath }/callrecord-downloadNet.action?wavFile=${fn:replace(fn:substring(ls.recflag,12,fn:length(ls.recflag)),'\\','/') }">下载</a>
+								</c:otherwise>
+							</c:choose>
 						</td>
 					</tr>
 					</c:forEach>
