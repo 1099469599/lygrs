@@ -58,7 +58,9 @@
                     <th width="12%">呼叫日期</th>
                     <th width="8%">等待时长(秒)</th>
                     <th width="8%">通话时长(秒)</th>
+                    <!--  
                     <th width="8%">操作</th>
+                    -->
                  </tr>
              </thead>
              <tbody id="movies">
@@ -71,12 +73,14 @@
 					<td>${fn:substring(calldt,0,19) }</td>
 					<td>${wait }</td>
 					<td>${talk }</td>
+					<!--  
 					<td>
 						<c:if test="${kind ne 0 }">
 						<a href="javascript:play('<s:property value="#session.vts.getIpWithCTS(#session.vts.curCTS)"/>','${fn:substring(rectag,26,fn:length(rectag)) }','${fn:replace(fn:substring(rectag,12,fn:length(rectag)),'\\','/') }')">播放</a>&nbsp;&nbsp;
 						<a href="<c:url value='/huifang-agentAnswer.action?tid=${tid }&ttid=${ttid }'/>">查看详细</a>
 						</c:if>
 					</td>
+					-->
 				</tr>
 				</s:iterator>
 			</tbody>

@@ -147,7 +147,7 @@
 	                     <th width="10%">通话时间</th>
 	                     <th width="6%">呼叫方向</th>
 	                     <th width="6%">接通情况</th>
-	                     <th width="4%">通话</th>
+	                     <th width="4%">通话(秒)</th>
 	                     <th width="12%">通话小结</th>
 	                     <th width="12%">操作</th>
 	                 </tr>

@@ -68,7 +68,7 @@
         		</c:otherwise>
         	</c:choose>
         	<span><a href="<c:url value='${homePage }'/>" target="mainFrame" title="首页" style="color:#fff;">首页</a></span>
-    		<span>欢迎：&nbsp;<s:property value="#session.vts.roleName"/></span><span><s:property value="#session.vts.username"/></span>
+    		<span>欢迎：&nbsp;<s:property value="#session.vts.roleName"/></span><span><s:property value="#session.vts.agttelnum"/>[<s:property value="#session.vts.username"/>]</span>
     		</div>
     		<div id="navigate" class="nav_left_path">
     			<span id="calling_num" class="calling_num"></span>
