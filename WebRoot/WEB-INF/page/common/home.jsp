@@ -68,7 +68,7 @@
         		</c:otherwise>
         	</c:choose>
         	<span><a href="<c:url value='${homePage }'/>" target="mainFrame" title="首页" style="color:#fff;">首页</a></span>
-    		<span>欢迎：&nbsp;<s:property value="#session.vts.roleName"/></span><span><s:property value="#session.vts.agttelnum"/>&nbsp;[<s:property value="#session.vts.username"/>]</span>
+    		<span>欢迎：&nbsp;<s:property value="#session.vts.roleName"/></span><span><s:property value="#session.vts.username"/>&nbsp;[<s:property value="#session.vts.agttelnum"/>]</span>
     		</div>
     		<div id="navigate" class="nav_left_path">
     			<span id="calling_num" class="calling_num"></span>
@@ -193,9 +193,7 @@
 	//logout
 	function logout()
 	{
-		//var ocx = document.getElementById("OCXPlugin");
 		layer.confirm("确定要注销吗？",function(){
-			//ocx.AgentCheckOut();
 			$("#form2").ajaxSubmit({ 
 				success:function(data){ //提交成功的回调函数
 					location.href="index.action";
@@ -215,27 +213,6 @@
 			$("#popHuifang")[0].href="customer-tanpin.action?ani="+ani+"&cid="+param[1]+"&talkdt="+param[2];
 			$("#popHuifang")[0].click();
 		}
-		/*
-		param = param.split(",");
-		if(param[0]=="a")
-		{
-			//获取回访类型
-			$.ajax({
-				type: "POST",
-				dataType: "json",
-				data: {tid: param[1]},
-				url: "huifangType.action",
-				success: function(data) {
-					$("#popHuifang")[0].href="customer-tanpin.action?flag="+data+"&tid="+param[1]+"&ttid="+param[2];
-					$("#popHuifang")[0].click();
-				}
-			});
-		}
-		else
-		{
-			return false;
-		}
-		*/
 	}
 
 	/*************** 业务组监控   ***************/ 
@@ -370,11 +347,6 @@
 </script>
 <script type="text/javascript">
 	$(function(){
-		//登录成功CheckIn
-		//20141129取消checkIn
-		//var agttel = "<s:property value='#session.vts.agttelnum'/>";
-		//var ocx = document.getElementById("OCXPlugin");
-		//ocx.AgentCheckIn(agttel,0);
 		//判断OCX
 		if(document.all.OCXPlugin.object==null)
 		{
@@ -520,7 +492,6 @@
 			var recalltel = ocx.GetLastCallee();
 			var callid = ocx.GetCallID();
 			ocx.doDialEx(recalltel,"b,,"+callid);
-			//ocx.doDial(recalltel);
 			callingTel.innerHTML=ing+recalltel;
 		}
 	}
@@ -643,23 +614,7 @@
 				line4.style.background=backimg1;
 			}
 		});
-		
 		//
-		/*
-		//呼我 ocx.AgentCallMe();
-		$("#line5").bind("click",function(){
-			//获取绑定分机
-			var tel = ocx.GetBindTelnum();
-			if(tel)
-			{
-				ocx.AgentCallMe(tel);
-				callingTel.innerHTML=ing+tel;
-			}
-			else
-			{
-			}
-		});
-		*/
 	});
 	//拔号盘按钮点击
 	function onclicknum(nums) { 
@@ -701,7 +656,6 @@
 		{
 			var callid = ocx.GetCallID();
 			ocx.doDialEx(tel,"b,,"+callid);
-			//ocx.doDial(tel);
 			callingTel.innerHTML=ing+tel;
 		}
 	}
@@ -750,10 +704,6 @@
 		//
 		callingTel.innerHTML="";
 		//
-		//line1.bind("click", showDial);
-		//line2.bind("click", reDial);
-		//line3.bind("click", answer);
-		//line4.bind("click", hook);
 	}
 	//1:空闲
 	else if(state==1)
@@ -775,10 +725,6 @@
 		//
 		callingTel.innerHTML="";
 		//
-		//line1.bind("click", showDial);
-		//line2.bind("click", reDial);
-		//line3.unbind("click");
-		//line4.unbind("click");
 	}
 	//2:通话 
 	else if(state==2)
@@ -800,10 +746,6 @@
 		//
 		callingTel.innerHTML="通话中";
 		//
-		//line1.unbind("click");
-		//line2.unbind("click");
-		//line3.unbind("click");
-		//line4.bind("click", hook);
 	}
 	//3:振铃 
 	else if(state==3)
@@ -823,10 +765,6 @@
 		line4.style.cursor=ms_p;
 		line4.name="1";
 		//
-		//line1.unbind("click");
-		//line2.unbind("click");
-		//line3.bind("click", answer);
-		//line4.bind("click", hook);
 	}
 	//4:拨号 
 	else if(state==4)
@@ -848,10 +786,6 @@
 		//
 		callingTel.innerHTML="";
 		//
-		//line1.bind("click", showDial);
-		//line2.bind("click", reDial);
-		//line3.unbind("click");
-		//line4.bind("click", hook);
 	}
 	//5:回铃
 	else if(state==5)
@@ -890,10 +824,6 @@
 		line4.style.cursor=ms_p;
 		line4.name="1";
 		//
-		//line1.unbind("click");
-		//line2.unbind("click");
-		//line3.unbind("click");
-		//line4.bind("click", hook);
 	}
 	//7:在线
 	else if(state==7)
@@ -915,10 +845,6 @@
 		//
 		callingTel.innerHTML="";
 		//
-		//line1.bind("click", showDial);
-		//line2.bind("click", reDial);
-		//line3.unbind("click");
-		//line4.bind("click", hook);
 	}
 	else
 	{
