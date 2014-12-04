@@ -269,14 +269,16 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 	 */
 	public String saveTalk() throws IOException
 	{
-		log.info("cid:"+customerForm.getCid()+", talkdt:"+customerForm.getTalkdt()+", talkresult:"+customerForm.getTalkresult()+", content:"+customerForm.getNoteinfo());
+		log.info("cid:"+customerForm.getCid()+", talkdt:"+customerForm.getTalkdt()+", talkresult:"+customerForm.getTalkresult()+", content:"+customerForm.getNoteinfo()+"talkcount:"+customerForm.getTalkcount());
 		customerDao.saveTalkContent(customerForm);
 		JSONObject json = new JSONObject();
 		json.put("cid", customerForm.getCid());
 		json.put("tr", customerForm.getTalkresult());
 		json.put("ct", customerForm.getNoteinfo());
+		json.put("count", customerForm.getTalkcount());
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(json);
+		log.info("json:"+json);
 		return null;
 	}
 	
@@ -297,7 +299,7 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 			InputStream inStream = conn.getInputStream();
 			// 设置输出的格式
 			response.reset();
-			response.setContentType("bin");
+			response.setContentType("audio/x-wav");
 			response.addHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
 			// 循环取出流中的数据
 			byte[] b = new byte[1024];

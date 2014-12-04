@@ -68,6 +68,7 @@ public class CustomerForm {
 	
 	private int talkresult;
 	private String talkdt;
+	private int talkcount;
 	
 	//appconfig.xml中配置
 	private String f;
@@ -324,5 +325,11 @@ public class CustomerForm {
 	}
 	public void setF(String f) {
 		this.f = f;
+	}
+	public int getTalkcount() {
+		return talkcount;
+	}
+	public void setTalkcount(int talkcount) {
+		this.talkcount = talkcount;
 	}
 }

@@ -19,3 +19,7 @@ piccadmin / Picc20141201
 2.拷贝sqlserver2008
 3.工控机安装http server
 4.
+
+点击播放分机信息，签入->
+
+

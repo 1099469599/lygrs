@@ -160,16 +160,16 @@
 						<td>${ls.callio }</td>
 						<td>${ls.callret }</td>
 						<td>${ls.talk }</td>
-						<td id="ctIndex_${ls.cid }" title="${ls.content }">
+						<td id="ctIndex_${status.count }" title="${ls.content }">
 							<c:set var="ctlen" value="${fn:length(ls.content) }"></c:set>
 							<c:choose>
-								<c:when test="${ctlen gt 10}">${fn:substring(ls.content,0,10)}</c:when>
+								<c:when test="${ctlen gt 10}">${fn:substring(ls.content,0,10)}..</c:when>
 								<c:otherwise>${ls.content }</c:otherwise>
 							</c:choose>
 						</td>
 						<td>
-							<input type="hidden" id="trIndex_${ls.cid }" value="${ls.tr }"/>
-							<a href="javascript:showTalk('${ls.cid }','${ls.tdt }')">小结查看</a>&nbsp;&nbsp;
+							<input type="hidden" id="trIndex_${status.count }" value="${ls.tr }"/>
+							<a href="javascript:showTalk('${ls.cid }','${ls.tdt }','${status.count }')">小结查看</a>&nbsp;&nbsp;
 							<a href="javascript:play('<s:property value="#session.vts.getIpWithCTS(#session.vts.curCTS)"/>','${fn:substring(ls.recflag,26,fn:length(ls.recflag)) }','${fn:replace(fn:substring(ls.recflag,12,fn:length(ls.recflag)),'\\','/') }')">播放</a>&nbsp;&nbsp;
 							<a href="${pageContext.request.contextPath }/customer-downloadNet.action?wavFile=${fn:replace(fn:substring(ls.recflag,12,fn:length(ls.recflag)),'\\','/') }">下载</a>
 						</td>
@@ -264,6 +264,7 @@
 	<form id="form3" name="form3" action="<c:url value='/customer-saveTalk.action'/>" method="post">
 	    <input type="hidden" id="talk_cid" name="cid" value="${cid }"/>
 	    <input type="hidden" id="talk_time" name="talkdt" value=""/>
+	    <input type="hidden" id="talk_count" name="talkcount" value=""/>
 	    <div class="lab_ipt_item">
 	    	<span class="lab120">通话结果：</span>
 	        <div class="ipt-box">
@@ -275,7 +276,8 @@
 	    <div class="h132">
 	    	<span class="lab120">通话小结：</span>
 	        <div class="h132 ipt-box">
-	        	<textarea id="talk_noteinfo" name="noteinfo" class="ipt_textarea_w300 inputDefault" style="font-size:12px;"></textarea>
+	        	<textarea id="talk_noteinfo" name="noteinfo" class="ipt_textarea_w300 inputDefault" style="font-size:12px;">
+	        	</textarea>
 	            <span></span>
 	        </div>
 	    </div>
@@ -288,17 +290,18 @@
 </div>
 <!--POP PLAYER END-->
 <script type="text/javascript">
-	function showTalk(cid,tdt)
+	function showTalk(cid,tdt,count)
 	{
-		var tr = $("#trIndex_"+cid).val();
-		var ct = $("#ctIndex_"+cid)[0].innerHTML;
-		//
+		var tr = $("#trIndex_"+count).val();
+		var content = $("#ctIndex_"+count)[0].innerHTML;
 		if(tr==1)
 		{
 			$("#tr1")[0].checked=true;
+			$("#tr2")[0].checked=false;
 		}
 		else if(tr==0)
 		{
+			$("#tr1")[0].checked=false;
 			$("#tr2")[0].checked=true;
 		}
 		else
@@ -306,7 +309,8 @@
 			alert("error:"+tr);
 		}
 		$("#talk_time").val(tdt);
-		$("#talk_noteinfo").val(ct);
+		$("#talk_noteinfo").val(content);
+		$("#talk_count").val(count);
 		$.layer({
 			type: 1,
 	        title: '通话小结',
@@ -328,8 +332,9 @@
 				var cid=d.cid;
 				var tr=d.tr;
 				var ct=d.ct;
-				$("#trIndex_"+cid).val(tr);
-				$("#ctIndex_"+cid)[0].innerHTML=ct;
+				var count = d.count;
+				$("#trIndex_"+count).val(tr);
+				$("#ctIndex_"+count)[0].innerHTML=ct;
 				alert("保存成功！");
 	        }  
 		}); 
