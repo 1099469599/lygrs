@@ -25,7 +25,7 @@
 	      	<fun name="客户资料管理" action="customer-query.action?f=all" />
 	      	<fun name="话务员资料维护" action="agent-list.action" />
 			<fun name="接听情况统计" action="agentanaly-list.action" />
-			<fun name="座席签系统查询" action="agentanaly-online.action" />
+			<fun name="座席签入查询" action="agentanaly-online.action" />
 		</grp>
 	</role>
 	<role roleid="3" describle="话务员">
