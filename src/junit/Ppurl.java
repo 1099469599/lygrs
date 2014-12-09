@@ -2,23 +2,19 @@ package junit;
 
 public class Ppurl {
 	public static void main(String[] args) {
-		int arr[] = {51,116,53,120,85,66,71,98,86,100};
-		int i,j;
-		for(i=0; i<10; i++)
+		String s = "12.0012312";
+		int p = s.indexOf(".");
+		System.out.println(p+2);
+	}
+	
+	public String getDecimalPoint(String str)
+	{
+		String substr = "";
+		int p = str.indexOf(".");
+		if(p > 0)
 		{
-			for(j=0; j<9; j++)
-			{
-				if(arr[j] > arr[j+1])
-				{
-					arr[j]^=arr[j+1];
-					arr[j+1]^=arr[j];
-					arr[j]^=arr[j+1];
-				}
-			}
+			substr = str.substring(0, p+2);
 		}
-		for(i=0; i<10; i++)
-		{
-			System.out.print(arr[i]);
-		}
+		return substr;
 	}
 }
