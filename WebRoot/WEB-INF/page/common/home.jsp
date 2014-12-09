@@ -64,11 +64,38 @@
         			<c:set var="homePage" value="sysparam-init.action"/>
         		</c:when>
         		<c:otherwise>
-        			<c:set var="homePage" value="customer-query.action"/>
+        			<c:set var="homePage" value="customer-guishu.action"/>
         		</c:otherwise>
         	</c:choose>
         	<span><a href="<c:url value='${homePage }'/>" target="mainFrame" title="首页" style="color:#fff;">首页</a></span>
-    		<span>欢迎：&nbsp;<s:property value="#session.vts.roleName"/></span><span><s:property value="#session.vts.username"/>&nbsp;[<s:property value="#session.vts.agttelnum"/>]</span>
+    		<span>欢迎：&nbsp;<s:property value="#session.vts.roleName"/></span>
+    		<span><s:property value="#session.vts.username"/>&nbsp;
+    			<c:if test="${sessionScope.vts.roleID ne 1 }">[<s:property value="#session.vts.agttelnum"/>]</c:if>
+    		</span>
+    		<c:if test="${session.vts.roleID eq 3 }">
+    		<span>
+    			<c:choose>
+    				<c:when test="${sessionScope.vts.agtlosttime gt 0 }">
+    					<a href="#" onclick="viewMissCall(this)" target="mainFrame" style="color:#CC0000; cursor:pointer" title="点击查看未接来电详情">未接来电</a>&nbsp;
+    					<label id="lost_time" style="color:#CC0000; font-size:16px">${sessionScope.vts.agtlosttime }</label>
+    				</c:when>
+    				<c:otherwise>
+    					<!--
+    					<a style="color:#fff; cursor:default;" href="javascript:void(0)">当前无未接来电</a>
+    					-->
+    				</c:otherwise>
+    			</c:choose>
+    		</span>
+    		<script type="text/javascript">
+    			function viewMissCall(obj)
+    			{
+    				obj.href="customer-missCall.action";
+    				obj.style.color="#fff";
+    				$("#lost_time")[0].innerHTML=0;
+    				$("#lost_time")[0].style.color="#fff";
+    			}
+    		</script>
+    		</c:if>
     		</div>
     		<div id="navigate" class="nav_left_path">
     			<span id="calling_num" class="calling_num"></span>
@@ -117,7 +144,7 @@
         <input type="hidden" id="curCusManagePage" value="1"/>
         <!-- 记录js分页当前页码 end -->
         </p>
-        <span>2014 VoiceT&nbsp;&nbsp;V141125&nbsp;&nbsp;[建议使用IE8以上版本或360兼容模式浏览器,&nbsp;显示器分辨率1280*1024]</span>
+        <span>2014 VoiceT&nbsp;&nbsp;V141210&nbsp;&nbsp;[建议使用IE8以上版本或360兼容模式浏览器,&nbsp;显示器分辨率1280*1024]</span>
     </div>
     <!-- print window -->
 	<div style="height:0px;">
@@ -526,7 +553,7 @@
 		$("#line3").bind("click",answer);
 		$("#line4").bind("click",hook);
 
-		if(line1.name=1)
+		if(line1.name==1)
 		{
 			line1.style.background=backimg1;
 			line1.style.cursor=ms_p;
@@ -537,7 +564,7 @@
 			line1.style.cursor=ms_d;
 		}
 		//
-		if(line2.name=1)
+		if(line2.name==1)
 		{
 			line2.style.background=backimg1;
 			line2.style.cursor=ms_p;
@@ -548,7 +575,7 @@
 			line2.style.cursor=ms_d;
 		}
 		//
-		if(line3.name=1)
+		if(line3.name==1)
 		{
 			line3.style.background=backimg1;
 			line3.style.cursor=ms_p;
@@ -559,7 +586,7 @@
 			line3.style.cursor=ms_d;
 		}
 		//
-		if(line4.name=1)
+		if(line4.name==1)
 		{
 			line4.style.background=backimg1;
 			line4.style.cursor=ms_p;

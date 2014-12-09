@@ -29,9 +29,6 @@
 	<h3 class="h3_title">客户&nbsp;[${tpMap.uname }]&nbsp;的资料详情&nbsp;&nbsp;批次号&nbsp;[${tpMap.ids }]
 		<span>
 			<input type="button" class="btn btn-primary" value="返回" onclick="document.form1.submit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
-			<c:if test="${sessionScope.vts.roleID eq 3 }">
-			<input type="checkbox" id="hideflagx" <c:if test="${tpMap.hideflag eq 1}"> checked="checked"</c:if> onclick="setHideFlag(this,'${tpMap.cid }')"/><label for="hideflagx">隐藏</label>
-			</c:if>
 		</span>
 	</h3>
 	<%-- 方便保存返回操作，回到客户资料管理页面 --%>
@@ -43,14 +40,16 @@
    		<input type="hidden" name="q_uname" value="${q_uname }"/>
    		<input type="hidden" name="q_mobile" value="${q_mobile }"/>
    		<input type="hidden" name="q_agtacc" value="${q_agtacc }"/>
+   		<input type="hidden" name="q_state" value="${q_state }"/>
    		<input type="hidden" id="pageflag" name="pageflag"/>
    	</form>
    	<div id="usual1" class="usual"> 
 	    <%-- tabs start --%>
 	    <div class="itab">
 		  	<ul> 
-			    <li><a href="#tab1" class="selected">资料详情</a></li> 
-			    <li><a href="#tab2">通话记录</a></li> 
+			    <li><a href="#tab1" class="selected">资料详情</a></li>
+			    <li><a href="#tab2">保费保单</a></li> 
+			    <li><a href="#tab3">通话记录</a></li> 
 		  	</ul>
 	    </div> 
     	<%-- tabs end --%>
@@ -64,6 +63,37 @@
   			<div class="queryDiv" style="border:0">
 			   	<ul class="queryWrap_ul" style="padding-left:70px;">
 					<li><label>导入批次：</label><input type="text" id="pinox" name="pino" value="${tpMap.ids }" class="ipt100" maxlength="100"/></li>
+					<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+					<li>
+						客户资料状态：&nbsp;<s:select name="hfqk" list="#application.vta.GetList('customerstate')" onchange="changeCustomerState(this)" listKey="id" listValue="str" value="%{#request.tpMap.state}"></s:select>
+						<input type="hidden" id="cstate" value="0"/>
+						<script type="text/javascript">
+							function changeCustomerState(obj)
+							{
+								$("#cstate").val(obj.value);
+							}
+							function setCusState(cid)
+							{
+								var state = $("#cstate").val();
+								var datajson = {"cid":cid, "state":state};
+								var url = 'setCustomerState.action';
+								$.ajax({
+							        type: "POST",
+							        url: url,
+							        data: datajson,
+							        success: function(){
+										alert("设置成功");
+							        },
+							        error: function () {
+							        	alert("设置失败");
+							        }
+							    });
+							}
+						</script>
+					</li>
+					<li>
+						<input type="button" class="btn4" value="保&nbsp;&nbsp;存" onclick="setCusState('${cid }')"/>
+					</li>
 				</ul>
 			</div>
 			<div id="error_msg" class="error_msg"></div>
@@ -73,7 +103,7 @@
 			   	<ul class="queryWrap_ul" style="padding-left:70px;">
 					<li><label>预约日期：</label><input type="text" id="yuydatex" name="yuydate" value="${fn:substring(tpMap.pdt,0,10) }" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'%y-%M-%d'})" class="Wdate inputDefault" style="width:90px; height:20px"/></li>
 			        <li><label>预约时间：</label><input type="text" id="yuytimex" name="yuytime" value="${fn:substring(tpMap.pdt,11,16) }" onclick="WdatePicker({dateFmt:'HH:mm',minDate:'%H:%m'})" class="Wdate inputDefault" style="width:90px; height:20px"/></li>
-			        <li><input type="button" class="btn4" value="设&nbsp;&nbsp;置" onclick="setYuyDateTime('${cid }','1')"/></li>
+			        <li><input type="button" class="btn4" value="确&nbsp;&nbsp;定" onclick="setYuyDateTime('${cid }','1')"/></li>
 			        <li>
 			        	<c:set var="yuyueriqi" value="${fn:substring(tpMap.pdt,0,10) }"></c:set>
 			        	<c:if test="${fn:length(yuyueriqi) gt 0}">
@@ -137,12 +167,59 @@
 			</form>
   		</div>
   		<%-- tab1 end --%>
-  		<%-- tab1 start --%>
-  		<div id="tab2" class="tabson">
+  		<%-- tab2 start --%>
+  		<div id="tab2" class="tabson" style="padding-left:20px;">
+  			<div class="formtitle"><span>保费保单信息</span></div>
+  			<div style="padding-left:170px;">
+  			<form id="bandanForm" action="<c:url value='customer-saveBaodan.action'/>" method="post">
+  				<input type="hidden" name="cid" value="${cid }"/>
+  				<div class="lab_ipt_item">
+			    	<span class="lab120">保费(元)：</span>
+			        <div class="ipt-box">
+			        	<c:set var="xsd" value="${fn:indexOf(tpMap.baofei,'.') + 3 }"></c:set>
+			        	<input type="text" id="baofeix" name="baofei" value="${fn:substring(tpMap.baofei,0,xsd) }" class="ipt_text_w150 inputDefault" />
+			            <span class="asterisk"></span>
+			        </div>
+			    </div>
+			    <div class="lab_ipt_item">
+			    	<span class="lab120">保单号：</span>
+			        <div class="ipt-box">
+			        	<input type="text" id="baodanx" name="baodan" value="${tpMap.baodan }" class="ipt_text_w150 inputDefault" />
+			            <span class="asterisk"></span>
+			        </div>
+			    </div>
+			    <div class="lab_ipt_item">
+			    	<span class="lab120">到期日期：</span>
+			        <div class="ipt-box">
+			        	<input type="text" id="baoendx" name="baoend" value="${tpMap.baoend }" class="Wdate inputDefault" style="width:90px; height:26px; line-height:26px"  onclick="WdatePicker({skin:'whyGreen'})" />
+			            <span class="asterisk"></span>
+			        </div>
+			    </div>
+			    <div class="lab_ipt_item">
+					<span class="lab120"></span>
+					<div class="ipt-box"><input type="button" onclick="saveBaodanBtn()" class="btn4" value="确定"/></div>
+					<div class="ipt-box"></div>
+				</div>	
+  			</form>
+  			</div>
+  			<script type="text/javascript">
+  				function saveBaodanBtn()
+  				{
+  					$("#bandanForm").ajaxSubmit({ 
+  						success:function(data){ //提交成功的回调函数
+  							alert("保存成功！");
+  				        }  
+  					}); 
+  				    return false;	//not refresh page
+  				}
+  			</script>
+  		</div>
+  		<%-- tab2 end --%>
+  		<%-- tab3 start --%>
+  		<div id="tab3" class="tabson">
   			<table cellpadding="0" cellspacing="0" class="tab_border">
 				<thead class="tab_head">
 	                 <tr>
-	                 	
 	                     <th width="8%">联系号码</th>
 	                     <th width="10%">通话时间</th>
 	                     <th width="6%">呼叫方向</th>
@@ -212,6 +289,9 @@
 	var callid = ocx.GetCallID();
 	function callMember(tag)
 	{
+		//添加呼叫次数
+		addCallTime(cid);
+		//
 		var m = $("#mobilex").val();
 		var h = $("#hometelx").val();
 		var o = $("#officetelx").val();

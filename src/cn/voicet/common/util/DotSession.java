@@ -74,6 +74,11 @@ public class DotSession {
 	public String cursdt = curDate;
 	public String curedt = curDate;
 	
+	public Map<String, Object> lygagtMap1;
+	public Map<String, Object> lygagtMap2;
+	
+	public int agtlosttime;	//未接电话个数
+	
 	private class StackInfo{
 		
 		public StackInfo(){}
@@ -166,6 +171,9 @@ public class DotSession {
 			arrayStackInfo[i] = new StackInfo();
 		}
 		sflag=0;
+		//
+		lygagtMap1 = new HashMap();
+		lygagtMap2 = new HashMap();
 	}
 	
 	public void clear() {
@@ -556,6 +564,24 @@ public class DotSession {
 	}
 	public void setDfagt(String dfagt) {
 		this.dfagt = dfagt;
+	}
+	public Map<String, Object> getLygagtMap1() {
+		return lygagtMap1;
+	}
+	public void setLygagtMap1(Map<String, Object> lygagtMap1) {
+		this.lygagtMap1 = lygagtMap1;
+	}
+	public Map<String, Object> getLygagtMap2() {
+		return lygagtMap2;
+	}
+	public void setLygagtMap2(Map<String, Object> lygagtMap2) {
+		this.lygagtMap2 = lygagtMap2;
+	}
+	public int getAgtlosttime() {
+		return agtlosttime;
+	}
+	public void setAgtlosttime(int agtlosttime) {
+		this.agtlosttime = agtlosttime;
 	}
 }
 

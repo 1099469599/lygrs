@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@taglib uri="/struts-tags" prefix="s" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -28,14 +27,18 @@
 </head>
 <body>
 <div id="contentWrap">
-	<h3 class="h3_title">座席签入查询</h3>
-   	<form action="<c:url value='/agentanaly-online.action'/>" method="post">
+	<h3 class="h3_title">跟单结果统计</h3>
+   	<form action="<c:url value='customer-status.action'/>" method="post">
 	<div class="queryDiv">
 	   	<ul class="queryWrap_ul_w600 left">
-	   		<li><label>话务员账号：</label><input type="text" name="account" class="ipt50 inputDefault" value="${account }"/></li>
-			<li><label>开始日期：</label><input type="text" id="sdt" name="sdt" class="Wdate inputDefault" style="width:90px; height:18px;" onclick="WdatePicker({maxDate:'#F{$dp.$D(\'edt\')||\'2050-01-01\'}',skin:'whyGreen'})" value="<s:property value="#session.vts.cursdt"/>"/></li>
-	        <li><label>结束日期：</label><input type="text" id="edt" name="edt" class="Wdate inputDefault" style="width:90px; height:18px;" onclick="WdatePicker({minDate:'#F{$dp.$D(\'sdt\')}',maxDate:'%y-%M-%d',skin:'whyGreen'})" value="<s:property value="#session.vts.curedt"/>"/></li>
+			<li><label>起始日期：</label><input type="text" id="sdt" name="sdt" class="Wdate inputDefault" style="width:90px; height:18px;" onclick="WdatePicker({maxDate:'#F{$dp.$D(\'edt\')||\'2050-01-01\'}',skin:'whyGreen'})" value="<s:property value="#session.vts.cursdt"/>"/></li>
+	        <li><label>终止日期：</label><input type="text" id="edt" name="edt" class="Wdate inputDefault" style="width:90px; height:18px;" onclick="WdatePicker({minDate:'#F{$dp.$D(\'sdt\')}',maxDate:'%y-%M-%d',skin:'whyGreen'})" value="<s:property value="#session.vts.curedt"/>"/></li>
 	        <li><input type="submit" class="btn4" value="查&nbsp;&nbsp;询"/></li>
+	        <li>
+	        	<c:if test="${not empty(statusList) }">
+	        	<input type="button" onclick="location.href='customer-exportStatus.action'" class="btn4" value="导&nbsp;&nbsp;出"/>
+	        	</c:if>
+	        </li>
 		</ul>
 		<ul class="queryWrap_ul_w100 right">
 	        <li></li>
@@ -46,25 +49,23 @@
 		<table cellpadding="0" cellspacing="0" class="tab_border">
 			<thead class="tab_head2">
                  <tr>
-                     <th width="8%">话务员账号</th>
-                     <th width="8%">姓名</th>
-                     <th width="12%">操作时间</th>
-                     <th width="12%">操作</th>
-                     <th width="6%">客户端</th>
-                     <th width="8%">业务组</th>
-                     <th width="20%">备注</th>
+                     <th width="10%">座席号码</th>
+                     <th width="10%">座席姓名</th>
+                     <th width="10%">总数</th>
+                     <th width="10%">成功数</th>
+                     <th width="10%">失败数</th>
+                     <th width="10%">跟踪数</th>
                  </tr>
              </thead>
              <tbody id="movies">
-             	<c:forEach items="${agentList }" var="ls">
+               	<c:forEach items="${statusList }" var="ls">
 				<tr align="center">
-					<td>${ls.account }</td>
+					<td>${ls.telnum }</td>
 					<td>${ls.agtname }</td>
-					<td>${fn:substring(ls.dt,0,19) }</td>
-					<td>${ls.actname }</td>
-					<td>${ls.clientinfo }</td>
-					<td>${ls.grpname }</td>
-					<td align="left">&nbsp;${ls.noteinfo }</td>
+					<td>${ls.tn }</td>
+					<td>${ls.sn }</td>
+					<td>${ls.fn }</td>
+					<td>${ls.xn }</td>
 				</tr>
 				</c:forEach>
 			</tbody>
@@ -110,5 +111,6 @@
     	});
 	});
 </script>
+
 </body>
 </html>

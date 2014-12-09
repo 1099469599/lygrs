@@ -95,4 +95,20 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		});
 	}
 
+	/**
+	 * 查询未接来电个数
+	 */
+	public int queryMissCallTimes(final DotSession ds) {
+		log.info("sp:web_agent_getlosttimes(?,?)");
+		return (Integer)this.getJdbcTemplate().execute("{call web_agent_getlosttimes(?,?)}", new CallableStatementCallback() {
+			public Object doInCallableStatement(CallableStatement cs)
+					throws SQLException, DataAccessException {
+				cs.setString(1, ds.agttelnum);
+				cs.registerOutParameter(2, Types.INTEGER);
+				cs.execute();
+				return cs.getInt(2);
+			}
+		});
+	}
+
 }

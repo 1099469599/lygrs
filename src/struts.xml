@@ -43,8 +43,14 @@
 			<result name="allocAgentPage">/WEB-INF/page/system/allocAgent.jsp</result>
 			<result name="customerManagePage">/WEB-INF/page/system/customerManage.jsp</result>
 			<result name="customerDetailPage">/WEB-INF/page/system/customerDetail.jsp</result>
-			
 			<result name="tanpinPage">/WEB-INF/page/system/tanpin.jsp</result>
+			
+			<!-- 2014-12-08 add -->
+			<result name="customerStatusPage">/WEB-INF/page/system/customerStatus.jsp</result>
+			<result name="customerGuishuPage">/WEB-INF/page/system/customerGuishu.jsp</result>
+			<result name="workjzPage">/WEB-INF/page/system/workjzPage.jsp</result>
+			<result name="baofeiTotal">/WEB-INF/page/system/baofeiTotal.jsp</result>
+			<result name="missCallPage">/WEB-INF/page/system/missCall.jsp</result>
 		</action>
 
 
@@ -160,9 +166,12 @@
 			<result type="json"></result>
 		</action>
 		
-		<action name="setHideFlag" class="customerAction" method="setHideFlag">
+		<action name="setCustomerState" class="customerAction" method="setCustomerState">
 			<result type="json"></result>
 		</action>
 		
+		<action name="addCallTime" class="customerAction" method="addCallTime">
+			<result type="json"></result>
+		</action>
 	</package>
 </struts>

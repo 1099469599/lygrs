@@ -20,7 +20,7 @@
 </head>
 <body>
 <div id="contentWrap">
-	<h3 class="h3_title">客户资料导入及分配&nbsp;<span>点击<a href="${pageContext.request.contextPath }/excelTemplate/customer_importTemplate.xls">下载</a>模板文件</span></h3>
+	<h3 class="h3_title">客户资料导入&nbsp;<span>点击<a href="${pageContext.request.contextPath }/excelTemplate/customer_importTemplate.xls">下载</a>模板文件</span></h3>
 	<form id="form1" name="form1" action="<c:url value='/customer-importData.action'/>" method="post">
 	
 	</form>
@@ -31,20 +31,24 @@
                      <th width="6%">批次号</th>
                      <th width="8%">创建日期</th>
                      <th width="4%">客户数</th>
+                     <!--  
                      <th width="4%">未分配数</th>
-                     <th width="14%">备注信息</th>
-                     <th width="16%" style="text-align:center">
+                     -->
+                     <th width="16%">备注信息</th>
+                     <th width="12%" style="text-align:center">
                      	<input type="button" onclick="savePiNo('add','','')" value="创建批次" class="btn btn-primary"/>
                      </th>
                  </tr>
              </thead>
              <tbody id="movies" class="tab_tbody">
              	<c:forEach items="${pList }" var="ls">
-				<tr>
+				<tr align="center">
 					<td>${ls.ids }</td>
 					<td>${fn:substring(ls.cdt,0,19) }</td>
 					<td>${ls.tn }</td>
+					<!--
 					<td>${ls.un }</td>
+					-->
 					<td title="${ls.noteinfo }">
 						<c:set var="notelen" value="${fn:length(ls.noteinfo) }"></c:set>
 						<c:choose>
@@ -55,6 +59,7 @@
 					<td>
 						<a href="javascript:savePiNo('edit','${ls.ids }','${ls.noteinfo }')">修改</a>&nbsp;&nbsp;
 						<a href="javascript:showSelFile('${ls.ids }')">导入</a>&nbsp;&nbsp;
+						<!--
 						<c:choose>
 							<c:when test="${ls.un gt 0 }">
 								<a href="javascript:alloc('${ls.ids }','${ls.un }','${fn:substring(ls.cdt,0,19) }','${ls.noteinfo }')">分配</a>&nbsp;&nbsp;	
@@ -72,7 +77,7 @@
 								<label style="color:#808080;">重置分配&nbsp;&nbsp;</label>
 							</c:otherwise>
 						</c:choose>
-						
+						-->
 						<c:choose>
 							<c:when test="${ls.tn gt 0 }">
 								<a href="javascript:clearPino('${ls.ids }')">清空批次</a>&nbsp;&nbsp;	

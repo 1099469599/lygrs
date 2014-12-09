@@ -9,7 +9,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -118,6 +124,7 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 							if(null!=row)
 							{
 								cell = row.getCell(j);
+								/*
 								if(null!=cell)
 								{
 									cell.setCellType(HSSFCell.CELL_TYPE_STRING);
@@ -127,6 +134,9 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 								{
 									cellValues[j]="";
 								}
+								*/
+								cellValues[j] = getValue(cell);
+								//
 								if(!checkCellOK(i, j, cellValues[j]))
 								{
 									bCheckOK = false;
@@ -185,6 +195,100 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 		});
 	}
 	
+	/**
+	 * 批量导入
+	 */
+	public void batchImportDataWithAgent(final File uploadExcel, final String pino) {
+		log.info("sp:web_lygrs_user_import(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+		final int MAX_COL_CHECK = 200;
+		//col_max[] excel actual column num
+		final int COL_ACTUAL_NUM[] = {2,8,6,8,16};
+		this.getJdbcTemplate().execute(new ConnectionCallback() {
+			public Object doInConnection(Connection conn) throws SQLException,
+					DataAccessException {
+				PreparedStatement ps = null;
+				//close session auto commit
+				conn.setAutoCommit(false);
+				ps = conn.prepareStatement("{call web_lygrs_user_import(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+				boolean bCheckOK;
+				String cellValues[]=new String[MAX_COL_CHECK];
+				//
+				try 
+				{
+					InputStream inStream=new FileInputStream(uploadExcel);
+					Workbook wb = VTJime.create(inStream);
+					Sheet sheet = wb.getSheetAt(0);
+					int totalRowNum = sheet.getPhysicalNumberOfRows();
+					//curRow
+					for(int i=1; i<=totalRowNum;i++)
+					{
+						Row row = sheet.getRow(i);
+						Cell cell;
+						bCheckOK=true;
+						//curCol
+						for(int j=0;j<COL_ACTUAL_NUM[4];j++)
+						{
+							if(null!=row)
+							{
+								cell = row.getCell(j);
+								cellValues[j] = getValue(cell);
+								//
+								if(!checkCellOK(i, j, cellValues[j]))
+								{
+									bCheckOK = false;
+								}
+								log.info("cellValues[j]:"+cellValues[j]);
+							}
+							else
+							{
+								bCheckOK = false;
+								log.info("第["+(i+1)+"]行 is null");
+							}
+						}// end col
+						//exec procedure
+						log.info("bCheckOK:"+bCheckOK);
+						if(bCheckOK)
+						{
+							//set task number
+							ps.setString(1, pino);
+							for(int j=0; j<COL_ACTUAL_NUM[4]; j++)
+							{
+								if(null==cellValues[j] || ""==cellValues[j])
+								{
+									ps.setString(j+2, null);
+								}
+								else
+								{
+									ps.setString(j+2, cellValues[j]);
+								}
+							}
+							ps.addBatch();
+							//
+							if(i % 1000==0){
+				        		//执行批量更新    
+				        		ps.executeBatch();
+				        		//语句执行完毕，提交本事务 
+				        		conn.commit();
+				        		ps.clearBatch();
+				        	}
+						}
+					}// end row
+					ps.executeBatch();
+					conn.commit();
+					ps.clearBatch();
+					ps.close();
+					conn.setAutoCommit(true);
+					return null;
+				} 
+				catch (Exception e) 
+				{
+					log.error(e);
+					return null;
+				}
+			}
+		});
+	}
+	
 	private boolean checkCellOK(int curRow, int curCol, String cellValue) {
 		//
 		switch (curCol) {
@@ -207,6 +311,83 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 				break;
 		}
 		return true;
+	}
+	
+	/**
+	 * 解决类型问题，获取数值
+	 * @param cell
+	 * @return
+	 */
+	public String getValue(Cell cell)
+	{
+		String value = "";
+		if(null==cell)
+		{
+			return value;
+		}
+		switch (cell.getCellType()) {
+			//数值型
+			case Cell.CELL_TYPE_NUMERIC:
+				if (HSSFDateUtil.isCellDateFormatted(cell)) 
+				{
+	                //如果是date类型则 ，获取该cell的date值，并进行格式化  
+	                Date date = HSSFDateUtil.getJavaDate(cell.getNumericCellValue()); 
+	                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	                value = format.format(date); 
+	            }
+				//纯数字
+				else 
+	            {
+	                value = String.valueOf(cell.getNumericCellValue());  
+	                //解决1234.0  去掉后面的.0  
+	                if(null!=value&&!"".equals(value.trim()))
+	                {
+	                     String[] item = value.split("[.]");
+	                     if(1<item.length && "0".equals(item[1]))
+	                     {
+	                         value=item[0];  
+	                     }
+	                }
+	            }
+	            log.info(value);
+				break;
+			//字符串类型
+			case Cell.CELL_TYPE_STRING:
+				value = cell.getStringCellValue().toString();
+				break;
+			//公式类型
+			case Cell.CELL_TYPE_FORMULA:
+				//读公式计算值
+				value = String.valueOf(cell.getNumericCellValue());
+				//如果获取的数值为非法值，则转换成获取字符串
+				if(value.equals("NaN"))
+				{
+					value = cell.getStringCellValue().toString();
+				}
+				break;
+			//布尔类型
+			case Cell.CELL_TYPE_BOOLEAN:
+				value = ""+cell.getBooleanCellValue();
+				break;
+			//空值
+			case Cell.CELL_TYPE_BLANK:
+				value = "";
+				log.info("excel出现空值");
+				break;
+			//故障
+			case Cell.CELL_TYPE_ERROR:
+				value = "";
+				log.info("excel出现ERROR");
+				break;
+			default:
+				value = cell.getStringCellValue().toString();
+				break;
+		}
+		if("null".endsWith(value.trim()))
+		{
+			value = "";
+		}
+		return value;
 	}
 	
 	/**
@@ -317,10 +498,17 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 				cs.setString("telnum", customerForm.getQ_mobile());
 				//车牌
 				cs.setString("cp", customerForm.getQ_chephm());
-				//隐藏是否显示,1:表示显示全部，0:只显示可显示的，隐藏不显示
-				cs.setInt("hidedis", 1);
 				//提取记录数
 				cs.setInt("peeknum", 500);
+				//新加查询参数:状态
+				if(customerForm.getQ_state()==-1)
+				{
+					cs.setString("state", null);
+				}
+				else
+				{
+					cs.setInt("state", customerForm.getQ_state());
+				}
 				cs.execute();
 				ResultSet rs = cs.getResultSet();
 				List list = new ArrayList();
@@ -355,10 +543,17 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 				cs.setString("telnum", customerForm.getQ_mobile());
 				//车版
 				cs.setString("cp", customerForm.getQ_chephm());
-				//隐藏是否显示,1:表示显示全部，0:只显示可显示的，隐藏不显示
-				cs.setInt("hidedis", 1);
 				//提取记录数
 				cs.setInt("peeknum", 0);
+				//新加查询参数:状态
+				if(customerForm.getQ_state()==-1)
+				{
+					cs.setString("state", null);
+				}
+				else
+				{
+					cs.setInt("state", customerForm.getQ_state());
+				}
 				cs.execute();
 				//
 				ResultSet rs = cs.getResultSet();
@@ -366,7 +561,7 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 				//int columnCount = rsm.getColumnCount();
 				//
 				String filePath = ServletActionContext.getServletContext().getRealPath("excelTemplate")+"/"+"customer_exportTemplate.xls";
-				HSSFWorkbook wb=VTJime.fromRStoExcel(filePath, 1, true, rs, 15);
+				HSSFWorkbook wb=VTJime.fromRStoExcel(filePath, 1, true, rs, 19);
 				try {
 					response.reset();
 					response.setHeader("Content-Disposition", "attachment;filename=" + "customerData.xls");
@@ -569,21 +764,6 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 		});
 	}
 
-	public void setHideFlag(final CustomerForm customerForm) {
-		log.info("sp:web_lygrs_set_hideflag(?,?)");
-		this.getJdbcTemplate().execute("{call web_lygrs_set_hideflag(?,?)}", new CallableStatementCallback() {
-			public Object doInCallableStatement(CallableStatement cs)
-					throws SQLException, DataAccessException {
-				//客户编号
-				cs.setInt("cid", customerForm.getCid());
-				//预约日期时间
-				cs.setInt("hideflag", customerForm.getHideflag());
-				cs.execute();
-				return null;
-			}
-		});
-	}
-
 	/**
 	 * 获取弹屏信息
 	 */
@@ -653,6 +833,418 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 				cs.setInt("result", customerForm.getTalkresult());
 				//通话内容
 				cs.setString("noteinfo", customerForm.getNoteinfo());
+				cs.execute();
+				return null;
+			}
+		});
+	}
+
+	/**
+	 * 统计客户状态 
+	 */
+	public List<Map<String, Object>> queryCustomerStatus(final DotSession ds) {
+		log.info("sp:web_lygrs_analy_state(?,?)");
+		return (List<Map<String, Object>>)this.getJdbcTemplate().execute("{call web_lygrs_analy_state(?,?)}", new CallableStatementCallback() {
+			public Object doInCallableStatement(CallableStatement cs)
+					throws SQLException, DataAccessException {
+				cs.setString("sdts", ds.cursdt);
+				cs.setString("edts", ds.curedt);
+				cs.execute();
+				ResultSet rs = cs.getResultSet();
+				List list = new ArrayList();
+				if(rs!=null){
+					while (rs.next()) {
+						 Map map = new HashMap();
+						 VTJime.putMapDataByColName(map, rs);
+		        		 list.add(map);
+					}
+				}
+				return list;
+			}
+		});
+	}
+	
+
+	public void exportCustomerStatus(final HttpServletResponse response, final DotSession ds) {
+		log.info("sp:web_lygrs_analy_state(?,?)");
+		this.getJdbcTemplate().execute("{call web_lygrs_analy_state(?,?)}", new CallableStatementCallback() {
+			public Object doInCallableStatement(CallableStatement cs)
+					throws SQLException, DataAccessException {
+				cs.setString("sdts", ds.cursdt);
+				cs.setString("edts", ds.curedt);
+				cs.execute();
+				ResultSet rs = cs.getResultSet();
+				//
+				String filePath = ServletActionContext.getServletContext().getRealPath("excelTemplate")+"/"+"gendan.xls";
+				HSSFWorkbook wb=VTJime.fromRStoExcel(filePath, 1, true, rs, 5);
+				try {
+					response.reset();
+					response.setHeader("Content-Disposition", "attachment;filename=" + "gendan.xls");
+					response.setContentType("application/vnd.ms-excel;charset=UTF-8");	
+					wb.write(response.getOutputStream());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				return null;
+			}
+		});
+		
+		
+		
+	}
+
+	/**
+	 * 查询客户资料归属
+	 */
+	public List<Map<String, Object>> queryCustomerGuishu(final CustomerForm customerForm) {
+		log.info("sp:web_lygrs_query_owner(?)");
+		return (List<Map<String, Object>>)this.getJdbcTemplate().execute("{call web_lygrs_query_owner(?)}", new CallableStatementCallback() {
+			public Object doInCallableStatement(CallableStatement cs)
+					throws SQLException, DataAccessException {
+				cs.setString("cp", customerForm.getQ_chephm());
+				cs.execute();
+				ResultSet rs = cs.getResultSet();
+				List list = new ArrayList();
+				if(rs!=null){
+					while (rs.next()) {
+						 Map map = new HashMap();
+						 VTJime.putMapDataByColName(map, rs);
+		        		 list.add(map);
+					}
+				}
+				return list;
+			}
+		});
+	}
+
+	public void setCustomerState(final CustomerForm customerForm) {
+		log.info("sp:web_lygrs_set_state(?,?)");
+		this.getJdbcTemplate().execute("{call web_lygrs_set_state(?,?)}", new CallableStatementCallback() {
+			public Object doInCallableStatement(CallableStatement cs)
+					throws SQLException, DataAccessException {
+				cs.setInt("cid", customerForm.getCid());
+				cs.setInt("state", customerForm.getState());
+				cs.execute();
+				return null;
+			}
+		});
+	}
+
+	public void saveBaodanInfo(final CustomerForm customerForm) {
+		log.info("sp:web_lygrs_set_baodan(?,?,?,?)");
+		this.getJdbcTemplate().execute("{call web_lygrs_set_baodan(?,?,?,?)}", new CallableStatementCallback() {
+			public Object doInCallableStatement(CallableStatement cs)
+					throws SQLException, DataAccessException {
+				cs.setInt("cid", customerForm.getCid());
+				cs.setString("baofei", customerForm.getBaofei());
+				cs.setString("baodan", customerForm.getBaodan());
+				cs.setString("baoend", customerForm.getBaoend());
+				cs.execute();
+				return null;
+			}
+		});
+	}
+
+	public void queryWorkJinZhan(final DotSession ds) {
+		log.info("sp:web_lygrs_work_info(?)");
+		this.getJdbcTemplate().execute("{call web_lygrs_work_info(?)}", new CallableStatementCallback() {
+			public Object doInCallableStatement(CallableStatement cs)
+					throws SQLException, DataAccessException {
+				cs.setString("agtacc", ds.agttelnum);
+				cs.execute();
+				ResultSet rs = cs.getResultSet();
+				int rid = 0;
+				int updateCount = -1;
+				do
+				{
+					updateCount = cs.getUpdateCount();
+					if(updateCount != -1)
+					{	
+						cs.getMoreResults();
+						continue;
+					}
+					rs = cs.getResultSet();
+					if(null != rs)
+					{
+						while(rs.next())
+						{
+							if(rid == 0)
+							{
+								Map map = new HashMap();
+								VTJime.putMapDataByColName(map, rs);
+								ds.lygagtMap1 = map;
+							}
+							else if(rid ==1)
+							{
+								Map map = new HashMap();
+								VTJime.putMapDataByColName(map, rs);
+								ds.lygagtMap2 = map;
+							}
+						}
+					}
+					if(rs != null)
+					{
+						cs.getMoreResults();
+						rid++;
+						continue;
+					}
+				}
+				while(!(updateCount == -1 && rs == null));
+				return null;
+			}
+		});
+	}
+
+	public List<Map<String, Object>> queryMissCall(final DotSession ds) {
+		log.info("sp:web_agent_getlostlist(?)");
+		return (List<Map<String, Object>>)this.getJdbcTemplate().execute("{call web_agent_getlostlist(?)}", new CallableStatementCallback() {
+			public Object doInCallableStatement(CallableStatement cs)
+					throws SQLException, DataAccessException {
+				cs.setString("agtacc", ds.agttelnum);
+				cs.execute();
+				ResultSet rs = cs.getResultSet();
+				List list = new ArrayList();
+				if(rs!=null){
+					while (rs.next()) {
+						 Map map = new HashMap();
+						 VTJime.putMapDataByColName(map, rs);
+		        		 list.add(map);
+					}
+				}
+				return list;
+			}
+		});
+	}
+	
+	public void queryBaoTotalInfo(final DotSession ds, final CustomerForm customerForm) {
+		log.info("sp:web_lygrs_baodan_analy(?,?,?,?)");
+		this.getJdbcTemplate().execute("{call web_lygrs_baodan_analy(?,?,?,?)}", new CallableStatementCallback() {
+			public Object doInCallableStatement(CallableStatement cs)
+					throws SQLException, DataAccessException {
+				cs.setString("sv", ds.cursdt);
+				cs.setString("ev", ds.curedt);
+				cs.setString("agtacc", customerForm.getQ_agtacc());
+				cs.setInt("mode", customerForm.getBaomode());
+				cs.execute();
+				ResultSet rs = cs.getResultSet();
+				int rid = 0;
+				int updateCount = -1;
+				ds.list = new ArrayList();
+				do
+				{
+					updateCount = cs.getUpdateCount();
+					if(updateCount != -1)
+					{	
+						cs.getMoreResults();
+						continue;
+					}
+					rs = cs.getResultSet();
+					if(null != rs)
+					{
+						while(rs.next())
+						{
+							if(rid == 0)
+							{
+								Map map = new HashMap();
+								VTJime.putMapDataByColName(map, rs);
+								ds.map = map;
+							}
+							else if(rid ==1)
+							{
+								Map map = new HashMap();
+								VTJime.putMapDataByColName(map, rs);
+								ds.list.add(map);
+							}
+						}
+					}
+					if(rs != null)
+					{
+						cs.getMoreResults();
+						rid++;
+						continue;
+					}
+				}
+				while(!(updateCount == -1 && rs == null));
+				return null;
+			}
+		});
+	}
+
+	public void exportBaodanTotalInfo(final CustomerForm customerForm, final HttpServletResponse response, final DotSession ds) {
+		final String baodan_files[] = {"baodan_total.xls","baodan_total_agent.xls"};
+		log.info("sp:web_lygrs_baodan_analy(?,?,?,?)");
+		this.getJdbcTemplate().execute("{call web_lygrs_baodan_analy(?,?,?,?)}", new CallableStatementCallback() {
+			public Object doInCallableStatement(CallableStatement cs)
+					throws SQLException, DataAccessException {
+				cs.setString("sv", ds.cursdt);
+				cs.setString("ev", ds.curedt);
+				cs.setString("agtacc", customerForm.getQ_agtacc());
+				cs.setInt("mode", customerForm.getBaomode());
+				cs.execute();
+				//
+				String expFile = "";
+				if(customerForm.getBaomode()==1)
+				{
+					expFile = baodan_files[1];
+				}
+				else
+				{
+					expFile = baodan_files[0];
+				}
+				ResultSet rs = cs.getResultSet();
+				String filePath = ServletActionContext.getServletContext().getRealPath("excelTemplate")+"/"+expFile;
+				//
+				String dataType[]=new String[60];//Data type
+				String FieldName[]=new String[60];//Data type
+				HSSFWorkbook workBook = null;
+				//String tempFile = null;
+				try 
+				{
+					File file = new File(filePath);
+					if(file.exists() && file.isFile())
+					{
+						workBook = new HSSFWorkbook(new FileInputStream(filePath));
+						HSSFSheet sheet = workBook.getSheetAt(0);
+				        HSSFCell cell;
+				        HSSFRow row1 = sheet.getRow(1);	//HeadRowNum  
+				        HSSFRow row2 = sheet.getRow(2);	//HeadRowNum 
+				        for(int i=0;i<4;i++)
+				        {
+				        	if(null!=row1) 
+							{
+				        		cell=row1.getCell(i);
+								if (null!=cell)
+								{
+									FieldName[i]=cell.getStringCellValue();
+									cell.setCellValue("");
+								}
+								else
+								{
+									FieldName[i]="^";
+								}
+							}
+				        	if (null!=row2)
+							{
+								cell=row1.getCell(i);
+								if (null!=cell)
+								{
+									dataType[i]=cell.getStringCellValue();
+									cell.setCellValue("");
+								}
+							}
+				        }
+				        //
+				        HSSFCellStyle style = workBook.createCellStyle();
+				        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+				        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+				        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
+				        style.setBorderTop(HSSFCellStyle.BORDER_THIN);
+				        //
+				        int i=0;
+				        //
+				        int rid = 0;
+						int updateCount = -1;
+						do
+						{
+							updateCount = cs.getUpdateCount();
+							if(updateCount != -1)
+							{	
+								cs.getMoreResults();
+								continue;
+							}
+							rs = cs.getResultSet();
+							if(null != rs)
+							{
+								while(rs.next())
+								{
+									if(rid == 0)
+									{
+										System.out.println("select1");
+									}
+									else if(rid ==1)
+									{
+										//export data
+										row1 = sheet.getRow(i+1);
+										 if(null==row1) row1=sheet.createRow(i+1);
+										 for(int j=0;j<4;j++)
+										 {
+											 cell = row1.getCell(j);
+											 if (null==cell) cell = row1.createCell(j);
+											 if(null!=cell) cell.setCellStyle(style);
+											 if(null!= cell && null!=FieldName[j] && FieldName[j]!="^")
+											 {
+												 String excelData = getDecimalPoint((String)rs.getString(FieldName[j])); 
+												 System.out.println("excelData:"+excelData);
+												 if(null!=dataType[j] && dataType[j].equals("N"))
+												 {
+													 if(null!=excelData && excelData.length()>0)
+													 {
+														 cell.setCellValue(Double.parseDouble(excelData));
+													 }
+												 }
+												 else
+												 {
+													 cell.setCellValue(excelData); 
+												 }
+											 }
+										 }//end for
+										 i++;
+									}
+								}
+							}
+							if(rs != null)
+							{
+								cs.getMoreResults();
+								rid++;
+								continue;
+							}
+						}
+						while(!(updateCount == -1 && rs == null));
+				        
+				        //
+					}
+					else
+					{
+						System.out.println("file not exist!");
+					}
+				}
+				catch (Exception e) 
+				{
+					e.printStackTrace();
+				}
+				HSSFWorkbook wb= workBook;
+				//
+				try {
+					response.reset();
+					response.setHeader("Content-Disposition", "attachment;filename=" + expFile);
+					response.setContentType("application/vnd.ms-excel;charset=UTF-8");	
+					wb.write(response.getOutputStream());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				return null;
+			}
+		});
+	}
+	
+
+	public static String getDecimalPoint(String str)
+	{
+		String substr = "";
+		int p = str.indexOf(".");
+		if(p > 0)
+		{
+			substr = str.substring(0, p+3);
+		}
+		return substr;
+	}
+
+	public void addCallTimes(final CustomerForm customerForm) {
+		log.info("sp:web_lygrs_addcalltimes(?)");
+		this.getJdbcTemplate().execute("{call web_lygrs_addcalltimes(?)}", new CallableStatementCallback() {
+			public Object doInCallableStatement(CallableStatement cs)
+					throws SQLException, DataAccessException {
+				cs.setInt("cid", customerForm.getCid());
 				cs.execute();
 				return null;
 			}

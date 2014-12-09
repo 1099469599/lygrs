@@ -232,30 +232,6 @@ function cancelYuyDateTime(cid,yflag)
 		}
 	});
 }
-
-//设置隐藏标记
-function setHideFlag(obj,cid)
-{
-	var hf;
-	if(obj.checked==true)
-	{
-		hf=1;
-	}
-	else
-	{
-		hf=0
-	}
-	$.ajax({
-		cache:false,
-		async:false,
-		type:"post",
-		data:{cid:cid,hideflag:hf},
-		url:"setHideFlag.action",
-		success: function(data) {
-			alert("设置成功！");
-		}
-	});
-}
 /*****************************************************************************************/
 /*************************************** 弹屏 ********************************************/
 /*****************************************************************************************/
@@ -280,3 +256,20 @@ function saveTanpinBtn()
 /**************************************************************/
 /************************* call *******************************/
 /**************************************************************/
+
+function addCallTime(cid)
+{
+	var datajson = {"cid":cid};
+	var url = 'addCallTime.action';
+	$.ajax({
+        type: "POST",
+        url: url,
+        data: datajson,
+        success: function(){
+			//alert("设置成功");
+        },
+        error: function () {
+        	//alert("设置失败");
+        }
+    });
+}

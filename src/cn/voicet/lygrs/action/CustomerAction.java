@@ -73,7 +73,8 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 	public String importTelnum()
 	{
 		log.info("pino:"+customerForm.getPino()+", uploadExcel file:"+uploadExcel);
-		customerDao.batchImportData(uploadExcel, customerForm.getPino());
+		//customerDao.batchImportData(uploadExcel, customerForm.getPino());
+		customerDao.batchImportDataWithAgent(uploadExcel, customerForm.getPino());
 		log.info("import complete");
 		return null;
 	}
@@ -129,10 +130,13 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 	{
 		DotSession ds = DotSession.getVTSession(request);
 		customerForm.setQ_agtacc(ds.agttelnum);
-		String findAll = request.getParameter("f");
-		if(null!=findAll && findAll.equals("all"))
+		if(ds.roleID.equals("2"))
 		{
 			customerForm.setQ_agtacc(null);
+		}
+		if(ds.roleID.equals("3"))
+		{
+			customerForm.setQ_state(0);
 		}
 		log.info("q_pino:"+customerForm.getQ_pino()+", q_caryear:"+customerForm.getQ_caryear()+", q_chuxcs:"+customerForm.getQ_chuxcs()+", q_chephm:"+customerForm.getQ_chephm()+", q_uname:"+customerForm.getQ_uname()+", q_mobile:"+customerForm.getQ_mobile()+", q_agtacc:"+customerForm.getQ_agtacc());
 		List<Map<String, Object>> list = customerDao.queryCustomerInfo(customerForm);
@@ -227,18 +231,6 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 		log.info("cid:"+customerForm.getCid()+", yuydate:"+customerForm.getYuydate()+", yuytime:"+customerForm.getYuytime());
 		customerDao.setYuyueDateTime(customerForm);
 		log.info("set yuyue date time complte!");
-		return null;
-	}
-	
-	/**
-	 * 设置隐藏标记
-	 * @return
-	 */
-	public String setHideFlag()
-	{
-		log.info("cid:"+customerForm.getCid()+", hideflag:"+customerForm.getHideflag());
-		customerDao.setHideFlag(customerForm);
-		log.info("set hide flag complte!");
 		return null;
 	}
 	
@@ -356,4 +348,153 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 		this.alist = alist;
 	}
 	
+	
+	/*************************************************************/
+	/********************* 2014-12-08需求补充  ************************/
+	/*************************************************************/
+	/**
+	 * 按座席统计各座席的成功数，失败数(对逾期自动删除的不在统计之列)
+	 */
+	public String status()
+	{
+		DotSession ds = DotSession.getVTSession(request);
+		log.info("form cts:"+ds.curCTS+", sdt:"+customerForm.getSdt()+", edt:"+customerForm.getEdt());
+		if(null!=customerForm.getSdt() || null!=customerForm.getEdt())
+		{
+			ds.cursdt = customerForm.getSdt();
+			ds.curedt = customerForm.getEdt();
+		}
+		log.info("ds cursdt:"+ds.cursdt+", curedt:"+ds.curedt);
+		List<Map<String, Object>> list = customerDao.queryCustomerStatus(ds);
+		request.setAttribute("statusList", list);
+		return "customerStatusPage";
+	}
+	
+	public String exportStatus()
+	{
+		DotSession ds = DotSession.getVTSession(request);
+		log.info("form cts:"+ds.curCTS+", sdt:"+customerForm.getSdt()+", edt:"+customerForm.getEdt());
+		if(null!=customerForm.getSdt() || null!=customerForm.getEdt())
+		{
+			ds.cursdt = customerForm.getSdt();
+			ds.curedt = customerForm.getEdt();
+		}
+		log.info("ds cursdt:"+ds.cursdt+", curedt:"+ds.curedt);
+		//
+		customerDao.exportCustomerStatus(response, ds);
+		return null;
+	}
+	
+	/**
+	 * 客户资料归属查询
+	 * 话务人员帐号可以通过车牌号查看库中所有客户的车牌号及归属座席姓名(逾期删除的不在统计之列)
+	 */
+	public String guishu()
+	{
+		if(null==customerForm.getQ_chephm() || customerForm.getQ_chephm().equals(""))
+		{
+			customerForm.setQ_chephm(null);
+		}
+		log.info("chephm:"+customerForm.getQ_chephm());
+		List<Map<String, Object>> list = customerDao.queryCustomerGuishu(customerForm);
+		request.setAttribute("gsList", list);
+		return "customerGuishuPage";
+	}
+	
+	/**
+	 * 工作进展查看
+	 * @return
+	 */
+	public String workjz()
+	{
+		DotSession ds = DotSession.getVTSession(request);
+		customerDao.queryWorkJinZhan(ds);
+		request.setAttribute("c1Map", ds.lygagtMap1);
+		request.setAttribute("c2Map", ds.lygagtMap2);
+		ds.lygagtMap1=null;
+		ds.lygagtMap2=null;
+		return "workjzPage";
+	}
+	
+	/**
+	 * 设置状态
+	 * @return
+	 */
+	public String setCustomerState()
+	{
+		log.info("cid:"+customerForm.getCid()+", state:"+customerForm.getState());
+		customerDao.setCustomerState(customerForm);
+		log.info("set state complete!");
+		return null;
+	}
+	
+	public String saveBaodan()
+	{
+		log.info("cid:"+customerForm.getCid()+", baofei:"+customerForm.getBaofei()+", baodan:"+customerForm.getBaodan()+", baoend:"+customerForm.getBaoend());
+		customerDao.saveBaodanInfo(customerForm);
+		return null;
+	}
+	
+	/**
+	 * 管理员保费统计
+	 * @return
+	 */
+	public String baofeianaly()
+	{
+		DotSession ds = DotSession.getVTSession(request);
+		log.info("form cts:"+ds.curCTS+", sdt:"+customerForm.getSdt()+", edt:"+customerForm.getEdt());
+		if(null!=customerForm.getSdt() || null!=customerForm.getEdt())
+		{
+			ds.cursdt = customerForm.getSdt();
+			ds.curedt = customerForm.getEdt();
+		}
+		log.info("ds cursdt:"+ds.cursdt+", curedt:"+ds.curedt);
+		log.info("agtacc:"+customerForm.getQ_agtacc()+", baomode:"+customerForm.getBaomode());
+		customerDao.queryBaoTotalInfo(ds,customerForm);
+		request.setAttribute("baoList", ds.list);
+		ds.list=null;
+		//放务员列表
+		alist = customerDao.queryAgentList();
+		return "baofeiTotal";
+	}
+	
+	/**
+	 * 查询未接来电
+	 * @return
+	 */
+	public String missCall()
+	{
+		DotSession ds = DotSession.getVTSession(request);
+		log.info("agttelnum:"+ds.agttelnum);
+		List<Map<String, Object>> list = customerDao.queryMissCall(ds);
+		ds.agtlosttime=0;
+		request.setAttribute("mcList", list);
+		return "missCallPage";
+	}
+	
+	/**
+	 * 导出保单汇总信息
+	 * @return
+	 */
+	public String exportBaodan()
+	{
+		DotSession ds = DotSession.getVTSession(request);
+		log.info("form cts:"+ds.curCTS+", sdt:"+customerForm.getSdt()+", edt:"+customerForm.getEdt());
+		if(null!=customerForm.getSdt() || null!=customerForm.getEdt())
+		{
+			ds.cursdt = customerForm.getSdt();
+			ds.curedt = customerForm.getEdt();
+		}
+		log.info("ds cursdt:"+ds.cursdt+", curedt:"+ds.curedt);
+		log.info("q_agtacc:"+customerForm.getQ_agtacc()+", baomode:"+customerForm.getBaomode());
+		customerDao.exportBaodanTotalInfo(customerForm, response, ds);
+		return null;
+	}
+	
+	public String addCallTime()
+	{
+		log.info("cid:"+customerForm.getCid());
+		customerDao.addCallTimes(customerForm);
+		return null;
+	}
 }

@@ -26,7 +26,10 @@
 </head>
 <body>
 <div id="contentWrap">
-	<h3 class="h3_title">客户资料管理&nbsp;</h3>
+	<h3 class="h3_title">
+		<c:if test="${sessionScope.vts.roleID eq 2 }">客户资料管理</c:if>
+		<c:if test="${sessionScope.vts.roleID eq 3 }">我的客户资料</c:if>
+	</h3>
    	<form name="form1" action="<c:url value='/customer-query.action'/>" method="post">
    	<input type="hidden" id="pageflag" name="pageflag" value=""/>
 	<div class="queryDiv_h80">
@@ -63,11 +66,20 @@
 		        	</c:otherwise>
 		        </c:choose>
 	        </li>
+	        <li>
+	        	<label>状态：</label>
+	        	<c:if test="${sessionScope.vts.roleID eq 2 }">
+	        		<s:select name="q_state" list="#application.vta.GetList('customerstate2')" listKey="id" listValue="str" value="q_state"></s:select>
+	        	</c:if>
+	        	<c:if test="${sessionScope.vts.roleID eq 3 }">
+	        		<s:select name="q_state" list="#{0:'跟踪'}" listKey="key" listValue="value" value="q_state"></s:select>
+	        	</c:if>
+	        </li>
 	        
 	        <li><input type="submit" class="btn4" value="查&nbsp;&nbsp;询"/></li>
 	        <li>
 	        	<c:if test="${sessionScope.vts.roleID eq 1 or sessionScope.vts.roleID eq 2}">
-	        		<input type="button" onclick="location.href='${pageContext.request.contextPath }/customer-exportAll.action?q_pino=${q_pino }&q_caryear=${q_caryear }&q_chuxcs=${q_chuxcs }&q_chephm=${q_chephm }&q_uname=${q_uname }&q_mobile=${q_mobile }&q_agtacc=${q_agtacc }'" class="btn4" value="导&nbsp;&nbsp;出"/>
+	        		<input type="button" onclick="location.href='${pageContext.request.contextPath }/customer-exportAll.action?q_pino=${q_pino }&q_caryear=${q_caryear }&q_chuxcs=${q_chuxcs }&q_chephm=${q_chephm }&q_uname=${q_uname }&q_mobile=${q_mobile }&q_agtacc=${q_agtacc }&q_state=${q_state }'" class="btn4" value="导&nbsp;&nbsp;出"/>
 	        	</c:if>
 	        </li>
 		</ul>
@@ -79,23 +91,27 @@
                  <tr>
                      <th width="6%">批次</th>
                      <th width="6%">车牌号码</th>
+                     <th width="4%">状态</th>
                      <th width="4%">车龄</th>
                      <th width="4%">出险次数</th>
                      <c:if test="${sessionScope.vts.roleID eq 3 }">
                      <th width="6%">预约时间</th>
                      </c:if>
-                     <th width="6%">客户姓名</th>
+                     <th width="4%">客户姓名</th>
                      <th width="6%">手机</th>
+                     <c:if test="${sessionScope.vts.roleID eq 3 }">
+                     <th width="2%" title="已呼叫次数">*</th>
+                     </c:if>
                      <th width="8%">备注信息</th>
                      <c:if test="${sessionScope.vts.roleID eq 1 or sessionScope.vts.roleID eq 2 }">
                      <th width="6%">所属话务员</th>
                      </c:if>
-                     <th width="14%">操作</th>
+                     <th width="10%">操作</th>
                  </tr>
              </thead>
              <tbody class="tab_tbody" id="movies">
 				<c:forEach items="${cList }" var="ls" varStatus="status">
-				<tr id="rowIndex_${status.count }">
+				<tr id="rowIndex_${status.count }" align="center">
 					<c:if test="${ls.pdt_l eq 2}">
 						<c:set var="ispdt" value="color:#DC143C; font-weight:bold;"></c:set>
 						<c:set var="gqtxt" value="已过期"></c:set>
@@ -117,6 +133,7 @@
 						</c:choose>
 					</td>
 					<td>${ls.cp }</td>
+					<td>${ls.state }</td>
 					<td>${ls.byear }</td>
 					<td>${ls.ot }</td>
 					<c:if test="${sessionScope.vts.roleID eq 3 }">
@@ -141,6 +158,9 @@
 						</c:choose>
 					</td>
 					<td>${ls.mobile }</td>
+					<c:if test="${sessionScope.vts.roleID eq 3 }">
+					<td id="call_time">${ls.calltimes }</td>
+					</c:if>
 					<td title="${ls.noteinfo }">
 						<c:set var="nilen" value="${fn:length(ls.noteinfo) }"/>
 						<c:choose>
@@ -166,7 +186,7 @@
 								</c:otherwise>
 							</c:choose>				
 						</c:if>
-						<a href="javascript:viewDetail('${ls.cid }','${q_pino }','${q_caryear }','${q_chuxcs }','${q_chephm }','${q_uname }','${q_mobile }','${q_agtacc }')">查看</a>&nbsp;&nbsp;
+						<a href="javascript:viewDetail('${ls.cid }','${q_pino }','${q_caryear }','${q_chuxcs }','${q_chephm }','${q_uname }','${q_mobile }','${q_agtacc }','${q_state }')">查看</a>&nbsp;&nbsp;
 					</td>
 				</tr>
 				</c:forEach>
@@ -203,6 +223,7 @@
 		<input type="hidden" id="vq_uname" name="q_uname"/>
 		<input type="hidden" id="vq_mobile" name="q_mobile"/>
 		<input type="hidden" id="vq_agtacc" name="q_agtacc"/>
+		<input type="hidden" id="vq_state" name="q_state"/>
 	</form>
     
 </div>
@@ -330,10 +351,13 @@ $(function(){
 	{
 		var ocx = $("#OCXPlugin",window.parent.document)[0];
 		var callingTel = $("#calling_num",window.parent.document)[0];
-		//ocx.doDial(mobile);
 		var callid = ocx.GetCallID();
 		ocx.doDialEx(mobile,"b,"+cid+","+callid);
 		callingTel.innerHTML="正在呼叫："+mobile;
+		var ct = $("#call_time")[0].innerHTML; 
+		$("#call_time")[0].innerHTML=parseInt(ct)+1;
+		//添加呼叫次数
+		addCallTime(cid);
 	}
 	
 </script>
@@ -373,5 +397,6 @@ $(function(){
     });    
   }   
 </script>
+<script type="text/javascript" src="<c:url value='js/customer_info.js?v=21'/>"></script>
 </body>
 </html>

@@ -25,7 +25,7 @@
 </head>
 <body>
 <div id="contentWrap">
-	<h3 class="h3_title">通话及录音查询&nbsp;</h3>
+	<h3 class="h3_title">通话记录查询&nbsp;</h3>
    	<form name="form1" action="<c:url value='/callrecord-list.action'/>" method="post">
 	<div class="queryDiv_h80">
 	   	<ul class="queryWrap_ul">

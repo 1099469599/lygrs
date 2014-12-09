@@ -61,6 +61,7 @@ public class CustomerForm {
 	private String q_uname;
 	private String q_mobile;
 	private String q_agtacc;
+	private int q_state = -1;
 	//
 	
 	//来电弹屏主叫号码 
@@ -72,6 +73,20 @@ public class CustomerForm {
 	
 	//appconfig.xml中配置
 	private String f;
+	
+	/**
+	 * 2014-12-08 add
+	 */
+	private String sdt;	//统计开始日期
+	private String edt;	//统计结束日期
+	
+	private int state;
+	
+	private String baofei;	//保费
+	private String baodan;	//保单号
+	private String baoend;	//到期日期
+	
+	private int baomode;	//统计保费模式
 	
 	public String getPino() {
 		return pino;
@@ -331,5 +346,53 @@ public class CustomerForm {
 	}
 	public void setTalkcount(int talkcount) {
 		this.talkcount = talkcount;
+	}
+	public String getSdt() {
+		return sdt;
+	}
+	public void setSdt(String sdt) {
+		this.sdt = sdt;
+	}
+	public String getEdt() {
+		return edt;
+	}
+	public void setEdt(String edt) {
+		this.edt = edt;
+	}
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
+	}
+	public String getBaofei() {
+		return baofei;
+	}
+	public void setBaofei(String baofei) {
+		this.baofei = baofei;
+	}
+	public String getBaodan() {
+		return baodan;
+	}
+	public void setBaodan(String baodan) {
+		this.baodan = baodan;
+	}
+	public String getBaoend() {
+		return baoend;
+	}
+	public void setBaoend(String baoend) {
+		this.baoend = baoend;
+	}
+	public int getBaomode() {
+		return baomode;
+	}
+	public void setBaomode(int baomode) {
+		this.baomode = baomode;
+	}
+	public int getQ_state() {
+		return q_state;
+	}
+	public void setQ_state(int qState) {
+		q_state = qState;
 	}
 }

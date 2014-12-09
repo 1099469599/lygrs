@@ -5,10 +5,10 @@
 	<role roleid="0" describle="未登录"></role>
 	<role roleid="1" describle="系统管理员">
 		<grp name="日常工作">
-			<fun name="系统参数设置" action="sysparam-init.action" />
+			<fun name="客户端配置" action="sysparam-init.action" />
 		</grp>
 	    <grp name="维护管理">
-	      	<fun name="话务员资料维护" action="agent-list.action" />
+	      	<fun name="座席资料维护" action="agent-list.action" />
 		</grp>
 	    <grp name="数据库">
 	      	<fun name="数据库维护" action="dbconfig.action" />
@@ -16,22 +16,25 @@
 	</role>
 	<role roleid="2" describle="业务管理员">
 	    <grp name="日常工作">
-	    	<fun name="客户资料管理" action="customer-query.action" />
-			<fun name="通话及录音查询" action="callrecord-list.action" />
-			<fun name="通话记录查询" action="agentanaly-answer.action" />
+			<fun name="客户归属查询" action="customer-guishu.action" />
+			<fun name="通话记录查询" action="callrecord-list.action" />
+			<fun name="接听情况统计" action="agentanaly-list.action" />
+			<fun name="跟单结果统计" action="customer-status.action" />
+			<fun name="保费汇总统计" action="customer-baofeianaly.action" />
 	    </grp>
 	    <grp name="维护管理">
-			<fun name="资料导入及分配" action="customer-importData.action" />
-	      	<fun name="客户资料管理" action="customer-query.action?f=all" />
-	      	<fun name="话务员资料维护" action="agent-list.action" />
-			<fun name="接听情况统计" action="agentanaly-list.action" />
-			<fun name="座席签入查询" action="agentanaly-online.action" />
-		</grp>
+			<fun name="客户资料导入" action="customer-importData.action" />
+	      	<fun name="客户资料管理" action="customer-query.action" />
+	      	<fun name="座席资料维护" action="agent-list.action" />
+	    </grp>
 	</role>
 	<role roleid="3" describle="话务员">
 		<grp name="日常工作">
-			<fun name="客户资料管理" action="customer-query.action" />
-			<fun name="通话记录查询" action="agentanaly-answer.action" />
+			<fun name="客户归属查询" action="customer-guishu.action" />
+			<fun name="我的客户资料" action="customer-query.action" />
+			<fun name="我的通话记录" action="agentanaly-answer.action" />
+			<fun name="座席工作概览" action="customer-workjz.action" />
+			<fun name="未接来电查看" action="customer-missCall.action" />
 	    </grp>
 	</role>
 	
@@ -64,5 +67,21 @@
 	<list name="succfail" describle="外呼结果">
 		<item id="1" name="成功" />
 		<item id="0" name="失败" />
+	</list>
+	<list name="customerstate" describle="客户资料状态">
+		<item id="0" name="跟踪" />
+		<item id="1" name="成功" />
+		<item id="2" name="失败" />
+	</list>
+	<list name="customerstate2" describle="客户资料状态">
+		<item id="-1" name="不限" />
+		<item id="0" name="跟踪" />
+		<item id="1" name="成功" />
+		<item id="2" name="失败" />
+	</list>
+	<list name="baodantotal" describle="保费保单汇总">
+		<item id="0" name="0:总体汇总" />
+		<item id="1" name="1:按话务员汇总" />
+		<item id="2" name="2:指定话务员按月汇总" />
 	</list>
 </dot2014>

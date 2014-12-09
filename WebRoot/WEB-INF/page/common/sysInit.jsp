@@ -10,14 +10,8 @@
 </head>
 <body style="background:#E0EEFB;">
 <div id="dbCon">
-	<h3 class="h3_title">系统参数设置</h3>
+	<h3 class="h3_title" style="margin-top:60px;">客户端配置</h3>
 	<div class="sys_init_info">
-        <div class="lab_ipt_item">
-	    	<span class="lab120"></span>
-	        <div class="ipt-box">
-	            <span class="asterisk"></span>
-	        </div>
-	    </div>
         <div class="lab_ipt_item">
 	    	<span class="lab120">连接服务器：</span>
 	        <div class="ipt-box">
@@ -27,13 +21,13 @@
 	    <div class="lab_ipt_item">
 	    	<span class="lab120">端口：</span>
 	        <div class="ipt-box">
-	        	<input type="text" id="portx" name="port" value="" placeholder="端口号" maxlength="5" class="ipt_text_w50 inputDefault" />
+	        	<input type="text" id="portx" name="port" value="" placeholder="端口号" maxlength="5" class="ipt_text_w150 inputDefault" />
 	        </div>
 	    </div>
 	    <div class="lab_ipt_item">
 	    	<span class="lab120">客户端账号：</span>
 	        <div class="ipt-box">
-	        	<input type="text" id="accountx" name="port" value="" placeholder="客户端账号" maxlength="10" class="ipt_text_w50 inputDefault" />
+	        	<input type="text" id="accountx" name="port" value="" placeholder="客户端账号" maxlength="10" class="ipt_text_w150 inputDefault" />
 	        </div>
 	    </div>
 	    <div class="lab_ipt_item">
@@ -42,14 +36,14 @@
 	        	<input type="button" class="btn4" value="链接" onclick="connectNTSServerBtn('${sessionScope.vts.account }','${sessionScope.vts.password }')"/>
 	        </div>
 	    </div>
-	    <div style="width:480px; height:1px; border-bottom:1px dashed #808080;"></div>
-	    
 	    <div class="lab_ipt_item">
 	    	<span class="lab120"></span>
 	        <div class="ipt-box">
 	            <span class="asterisk"></span>
 	        </div>
 	    </div>
+	    <div style="width:380px; height:1px; border-bottom:1px dashed #808080;"></div>
+	    
 	    <div class="lab_ipt_item">
 	    	<span class="lab120">绑定分机：</span>
 	        <div class="ipt-box">
@@ -60,6 +54,12 @@
 	    	<span class="lab120">&nbsp;</span>
 	        <div class="ipt-box">
 	        	<input type="button" class="btn4" value="绑定" onclick="bindSubTelBtn()"/>
+	        </div>
+	    </div>
+	    <div class="lab_ipt_item">
+	    	<span class="lab120"></span>
+	        <div class="ipt-box">
+	            <span class="asterisk"></span>
 	        </div>
 	    </div>
     </div>

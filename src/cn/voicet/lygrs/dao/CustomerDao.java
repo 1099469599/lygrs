@@ -14,6 +14,7 @@ public interface CustomerDao{
 	List<Map<String, Object>> queryPiNo();
 	void savePiNo(CustomerForm customerForm);
 	void batchImportData(File uploadExcel, String pino);
+	void batchImportDataWithAgent(File uploadExcel, String pino);
 	List<Map<String, Object>> queryAgentList();
 	void allocAgentByPino(CustomerForm customerForm);
 	void clearPino(CustomerForm customerForm);
@@ -28,9 +29,20 @@ public interface CustomerDao{
 	//
 	void saveCustomerInfo(CustomerForm customerForm);
 	void setYuyueDateTime(CustomerForm customerForm);
-	void setHideFlag(CustomerForm customerForm);
 	//
 	void queryTanpinInfo(DotSession ds, CustomerForm customerForm);
 	void saveTalkContent(CustomerForm customerForm);
+	//
+	List<Map<String, Object>> queryCustomerStatus(DotSession ds);
+	void exportCustomerStatus(HttpServletResponse response, DotSession ds);
+	List<Map<String, Object>> queryCustomerGuishu(CustomerForm customerForm);
+	void setCustomerState(CustomerForm customerForm);
+	void saveBaodanInfo(CustomerForm customerForm);
+	void queryWorkJinZhan(DotSession ds);
+	List<Map<String, Object>> queryMissCall(DotSession ds);
+	void queryBaoTotalInfo(DotSession ds, CustomerForm customerForm);
+	void exportBaodanTotalInfo(CustomerForm customerForm, HttpServletResponse response, DotSession ds);
+	void addCallTimes(CustomerForm customerForm);
+	
 	
 }

@@ -60,6 +60,10 @@ public class UserAction extends BaseAction implements ModelDriven<UserForm>{
 		{
 			json.put("status", "ok");
 			log.info("login complete");
+			//
+			int agt_lost_time = userDao.queryMissCallTimes(ds);
+			log.info("agt_lost_time:"+agt_lost_time);
+			ds.agtlosttime = agt_lost_time; 
 		}
 		else
 		{
