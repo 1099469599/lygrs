@@ -1235,8 +1235,9 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 		if(p > 0)
 		{
 			substr = str.substring(0, p+3);
+			return substr;
 		}
-		return substr;
+		return str;
 	}
 
 	public void addCallTimes(final CustomerForm customerForm) {
