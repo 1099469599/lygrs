@@ -876,7 +876,7 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 				ResultSet rs = cs.getResultSet();
 				//
 				String filePath = ServletActionContext.getServletContext().getRealPath("excelTemplate")+"/"+"gendan.xls";
-				HSSFWorkbook wb=VTJime.fromRStoExcel(filePath, 1, true, rs, 5);
+				HSSFWorkbook wb=VTJime.fromRStoExcel(filePath, 1, true, rs, 6);
 				try {
 					response.reset();
 					response.setHeader("Content-Disposition", "attachment;filename=" + "gendan.xls");
