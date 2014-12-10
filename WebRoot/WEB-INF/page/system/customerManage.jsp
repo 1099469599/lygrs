@@ -67,12 +67,9 @@
 		        </c:choose>
 	        </li>
 	        <li>
-	        	<label>状态：</label>
 	        	<c:if test="${sessionScope.vts.roleID eq 2 }">
+	        		<label>状态：</label>
 	        		<s:select name="q_state" list="#application.vta.GetList('customerstate2')" listKey="id" listValue="str" value="q_state"></s:select>
-	        	</c:if>
-	        	<c:if test="${sessionScope.vts.roleID eq 3 }">
-	        		<s:select name="q_state" list="#{0:'跟踪'}" listKey="key" listValue="value" value="q_state"></s:select>
 	        	</c:if>
 	        </li>
 	        
@@ -91,7 +88,9 @@
                  <tr>
                      <th width="6%">批次</th>
                      <th width="6%">车牌号码</th>
+                     <c:if test="${sessionScope.vts.roleID eq 2 }">
                      <th width="4%">状态</th>
+                     </c:if>
                      <th width="4%">车龄</th>
                      <th width="4%">出险次数</th>
                      <c:if test="${sessionScope.vts.roleID eq 3 }">
@@ -133,7 +132,9 @@
 						</c:choose>
 					</td>
 					<td>${ls.cp }</td>
+					<c:if test="${sessionScope.vts.roleID eq 2 }">
 					<td>${ls.state }</td>
+					</c:if>
 					<td>${ls.byear }</td>
 					<td>${ls.ot }</td>
 					<c:if test="${sessionScope.vts.roleID eq 3 }">

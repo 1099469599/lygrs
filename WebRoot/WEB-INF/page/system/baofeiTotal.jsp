@@ -53,10 +53,7 @@
 	        	</c:choose>
 	        	<div id="hideagt" style="${agtshow }">
 	        	<label>所属话务员：</label>
-	        		<s:select list="alist" onchange="selectAgent(this)"  cssStyle="height:22px;" headerKey="" headerValue="--请选择话务员--" listKey="telnum" listValue="telagt" name="q_agtacc" value="q_agtacc"></s:select>
-	        		<!--
-	        		<input type="text" name="q_agtacc" class="ipt100 inputDefault" value="${q_agtacc }" maxlength="10"/>
-	        		-->
+	        		<s:select list="alist" cssStyle="height:22px;" headerKey="" headerValue="--请选择话务员--" listKey="telnum" listValue="telagt" name="q_agtacc" value="q_agtacc"></s:select>
 	        	</div>
 	        </li>
 	        <li><input type="submit" class="btn4" value="查&nbsp;&nbsp;询"/></li>
