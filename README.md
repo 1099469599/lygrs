@@ -11,3 +11,14 @@
 解决IE浏览器Activex控件不加载问题
 www.iefans.net/ie-diaoyong-weiqianming-activex-kongjian-shezhi-fangfa/
 
+====
+lygrs_tomcat_memory_set
+
+-XX:PermSize=128m
+-XX:MaxPermSize=256m
+-Xss256k
+-XX:NewSize=768m
+
+Initial memory pool:1124MB
+Maximum memory pool:1324MB
+
