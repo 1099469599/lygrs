@@ -1,6 +1,6 @@
 $(function(){
-	$("#waittimex").bind("blur",checkWaittime);
-	$("#calltimex").bind("blur",checkCalltime);
+	//$("#waittimex").bind("blur",checkWaittime);
+	//$("#calltimex").bind("blur",checkCalltime);
 });
 
 function checkWaittime()
@@ -46,8 +46,8 @@ function checkCalltime()
 
 function queryCall()
 {
-	if(!checkWaittime()) return false;
-	if(!checkCalltime()) return false;
+	//if(!checkWaittime()) return false;
+	//if(!checkCalltime()) return false;
 	document.form1.submit();
 }
 //play music

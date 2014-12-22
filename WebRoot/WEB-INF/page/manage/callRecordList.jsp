@@ -44,15 +44,15 @@
 			</li>	       
 	        <li>
 	        	<label>等待时长：</label>
-	        	<input type="text" id="waittimex" name="calltxt" class="ipt50 inputDefault" value="${calltxt[3] }"/>
+	        	<input type="text" id="waittimex" name="calltxt" title="如:>0" class="ipt50 inputDefault" value="${calltxt[3] }"/>
 	        	<span class="asterisk"></span>
 	        </li>
 	        <li>
 	        	<label>通话时长：</label>
-	        	<input type="text" id="calltimex" name="calltxt" class="ipt50 inputDefault" value="${calltxt[4] }"/>
+	        	<input type="text" id="calltimex" name="calltxt" title="如:>0" class="ipt50 inputDefault" value="${calltxt[4] }"/>
 	        	<span class="asterisk"></span>
 	        </li>
-	        <li><label>话务员号码：</label><input type="text" name="calltxt" class="ipt50 inputDefault" value="${calltxt[5] }"/></li>
+	        <li><label>话务员号码：</label><input type="text" name="calltxt" class="ipt100 inputDefault" value="${calltxt[5] }"/></li>
 	        <li><input type="button" onclick="queryCall()" class="btn4" value="查&nbsp;&nbsp;询"/></li>
 		</ul>
 	</div>
@@ -72,8 +72,8 @@
                      <th width="4%">等待</th>
                      <th width="4%">通话</th>
                      <th width="6%">结束方式</th>
-                     <th width="6%">话务员</th>
-                     <th width="8%">操作</th>
+                     <th width="7%">话务员</th>
+                     <th width="7%">操作</th>
                  </tr>
              </thead>
              <tbody id="movies">
@@ -128,7 +128,7 @@
 	        next : "下一页",
 	        last : "尾页",
 	       	startPage : 1,
-	        perPage : 24,
+	        perPage : 22,
 	        keyBrowse:true,
 	        delay : 0,
 	        callback : function( pages, items ){
