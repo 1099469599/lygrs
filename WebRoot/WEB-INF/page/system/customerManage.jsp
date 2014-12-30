@@ -88,12 +88,12 @@
 		<table cellpadding="0" cellspacing="0" class="tab_border">
 			<thead class="tab_head">
                  <tr>
-                     <th width="6%">批次</th>
+                     <th width="8%">批次</th>
                      <th width="6%">车牌号码</th>
                      <c:if test="${sessionScope.vts.roleID eq 2 }">
-                     <th width="4%">状态</th>
+                     <th width="2%">状态</th>
                      </c:if>
-                     <th width="4%">车龄</th>
+                     <th width="2%">车龄</th>
                      <th width="4%">出险次数</th>
                      <c:if test="${sessionScope.vts.roleID eq 3 }">
                      <th width="6%">预约时间</th>
@@ -160,7 +160,13 @@
 							<c:otherwise>${ls.uname }</c:otherwise>
 						</c:choose>
 					</td>
-					<td>${ls.mobile }</td>
+					<td>
+						<c:set var="mobilelen" value="${fn:length(ls.mobile) }"/>
+						<c:choose>
+							<c:when test="${mobilelen gt 12 }">${fn:substring(ls.uname,0,11) }..</c:when>
+							<c:otherwise>${ls.mobile }</c:otherwise>
+						</c:choose>
+					</td>
 					<c:if test="${sessionScope.vts.roleID eq 3 }">
 					<td id="call_time">${ls.calltimes }</td>
 					</c:if>
