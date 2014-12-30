@@ -39,11 +39,13 @@
 	        <li><label>出险次数：</label><input type="text" name="q_chuxcs" class="ipt60 inputDefault" value="${q_chuxcs }" placeholder="如:&gt;10" maxlength="8"/></li>
 	        <li><label>车牌号码：</label><input type="text" name="q_chephm" class="ipt100 inputDefault" value="${q_chephm }" maxlength="20"/></li>
 	        <li>
+	        	<!--	
 	        	<c:if test="${sessionScope.vts.roleID eq 1 or sessionScope.vts.roleID eq 2}">
 		        	<label>选择分配话务员：</label>
 					<s:select list="alist" onchange="selectAgent(this)"  cssStyle="height:22px;" headerKey="" headerValue="--请选择话务员--" listKey="telnum" listValue="telagt" value="#session.vts.dfagt"></s:select>
 					<input type="hidden" name="defaultAgent" id="selected_agt" value="${sessionScope.vts.dfagt }"/>
 				</c:if>
+				-->
 	        </li>
 		</ul>
 		<ul class="queryWrap_ul" style="margin-top:-4px;">
@@ -175,7 +177,9 @@
 					<td>
 						<c:if test="${sessionScope.vts.roleID eq 1 or sessionScope.vts.roleID eq 2 }">
 							<a href="javascript:deleteCustomerInfo('${ls.cid }','${status.count }')">删除</a>&nbsp;&nbsp;
+							<!--
 							<a href="javascript:fenPeiAgt('${ls.cid }','${status.count }')">分配</a>&nbsp;&nbsp;
+							-->
 						</c:if>
 						<c:if test="${sessionScope.vts.roleID eq 3 }">	
 							<c:choose>

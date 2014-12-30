@@ -19,6 +19,7 @@
 			<fun name="客户归属查询" action="customer-guishu.action" />
 			<fun name="通话记录查询" action="callrecord-list.action" />
 			<fun name="接听情况统计" action="agentanaly-list.action" />
+			<fun name="外呼情况统计" action="agentanaly-callout.action" />
 			<fun name="跟单结果统计" action="customer-status.action" />
 			<fun name="保费汇总统计" action="customer-baofeianaly.action" />
 	    </grp>

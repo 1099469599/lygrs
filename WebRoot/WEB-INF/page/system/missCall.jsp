@@ -33,6 +33,7 @@
                      <th width="10%">呼叫时间</th>
                      <th width="10%">来电号码</th>
                      <th width="10%">等待时长(秒)</th>
+                     <th width="10%">操作</th>
                  </tr>
              </thead>
              <tbody id="movies">
@@ -42,6 +43,9 @@
 					<td>${fn:substring(ls.callin,0,19) }</td>
 					<td>${ls.ani }</td>
 					<td>${ls.wait }</td>
+					<td>
+						<a href="javascript:callCustomer('${ls.ani }','0')">呼叫</a>&nbsp;&nbsp;
+					</td>
 				</tr>
 				</c:forEach>
 			</tbody>
@@ -103,6 +107,19 @@ document.onkeydown = function(e) {
 	}   
 	return true;
 }
+</script>
+<script type="text/javascript">
+	//呼叫
+	function callCustomer(mobile,cid)
+	{
+		var ocx = $("#OCXPlugin",window.parent.document)[0];
+		var callingTel = $("#calling_num",window.parent.document)[0];
+		var callid = ocx.GetCallID();
+		ocx.doDialEx(mobile,"b,"+cid+","+callid);
+		callingTel.innerHTML="正在呼叫："+mobile;
+		//添加呼叫次数
+		addCallTime(cid);
+	}
 </script>
 </body>
 </html>

@@ -26,7 +26,7 @@
 </head>
 <body>
 <div id="contentWrap">
-	<h3 class="h3_title">客户&nbsp;[${tpMap.uname }]&nbsp;的资料详情&nbsp;&nbsp;批次号&nbsp;[${tpMap.ids }]
+	<h3 class="h3_title" style="margin-top:2px;">客户&nbsp;[${tpMap.uname }]&nbsp;的资料详情&nbsp;&nbsp;批次号&nbsp;[${tpMap.ids }]
 		<span>
 			<input type="button" class="btn btn-primary" value="返回" onclick="document.form1.submit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
 		</span>
@@ -101,8 +101,12 @@
 			<div class="formtitle"><span>预约信息</span></div>
 			<div class="queryDiv_n">
 			   	<ul class="queryWrap_ul" style="padding-left:70px;">
-					<li><label>预约日期：</label><input type="text" id="yuydatex" name="yuydate" value="${fn:substring(tpMap.pdt,0,10) }" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'%y-%M-%d'})" class="Wdate inputDefault" style="width:90px; height:20px"/></li>
-			        <li><label>预约时间：</label><input type="text" id="yuytimex" name="yuytime" value="${fn:substring(tpMap.pdt,11,16) }" onclick="WdatePicker({dateFmt:'HH:mm',minDate:'%H:%m'})" class="Wdate inputDefault" style="width:90px; height:20px"/></li>
+					<li><label>预约日期时间：</label><input type="text" id="yuydatex" name="yuydate" value="${fn:substring(tpMap.pdt,0,19) }" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'%y-%M-%d %H:%m:%s'})" class="Wdate inputDefault" style="width:180px; height:20px"/></li>
+			        <li>
+			        	<!-- 
+			        	<label>预约时间：</label><input type="text" id="yuytimex" name="yuytime" value="${fn:substring(tpMap.pdt,11,16) }" onclick="WdatePicker({dateFmt:'HH:mm',minDate:'%H:%m'})" class="Wdate inputDefault" style="width:90px; height:20px"/>
+			        	 -->
+			        </li>
 			        <li><input type="button" class="btn4" value="确&nbsp;&nbsp;定" onclick="setYuyDateTime('${cid }','1')"/></li>
 			        <li>
 			        	<c:set var="yuyueriqi" value="${fn:substring(tpMap.pdt,0,10) }"></c:set>
@@ -149,7 +153,7 @@
 					<li><label>派送地址：</label><input type="text" name="address" value="${tpMap.addr }"  maxlength="100" class="ipt500"/></li>
 				</ul>
 			</div>
-			<div class="queryDiv_n">
+			<div class="queryDiv_n" style="height:142px;">
 			   	<ul class="queryWrap_ul" style="padding-left:70px;">
 					<li><label style="vertical-align:top;">备注信息：</label><textarea name="noteinfo" class="ipt_area_w300">${tpMap.noteinfo }</textarea></li>
 				</ul>
@@ -280,7 +284,7 @@
 <!--POP PLAYER END-->
 <script type="text/javascript" src="<c:url value='js/jquery.form-3.46.0.js?v=5'/>"></script>
 <script type="text/javascript" src="<c:url value='js/cts.js?v=2'/>"></script>
-<script type="text/javascript" src="<c:url value='js/customer_info.js?v=21'/>"></script>
+<script type="text/javascript" src="<c:url value='js/customer_info.js?v=27'/>"></script>
 <script type="text/javascript">
 	var ocx = $("#OCXPlugin",window.parent.document)[0];
 	var callingTel = $("#calling_num",window.parent.document)[0];

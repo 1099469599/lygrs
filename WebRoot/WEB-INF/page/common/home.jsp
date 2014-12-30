@@ -879,5 +879,9 @@
 	}
 	
 </script>
+<script type="text/javascript" for="OCXPlugin" event="OnRing(line,ani,dnis,param)">
+	var callingTel = document.getElementById("calling_num");
+	callingTel.innerHTML=ani+"&nbsp;正在接入...";
+</script>
 </body>
 </html>

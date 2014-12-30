@@ -96,4 +96,36 @@ public class AgentAnalyAction extends BaseAction implements ModelDriven<AgentFor
 		ds.list=null;
 		return "show_agent_online";
 	}
+	
+	/**
+	 * 外呼情况统计
+	 * @return
+	 */
+	public String callout()
+	{
+		DotSession ds = DotSession.getVTSession(request);
+		log.info("form sdt:"+agentForm.getSdt()+", edt:"+agentForm.getEdt());
+		if(null!=agentForm.getSdt() || null!=agentForm.getEdt())
+		{
+			ds.cursdt = agentForm.getSdt();
+			ds.curedt = agentForm.getEdt();
+		}
+		log.info("ds cursdt:"+ds.cursdt+", curedt:"+ds.curedt);
+		agentDao.queryAgentCalloutList(ds);
+		request.setAttribute("calloutList", ds.list);
+		ds.list=null;
+		return "show_agent_callout";
+	}
+	
+	/**
+	 * 导出外呼结果数据
+	 * @return
+	 */
+	public String exportCallout()
+	{
+		DotSession ds = DotSession.getVTSession(request);
+		log.info("sdt:"+ds.cursdt+", edt:"+ds.curedt);
+		agentDao.exportCalloutData(ds, response);
+		return null;
+	}
 }

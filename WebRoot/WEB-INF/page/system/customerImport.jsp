@@ -9,7 +9,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
  	<meta http-equiv="cache-control" content="no-cache"/>
  	<meta http-equiv="expires" content="0"/>
-	<link type="text/css" href="<c:url value='css/common.css?v=1'/>" rel="stylesheet" />
+	<link type="text/css" href="<c:url value='css/common.css?v=4'/>" rel="stylesheet" />
 	<link type="text/css" href="<c:url value='css/layout.css?v=3'/>" rel="stylesheet" />
 	<link type="text/css" href="<c:url value='layer/skin/layer.css'/>" rel="stylesheet" />
 	<script type="text/javascript" src="<c:url value='js/jquery-1.11.1.min.js'/>"></script>
@@ -20,7 +20,7 @@
 </head>
 <body>
 <div id="contentWrap">
-	<h3 class="h3_title">客户资料导入&nbsp;<span>点击<a href="${pageContext.request.contextPath }/excelTemplate/customer_importTemplate.xls">下载</a>模板文件</span></h3>
+	<h3 class="h3_title1">客户资料导入&nbsp;<span class="down">点击<a href="${pageContext.request.contextPath }/excelTemplate/customer_importTemplate.xls">下载</a>模板文件</span></h3>
 	<form id="form1" name="form1" action="<c:url value='/customer-importData.action'/>" method="post">
 	
 	</form>
@@ -31,11 +31,9 @@
                      <th width="6%">批次号</th>
                      <th width="8%">创建日期</th>
                      <th width="4%">客户数</th>
-                     <!--  
                      <th width="4%">未分配数</th>
-                     -->
-                     <th width="16%">备注信息</th>
-                     <th width="12%" style="text-align:center">
+                     <th width="12%">备注信息</th>
+                     <th width="16%" style="text-align:center">
                      	<input type="button" onclick="savePiNo('add','','')" value="创建批次" class="btn btn-primary"/>
                      </th>
                  </tr>
@@ -46,9 +44,7 @@
 					<td>${ls.ids }</td>
 					<td>${fn:substring(ls.cdt,0,19) }</td>
 					<td>${ls.tn }</td>
-					<!--
 					<td>${ls.un }</td>
-					-->
 					<td title="${ls.noteinfo }">
 						<c:set var="notelen" value="${fn:length(ls.noteinfo) }"></c:set>
 						<c:choose>
@@ -59,7 +55,6 @@
 					<td>
 						<a href="javascript:savePiNo('edit','${ls.ids }','${ls.noteinfo }')">修改</a>&nbsp;&nbsp;
 						<a href="javascript:showSelFile('${ls.ids }')">导入</a>&nbsp;&nbsp;
-						<!--
 						<c:choose>
 							<c:when test="${ls.un gt 0 }">
 								<a href="javascript:alloc('${ls.ids }','${ls.un }','${fn:substring(ls.cdt,0,19) }','${ls.noteinfo }')">分配</a>&nbsp;&nbsp;	
@@ -68,7 +63,6 @@
 								<label style="color:#808080;">分配&nbsp;&nbsp;</label>
 							</c:otherwise>
 						</c:choose>
-						
 						<c:choose>
 							<c:when test="${ls.tn gt 0 and ls.tn ne ls.un }">
 								<a href="javascript:resetFenpei('${ls.ids }')">重置分配</a>&nbsp;&nbsp;	
@@ -77,7 +71,6 @@
 								<label style="color:#808080;">重置分配&nbsp;&nbsp;</label>
 							</c:otherwise>
 						</c:choose>
-						-->
 						<c:choose>
 							<c:when test="${ls.tn gt 0 }">
 								<a href="javascript:clearPino('${ls.ids }')">清空批次</a>&nbsp;&nbsp;	

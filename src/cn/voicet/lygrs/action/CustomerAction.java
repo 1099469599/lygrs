@@ -129,10 +129,9 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 	public String query()
 	{
 		DotSession ds = DotSession.getVTSession(request);
-		customerForm.setQ_agtacc(ds.agttelnum);
-		if(ds.roleID.equals("2"))
+		if(ds.roleID.equals("3"))
 		{
-			customerForm.setQ_agtacc(null);
+			customerForm.setQ_agtacc(ds.agttelnum);
 		}
 		if(ds.roleID.equals("3"))
 		{

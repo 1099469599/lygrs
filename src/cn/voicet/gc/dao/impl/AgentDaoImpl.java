@@ -221,4 +221,58 @@ public class AgentDaoImpl extends BaseDaoImpl implements AgentDao {
 		});
 	}
 
+	public void queryAgentCalloutList(final DotSession ds) {
+		log.info("sp:web_agent_callout_analy(?,?)");
+		this.getJdbcTemplate().execute("{call web_agent_callout_analy(?,?)}", new CallableStatementCallback() {
+			public Object doInCallableStatement(CallableStatement cs)
+					throws SQLException, DataAccessException {
+				cs.setString(1, ds.cursdt);
+				cs.setString(2, ds.curedt);
+				cs.execute();
+				ResultSet rs = cs.getResultSet();
+				ds.initData();
+				ds.list = new ArrayList();
+				if(rs!=null){
+					while (rs.next()) {
+						 Map map = new HashMap();
+						 VTJime.putMapDataByColName(map, rs);
+		        		 ds.list.add(map);
+					}
+				}
+				return null;
+			}
+		});
+	}
+
+	public void exportCalloutData(final DotSession ds, final HttpServletResponse response) {
+		final String excelExportFile = "agt_callout_export.xls";
+		final String outputFileName="agent_callout.xls";
+		//
+		log.info("sp:web_agent_callout_analy(?,?)");
+		this.getJdbcTemplate().execute("{call web_agent_callout_analy(?,?)}", new CallableStatementCallback() {
+			public Object doInCallableStatement(CallableStatement cs)
+					throws SQLException, DataAccessException {
+				cs.setString(1, ds.cursdt);
+				cs.setString(2, ds.curedt);
+				cs.execute();
+				//
+				ResultSet rs = cs.getResultSet();
+				ResultSetMetaData rsm =rs.getMetaData();
+				int columnCount = rsm.getColumnCount();
+				//
+				String filePath = ServletActionContext.getServletContext().getRealPath("excelTemplate")+"/"+excelExportFile;
+				HSSFWorkbook wb=DotSession.fromRStoExcel(filePath, 1, true, rs, columnCount);
+				try {
+					response.reset();
+					response.setHeader("Content-Disposition", "attachment;filename=" + outputFileName);
+					response.setContentType("application/vnd.ms-excel;charset=UTF-8");	
+					wb.write(response.getOutputStream());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				return null;
+			}
+		});
+	}
+
 }

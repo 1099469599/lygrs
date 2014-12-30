@@ -113,7 +113,7 @@
 					<li><label>派送地址：</label><input type="text" name="address" value="${tpMap.addr }"  maxlength="100" class="ipt500"/></li>
 				</ul>
 			</div>
-			<div class="queryDiv_n">
+			<div class="queryDiv_n" style="height:142px;">
 			   	<ul class="queryWrap_ul" style="padding-left:70px;">
 					<li><label style="vertical-align:top;">备注信息：</label><textarea name="noteinfo" class="ipt_area_w300">${tpMap.noteinfo }</textarea></li>
 				</ul>
