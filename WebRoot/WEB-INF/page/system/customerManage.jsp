@@ -46,6 +46,22 @@
 					<input type="hidden" name="defaultAgent" id="selected_agt" value="${sessionScope.vts.dfagt }"/>
 				</c:if>
 				-->
+				<c:if test="${sessionScope.vts.roleID eq 3 }">
+				<input type="checkbox" id="view_all" <c:if test='${viewall eq 1 }'>checked='checked'</c:if> name="viewall" value="${viewall }" onclick="viewAll(this)"/><label for="view_all">&nbsp;查看全部</label>
+				<script type="text/javascript">
+					function viewAll(obj)
+					{
+						if(obj.checked)
+						{
+							obj.value=1;
+						}
+						else
+						{
+							obj.value=0;
+						}
+					}
+				</script>
+				</c:if>
 	        </li>
 		</ul>
 		<ul class="queryWrap_ul" style="margin-top:-4px;">

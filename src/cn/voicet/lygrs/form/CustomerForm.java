@@ -88,6 +88,8 @@ public class CustomerForm {
 	
 	private int baomode;	//统计保费模式
 	
+	private int viewall=0;
+	
 	public String getPino() {
 		return pino;
 	}
@@ -394,5 +396,11 @@ public class CustomerForm {
 	}
 	public void setQ_state(int qState) {
 		q_state = qState;
+	}
+	public int getViewall() {
+		return viewall;
+	}
+	public void setViewall(int viewall) {
+		this.viewall = viewall;
 	}
 }
