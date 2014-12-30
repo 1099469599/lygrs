@@ -85,4 +85,7 @@
 		<item id="1" name="1:按话务员汇总" />
 		<item id="2" name="2:指定话务员按月汇总" />
 	</list>
+	<list name="ctsip" describle="录音服务器地址列表">
+		<item id="100" name = "http://192.168.1.200"/>
+	</list>
 </dot2014>

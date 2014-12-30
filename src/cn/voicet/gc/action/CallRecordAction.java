@@ -8,10 +8,12 @@ import java.net.URLConnection;
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import cn.voicet.common.action.BaseAction;
+import cn.voicet.common.util.DotRoleMenu;
 import cn.voicet.common.util.DotSession;
 import cn.voicet.gc.dao.CallRecordDao;
 import cn.voicet.gc.form.CallRecordForm;
@@ -52,7 +54,8 @@ public class CallRecordAction extends BaseAction implements ModelDriven<CallReco
 		DotSession ds = DotSession.getVTSession(request);
 		String wav = request.getParameter("wavFile");
 		log.info("wav:"+wav);
-		String ip= ds.getIpWithCTS(ds.curCTS);
+		DotRoleMenu roleMenu = (DotRoleMenu)ServletActionContext.getServletContext().getAttribute("vta");
+		String ip= roleMenu.getIpWithCTS(ds.curCTS);
 		log.info("ip");
 		URL url = new URL(ip+"/"+wav);
 		log.info("url:"+url);

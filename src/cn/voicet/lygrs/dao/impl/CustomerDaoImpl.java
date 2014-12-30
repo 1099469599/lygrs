@@ -561,7 +561,7 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 				//int columnCount = rsm.getColumnCount();
 				//
 				String filePath = ServletActionContext.getServletContext().getRealPath("excelTemplate")+"/"+"customer_exportTemplate.xls";
-				HSSFWorkbook wb=VTJime.fromRStoExcel(filePath, 1, true, rs, 19);
+				HSSFWorkbook wb=VTJime.fromRStoExcel(filePath, 1, true, rs, 20);
 				try {
 					response.reset();
 					response.setHeader("Content-Disposition", "attachment;filename=" + "customerData.xls");

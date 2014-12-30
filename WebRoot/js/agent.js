@@ -201,15 +201,17 @@ function deleteAgent(agtid)
 //init agent password
 function initAgentpwd(agtid)
 {
-    $.ajax({  
-        type: "POST",  
-        url: "agent-initAgentpwd.action",  
-        data: {agtid:agtid},  
-        success: function(data){  
-        	if(data=="ok")
-        		layer.alert("成功! 初始化密码：123456",111);
-        }  
-    }); 
+	layer.confirm("确定要初始化密码？",function(){
+		$.ajax({  
+	        type: "POST",  
+	        url: "agent-initAgentpwd.action",  
+	        data: {agtid:agtid},  
+	        success: function(data){  
+	        	if(data=="ok")
+	        		layer.alert("成功! 初始化密码：123456",111);
+	        }  
+	    }); 
+	});
 }
 
 //清空接听查询

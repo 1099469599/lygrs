@@ -103,10 +103,10 @@
                      <c:if test="${sessionScope.vts.roleID eq 3 }">
                      <th width="2%" title="已呼叫次数">*</th>
                      </c:if>
-                     <th width="8%">备注信息</th>
                      <c:if test="${sessionScope.vts.roleID eq 1 or sessionScope.vts.roleID eq 2 }">
                      <th width="6%">所属话务员</th>
                      </c:if>
+                     <th width="8%">备注信息</th>
                      <th width="10%">操作</th>
                  </tr>
              </thead>
@@ -129,7 +129,7 @@
 					<td title="${ls.ids }">
 						<c:set var="idslen" value="${fn:length(ls.ids) }"/>
 						<c:choose>
-							<c:when test="${idslen gt 6 }">${fn:substring(ls.ids,0,5) }..</c:when>
+							<c:when test="${idslen gt 13 }">${fn:substring(ls.ids,0,12) }..</c:when>
 							<c:otherwise>${ls.ids }</c:otherwise>
 						</c:choose>
 					</td>
@@ -164,6 +164,9 @@
 					<c:if test="${sessionScope.vts.roleID eq 3 }">
 					<td id="call_time">${ls.calltimes }</td>
 					</c:if>
+					<c:if test="${sessionScope.vts.roleID eq 1 or sessionScope.vts.roleID eq 2 }">
+					<td id="td_agtacc${status.count }">${ls.agtacc }</td>
+					</c:if>
 					<td title="${ls.noteinfo }">
 						<c:set var="nilen" value="${fn:length(ls.noteinfo) }"/>
 						<c:choose>
@@ -171,9 +174,6 @@
 							<c:otherwise>${ls.noteinfo }</c:otherwise>
 						</c:choose>
 					</td>
-					<c:if test="${sessionScope.vts.roleID eq 1 or sessionScope.vts.roleID eq 2 }">
-					<td id="td_agtacc${status.count }">${ls.agtacc }</td>
-					</c:if>
 					<td>
 						<c:if test="${sessionScope.vts.roleID eq 1 or sessionScope.vts.roleID eq 2 }">
 							<a href="javascript:deleteCustomerInfo('${ls.cid }','${status.count }')">删除</a>&nbsp;&nbsp;

@@ -98,7 +98,7 @@
 								<label style="color:#808080;">下载</label>
 							</c:when>
 							<c:otherwise>
-								<a href="javascript:play('<s:property value="#session.vts.getIpWithCTS(#session.vts.curCTS)"/>','${fn:substring(ls.recflag,26,fn:length(ls.recflag)) }','${fn:replace(fn:substring(ls.recflag,12,fn:length(ls.recflag)),'\\','/') }')">播放</a>&nbsp;&nbsp;
+								<a href="javascript:play('<s:property value="#application.vta.getIpWithCTS(#session.vts.curCTS)"/>','${fn:substring(ls.recflag,26,fn:length(ls.recflag)) }','${fn:replace(fn:substring(ls.recflag,12,fn:length(ls.recflag)),'\\','/') }')">播放</a>&nbsp;&nbsp;
 								<a href="${pageContext.request.contextPath }/callrecord-downloadNet.action?wavFile=${fn:replace(fn:substring(ls.recflag,12,fn:length(ls.recflag)),'\\','/') }">下载</a>
 							</c:otherwise>
 						</c:choose>
@@ -153,7 +153,7 @@
 <!--POP PLAYER START-->
 <div id="popMusicDiv" style="display:none;"></div>
 <!--POP PLAYER END-->
-<script type="text/javascript" src="<c:url value='js/callrecord.js?v=16'/>"></script>
+<script type="text/javascript" src="<c:url value='js/callrecord.js?v=18'/>"></script>
 <script type="text/javascript" src="<c:url value='js/cts.js?v=2'/>"></script>
 </body>
 </html>

@@ -202,4 +202,19 @@ public class DotRoleMenu {
 		return menuInfo;
 	}
 	
+	public String getIpWithCTS(String icts)
+	{
+		int iCTSID=Integer.parseInt(icts.substring(3,6));
+		List lst=GetList("ctsip");
+		if(lst!=null)
+		{
+			for(int i=0;i<lst.size();i++)
+			{
+				ListItem li=(ListItem)lst.get(i);
+				if(li!=null && li.id ==iCTSID)
+					return li.str;
+			}
+		}
+		return "127.0.0.1";
+	}
 }

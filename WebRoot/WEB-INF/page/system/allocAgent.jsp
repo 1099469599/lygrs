@@ -32,7 +32,7 @@
 			<li><label>备注信息：</label><label>${noteinfo }</label></li>
 		</ul>
 		<form id="form2" name="form2" action="<c:url value='customer-allocAgent.action'/>">
-		<input type="hidden" name="pino" value="${pino }"/>
+		<input type="hidden" name="pino" id="pinox" value="${pino }"/>
 		<ul class="queryWrap_ul">
 			<li>
 				<label>本次分配数：</label><input type="text" id="allocnumx" name="allocnum" class="ipt50"/>
@@ -157,8 +157,8 @@ $(function(){
 		}
 		$("#agtlistx").val(agtlist);
 	}
-	
-	function allocAgent()
+
+	function checkAlloc()
 	{
 		var allocnum = $("#allocnumx").val();
 		var agtlist = $("#agtlistx").val();
@@ -192,14 +192,39 @@ $(function(){
 		{
 			$("#error_msg").css("display","none");
 			$("#error_msg")[0].innerHTML="";
-			$("#form2").ajaxSubmit({ 
-				success:function(data){ //提交成功的回调函数
-					alert("分配成功");	
-					$("#pageflag").val("update");
-					document.form1.submit();
-		        }  
-			});
+			return true;
 		}
+	}
+
+	
+	function allocAgent()
+	{
+		if(!checkAlloc()) return;
+		
+		var pino = $("#pinox").val(); 
+		var allocnum = $("#allocnumx").val();
+		var agentlist = $("#agtlistx").val(); 
+		$.ajax({
+			async: false,
+			type: "POST",
+			data: {pino:pino,allocnum:allocnum,agentlist:agentlist},
+			url: "allocAgent.action",
+			success: function() {
+				alert("分配成功");
+				$("#pageflag").val("update");
+				document.form1.submit();
+			}
+		});
+		/*
+		$("#form2").ajaxSubmit({ 
+			success:function(data){ //提交成功的回调函数
+				alert("分配成功");
+				$("#pageflag").val("update");
+				//document.form1.submit();
+	        }
+		});
+		return false;
+		*/
 	}
 	
 </script>

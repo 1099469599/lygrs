@@ -366,25 +366,6 @@ public class DotSession {
 		}
 	}
 
-	
-	public static final String ONE_IP = "http://32.113.61.6";	//cts100
-	public static final String TWO_IP = "http://32.113.61.6";	//cts200
-	
-	public String getIpWithCTS(String icts)
-	{
-		if(icts.equals("cts100"))
-		{
-			return ONE_IP;
-		}
-		else if(icts.equals("cts200"))
-		{
-			return TWO_IP;
-		}
-		else
-		{
-			return null;
-		}
-	}
 	public String getAccount() {
 		return account;
 	}

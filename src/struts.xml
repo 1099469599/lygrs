@@ -174,5 +174,8 @@
 		<action name="addCallTime" class="customerAction" method="addCallTime">
 			<result type="json"></result>
 		</action>
+		<action name="allocAgent" class="customerAction" method="allocAgent">
+			<result type="json"></result>
+		</action>
 	</package>
 </struts>

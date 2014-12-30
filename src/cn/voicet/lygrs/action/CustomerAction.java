@@ -14,10 +14,12 @@ import javax.annotation.Resource;
 import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import cn.voicet.common.action.BaseAction;
+import cn.voicet.common.util.DotRoleMenu;
 import cn.voicet.common.util.DotSession;
 import cn.voicet.lygrs.dao.CustomerDao;
 import cn.voicet.lygrs.form.CustomerForm;
@@ -279,7 +281,8 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 		DotSession ds = DotSession.getVTSession(request);
 		String wav = request.getParameter("wavFile");
 		log.info("wav:"+wav);
-		String ip= ds.getIpWithCTS(ds.curCTS);
+		DotRoleMenu roleMenu = (DotRoleMenu)ServletActionContext.getServletContext().getAttribute("vta");
+		String ip= roleMenu.getIpWithCTS(ds.curCTS);
 		log.info("ip");
 		URL url = new URL(ip+"/"+wav);
 		log.info("url:"+url);

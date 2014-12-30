@@ -181,7 +181,7 @@ document.onkeydown = function(e) {
 <!-- layer 弹出插件 start -->
 <script type="text/javascript" src="<c:url value='layer/layer.min.js'/>"></script>
 <!-- layer 弹出插件 end -->
-<script type="text/javascript" src="<c:url value='js/agent.js?v=19'/>"></script>
+<script type="text/javascript" src="<c:url value='js/agent.js?v=20'/>"></script>
 <!-- ajax file upload -->
 <script type="text/javascript" src="<c:url value='js/jquery.form-3.46.0.js'/>"></script>
 </body>
