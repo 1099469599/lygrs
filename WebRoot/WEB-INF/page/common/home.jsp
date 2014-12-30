@@ -45,6 +45,8 @@
   		<div class="tit2"><s:property value="#application.vta.customer"/>
   			<!-- js 客户端测试 -->
   			<!--
+  			测试未接来电
+  			<input type="button" onclick="showLostCall()" value="未接来电"/>
   			<input type="button" onclick="showTalk()" value="通话小结"/>
   			<input type="button" onclick="js_detectcall('callin','ani=808;dnis=10086;param=a,1,1;')" value="测试弹屏"/>
   			<input type="button" onclick="js_monitor_acdgrp('5,933300,呼叫,0,0,0,0.00%,0/0')" value="测试业务组监控"/>
@@ -76,15 +78,14 @@
     		<span>
     			<c:choose>
     				<c:when test="${sessionScope.vts.agtlosttime gt 0 }">
-    					<a href="#" onclick="viewMissCall(this)" target="mainFrame" style="color:#CC0000; cursor:pointer" title="点击查看未接来电详情">未接来电</a>&nbsp;
-    					<label id="lost_time" style="color:#CC0000; font-size:16px">${sessionScope.vts.agtlosttime }</label>
+    					<c:set var="miscalcolor" value="#CC0000"></c:set>
     				</c:when>
     				<c:otherwise>
-    					<!--
-    					<a style="color:#fff; cursor:default;" href="javascript:void(0)">当前无未接来电</a>
-    					-->
+    					<c:set var="miscalcolor" value="#ffffff"></c:set>
     				</c:otherwise>
     			</c:choose>
+    			<a id="weijie" href="#" onclick="viewMissCall(this)" target="mainFrame" style="color:${miscalcolor }; cursor:pointer" title="点击查看未接来电详情">未接来电</a>&nbsp;
+    			<label id="lost_time" style="color:${miscalcolor }; font-size:16px">${sessionScope.vts.agtlosttime }</label>
     		</span>
     		<script type="text/javascript">
     			function viewMissCall(obj)
@@ -882,6 +883,26 @@
 <script type="text/javascript" for="OCXPlugin" event="OnRing(line,ani,dnis,param)">
 	var callingTel = document.getElementById("calling_num");
 	callingTel.innerHTML=ani+"&nbsp;正在接入...";
+</script>
+<script type="text/javascript" for="OCXPlugin" event="OnCallCancel(caller,callee)">
+	var weijietxt = document.getElementById("weijie");
+	var obj = document.getElementById("lost_time");
+	weijietxt.style.color="#CC0000";
+	obj.style.color="#CC0000";
+	var lt = $("#lost_time")[0].innerHTML; 
+	$("#lost_time")[0].innerHTML=1+parseInt(lt);
+</script>
+<script type="text/javascript">
+	//测试未接来电 
+	function showLostCall()
+	{
+		var weijietxt = document.getElementById("weijie");
+		var obj = document.getElementById("lost_time");
+		weijietxt.style.color="#CC0000";
+		obj.style.color="#CC0000";
+		var lt = $("#lost_time")[0].innerHTML; 
+		$("#lost_time")[0].innerHTML=1+parseInt(lt);
+	}
 </script>
 </body>
 </html>

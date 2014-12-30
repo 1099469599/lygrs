@@ -480,8 +480,8 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 	 * 连云港人寿--车辆信息列表查询
 	 */
 	public List<Map<String, Object>> queryCustomerInfo(final CustomerForm customerForm) {
-		log.info("sp:web_lygrs_userlist_query(?,?,?,?,?,?,?,?,?)");
-		return (List<Map<String, Object>>)this.getJdbcTemplate().execute("{call web_lygrs_userlist_query(?,?,?,?,?,?,?,?,?)}", new CallableStatementCallback() {
+		log.info("sp:web_lygrs_userlist_query(?,?,?,?,?,?,?,?,?,?)");
+		return (List<Map<String, Object>>)this.getJdbcTemplate().execute("{call web_lygrs_userlist_query(?,?,?,?,?,?,?,?,?,?)}", new CallableStatementCallback() {
 			public Object doInCallableStatement(CallableStatement cs)
 					throws SQLException, DataAccessException {
 				//所属话务员
@@ -500,6 +500,9 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 				cs.setString("cp", customerForm.getQ_chephm());
 				//提取记录数
 				cs.setInt("peeknum", 500);
+				//查看方式
+				cs.setInt("pm", customerForm.getViewall());
+				
 				//新加查询参数:状态
 				if(customerForm.getQ_state()==-1)
 				{
@@ -525,8 +528,8 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 	}
 
 	public void exportCustomerData(final CustomerForm customerForm, final HttpServletResponse response) {
-		log.info("sp:web_lygrs_userlist_query(?,?,?,?,?,?,?,?,?)");
-		this.getJdbcTemplate().execute("{call web_lygrs_userlist_query(?,?,?,?,?,?,?,?,?)}", new CallableStatementCallback() {
+		log.info("sp:web_lygrs_userlist_query(?,?,?,?,?,?,?,?,?,?)");
+		this.getJdbcTemplate().execute("{call web_lygrs_userlist_query(?,?,?,?,?,?,?,?,?,?)}", new CallableStatementCallback() {
 			public Object doInCallableStatement(CallableStatement cs)
 					throws SQLException, DataAccessException {
 				//所属话务员
@@ -545,6 +548,8 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 				cs.setString("cp", customerForm.getQ_chephm());
 				//提取记录数
 				cs.setInt("peeknum", 0);
+				//查看方式
+				cs.setInt("pm", 1);
 				//新加查询参数:状态
 				if(customerForm.getQ_state()==-1)
 				{
@@ -1246,6 +1251,18 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 			public Object doInCallableStatement(CallableStatement cs)
 					throws SQLException, DataAccessException {
 				cs.setInt("cid", customerForm.getCid());
+				cs.execute();
+				return null;
+			}
+		});
+	}
+
+	public void changeCallReply(final CustomerForm customerForm) {
+		log.info("sp:web_agent_getlostlist_reply(?)");
+		this.getJdbcTemplate().execute("{call web_agent_getlostlist_reply(?)}", new CallableStatementCallback() {
+			public Object doInCallableStatement(CallableStatement cs)
+					throws SQLException, DataAccessException {
+				cs.setInt("csid", customerForm.getCid());
 				cs.execute();
 				return null;
 			}

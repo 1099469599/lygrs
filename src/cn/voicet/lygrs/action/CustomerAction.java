@@ -139,7 +139,11 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 		{
 			customerForm.setQ_state(0);
 		}
-		log.info("q_pino:"+customerForm.getQ_pino()+", q_caryear:"+customerForm.getQ_caryear()+", q_chuxcs:"+customerForm.getQ_chuxcs()+", q_chephm:"+customerForm.getQ_chephm()+", q_uname:"+customerForm.getQ_uname()+", q_mobile:"+customerForm.getQ_mobile()+", q_agtacc:"+customerForm.getQ_agtacc());
+		if(ds.roleID.equals("2"))
+		{
+			customerForm.setViewall(1);
+		}
+		log.info("q_pino:"+customerForm.getQ_pino()+", q_caryear:"+customerForm.getQ_caryear()+", q_chuxcs:"+customerForm.getQ_chuxcs()+", q_chephm:"+customerForm.getQ_chephm()+", q_uname:"+customerForm.getQ_uname()+", q_mobile:"+customerForm.getQ_mobile()+", q_agtacc:"+customerForm.getQ_agtacc()+", viewall:"+customerForm.getViewall());
 		List<Map<String, Object>> list = customerDao.queryCustomerInfo(customerForm);
 		request.setAttribute("cList", list);
 		//
@@ -497,6 +501,13 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 	{
 		log.info("cid:"+customerForm.getCid());
 		customerDao.addCallTimes(customerForm);
+		return null;
+	}
+	
+	public String changeCallReply()
+	{
+		log.info("cid:"+customerForm.getCid());
+		customerDao.changeCallReply(customerForm);
 		return null;
 	}
 }

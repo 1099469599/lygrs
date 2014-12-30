@@ -177,5 +177,8 @@
 		<action name="allocAgent" class="customerAction" method="allocAgent">
 			<result type="json"></result>
 		</action>
+		<action name="changeCallReply" class="customerAction" method="changeCallReply">
+			<result type="json"></result>
+		</action>
 	</package>
 </struts>

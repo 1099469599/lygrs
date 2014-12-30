@@ -43,6 +43,5 @@ public interface CustomerDao{
 	void queryBaoTotalInfo(DotSession ds, CustomerForm customerForm);
 	void exportBaodanTotalInfo(CustomerForm customerForm, HttpServletResponse response, DotSession ds);
 	void addCallTimes(CustomerForm customerForm);
-	
-	
+	void changeCallReply(CustomerForm customerForm);
 }
