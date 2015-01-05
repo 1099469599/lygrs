@@ -291,7 +291,7 @@ $(function(){
 });
 </script>
 <script type="text/javascript">
-	function viewDetail(cid,q_pino,q_caryear,q_chuxcs,q_chephm,q_uname,q_mobile,q_agtacc)
+	function viewDetail(cid,q_pino,q_caryear,q_chuxcs,q_chephm,q_uname,q_mobile,q_agtacc,q_state)
 	{
 		$("#vcid").val(cid);
 		$("#vq_pino").val(q_pino);
@@ -301,9 +301,9 @@ $(function(){
 		$("#vq_uname").val(q_uname);
 		$("#vq_mobile").val(q_mobile);
 		$("#vq_agtacc").val(q_agtacc);
+		$("#vq_state").val(q_state);
 		document.form4.submit();
 	}
-
 
 	function deleteCustomerInfo(cid,index)
 	{
