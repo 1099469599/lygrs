@@ -238,7 +238,17 @@
 		param = param.split(",");
 		if(param[0]=="b")
 		{
-			$("#popHuifang")[0].href="customer-tanpin.action?ani="+ani+"&cid="+param[1]+"&talkdt="+param[2];
+			//处理cid为空的情况
+			var cid=0;
+			if(param[1].length==0)
+			{
+				cid=0;
+			}
+			else
+			{
+				cid=param[1];
+			}
+			$("#popHuifang")[0].href="customer-tanpin.action?ani="+ani+"&cid="+cid+"&talkdt="+param[2];
 			$("#popHuifang")[0].click();
 		}
 	}
