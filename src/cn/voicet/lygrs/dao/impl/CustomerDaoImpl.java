@@ -615,6 +615,7 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 	}
 
 	public void queryDetailInfo(final DotSession ds, final CustomerForm customerForm) {
+		log.info("sp:web_lygrs_userdata_look(?,?)");
 		this.getJdbcTemplate().execute("{call [web_lygrs_userdata_look](?,?)}", new CallableStatementCallback() {
 			public Object doInCallableStatement(CallableStatement cs)
 					throws SQLException, DataAccessException {
