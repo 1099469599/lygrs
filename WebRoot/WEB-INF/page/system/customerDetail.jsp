@@ -42,6 +42,7 @@
    		<input type="hidden" name="q_agtacc" value="${q_agtacc }"/>
    		<input type="hidden" name="q_state" value="${q_state }"/>
    		<input type="hidden" id="pageflag" name="pageflag"/>
+		<input type="hidden" name="viewall" value="${viewall }"/>
    	</form>
    	<div id="usual1" class="usual"> 
 	    <%-- tabs start --%>
