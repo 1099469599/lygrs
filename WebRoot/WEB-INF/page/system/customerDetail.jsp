@@ -161,7 +161,8 @@
 			</div>
 			<div class="queryDiv_h">
 			   	<ul class="queryWrap_ul_w600 left">
-			        <li style="padding-left:140px"><input type="button" onclick="saveCustomerBtn()" value="保&nbsp;&nbsp;存" class="btn4"/></li>
+			        <li style="padding-left:280px"><input type="button" onclick="saveCustomerBtn()" value="保&nbsp;&nbsp;存" class="btn4"/></li>
+			        <li style="padding-left:100px"><input type="button" onclick="history.go(-1)" value="返&nbsp;&nbsp;回" class="btn4"/></li>
 				</ul>
 				<ul class="queryWrap_ul_w100 right">
 			        <li></li>
@@ -230,18 +231,21 @@
 	                     <th width="6%">呼叫方向</th>
 	                     <th width="6%">接通情况</th>
 	                     <th width="4%">通话(秒)</th>
+	                     <!--
 	                     <th width="12%">通话小结</th>
+	                     -->
 	                     <th width="12%">操作</th>
 	                 </tr>
 	             </thead>
 	             <tbody class="tab_tbody">
 	             	<c:forEach items="${callRecordList }" var="ls" varStatus="status">
-					<tr>
+					<tr align="center">
 						<td>${ls.ani }</td>
 						<td>${fn:substring(ls.onhook,0,19) }</td>
 						<td>${ls.callio }</td>
 						<td>${ls.callret }</td>
 						<td>${ls.talk }</td>
+						<!--
 						<td id="ctIndex_${status.count }" title="${ls.content }">
 							<c:set var="ctlen" value="${fn:length(ls.content) }"></c:set>
 							<c:choose>
@@ -249,9 +253,12 @@
 								<c:otherwise>${ls.content }</c:otherwise>
 							</c:choose>
 						</td>
+						-->
 						<td>
 							<input type="hidden" id="trIndex_${status.count }" value="${ls.tr }"/>
+							<!--  
 							<a href="javascript:showTalk('${ls.cid }','${ls.tdt }','${status.count }')">小结查看</a>&nbsp;&nbsp;
+							-->
 							<c:choose>
 								<c:when test="${empty ls.recflag}">
 									<label style="color:#808080;">播放&nbsp;&nbsp;</label>

@@ -37,7 +37,9 @@
 		</c:choose>
 		
 		<span>
+			<!--
 			<input type="button" class="btn4" value="通话小结" onclick="showTalk()"/>&nbsp;&nbsp;&nbsp;&nbsp;
+			-->
 			<input type="button" class="btn btn-primary" value="返回" onclick="document.form1.submit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
 		</span>
 	</h3>
@@ -50,7 +52,9 @@
    		<input type="hidden" name="q_uname" value="${q_uname }"/>
    		<input type="hidden" name="q_mobile" value="${q_mobile }"/>
    		<input type="hidden" name="q_agtacc" value="${q_agtacc }"/>
+   		<input type="hidden" name="q_state" value="${q_state }"/>
    		<input type="hidden" id="pageflag" name="pageflag"/>
+		<input type="hidden" name="viewall" value="${viewall }"/>
    	</form>
    	<div id="usual1" class="usual">
 	    <%-- tabs start --%>
@@ -117,7 +121,8 @@
 			</div>
 			<div class="queryDiv_h">
 			   	<ul class="queryWrap_ul_w600 left">
-			        <li style="padding-left:140px"><input type="button" onclick="saveCustomerBtn()" value="保&nbsp;&nbsp;存" class="btn4"/></li>
+			        <li style="padding-left:280px"><input type="button" onclick="saveCustomerBtn()" value="保&nbsp;&nbsp;存" class="btn4"/></li>
+			        <li style="padding-left:100px"><input type="button" onclick="history.go(-1)" value="返&nbsp;&nbsp;回" class="btn4"/></li>
 				</ul>
 				<ul class="queryWrap_ul_w100 right">
 			        <li></li>
@@ -146,7 +151,7 @@
 	             </thead>
 	             <tbody class="tab_tbody">
 	             	<c:forEach items="${callRecordList }" var="ls">
-					<tr>
+					<tr align="center">
 						<td>${ls.ani }</td>
 						<td>${fn:substring(ls.onhook,0,19) }</td>
 						<td>${ls.callio }</td>
