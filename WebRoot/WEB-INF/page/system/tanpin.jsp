@@ -39,9 +39,6 @@
 		<span>
 			<input type="button" class="btn4" value="通话小结" onclick="showTalk()"/>&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="button" class="btn btn-primary" value="返回" onclick="document.form1.submit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
-			<c:if test="${sessionScope.vts.roleID eq 3 }">
-			<input type="checkbox" id="hideflagx" <c:if test="${tpMap.hideflag eq 1}"> checked="checked"</c:if> onclick="setHideFlag(this,'${tpMap.cid }')"/><label for="hideflagx">隐藏</label>
-			</c:if>
 		</span>
 	</h3>
 	<%-- 方便保存返回操作，回到客户资料管理页面 --%>
@@ -141,7 +138,9 @@
 	                     <th width="6%">呼叫方向</th>
 	                     <th width="6%">接通情况</th>
 	                     <th width="4%">通话(秒)</th>
+	                     <!--  
 	                     <th width="12%">通话小结</th>
+	                     -->
 	                     <th width="12%">操作</th>
 	                 </tr>
 	             </thead>
@@ -153,6 +152,7 @@
 						<td>${ls.callio }</td>
 						<td>${ls.callret }</td>
 						<td>${ls.talk }</td>
+						<!--
 						<td title="${ls.content }">
 							<c:set var="ctlen" value="${fn:length(ls.content) }"></c:set>
 							<c:choose>
@@ -160,6 +160,7 @@
 								<c:otherwise>${ls.content }</c:otherwise>
 							</c:choose>
 						</td>
+						-->
 						<td>
 							<c:choose>
 								<c:when test="${empty ls.recflag}">
