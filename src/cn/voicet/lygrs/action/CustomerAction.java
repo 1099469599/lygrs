@@ -137,13 +137,13 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 		}
 		if(ds.roleID.equals("3"))
 		{
-			customerForm.setQ_state(0);
+			customerForm.setQ_state(-1);
 		}
 		if(ds.roleID.equals("2"))
 		{
 			customerForm.setViewall(1);
 		}
-		log.info("q_pino:"+customerForm.getQ_pino()+", q_caryear:"+customerForm.getQ_caryear()+", q_chuxcs:"+customerForm.getQ_chuxcs()+", q_chephm:"+customerForm.getQ_chephm()+", q_uname:"+customerForm.getQ_uname()+", q_mobile:"+customerForm.getQ_mobile()+", q_agtacc:"+customerForm.getQ_agtacc()+", viewall:"+customerForm.getViewall());
+		log.info("q_pino:"+customerForm.getQ_pino()+", q_caryear:"+customerForm.getQ_caryear()+", q_chuxcs:"+customerForm.getQ_chuxcs()+", q_chephm:"+customerForm.getQ_chephm()+", q_uname:"+customerForm.getQ_uname()+", q_mobile:"+customerForm.getQ_mobile()+", q_agtacc:"+customerForm.getQ_agtacc()+", viewall:"+customerForm.getViewall()+", q_state:"+customerForm.getQ_state());
 		List<Map<String, Object>> list = customerDao.queryCustomerInfo(customerForm);
 		request.setAttribute("cList", list);
 		//
@@ -245,7 +245,7 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 		 * 来电弹屏，根据主叫号码【mobile,hometel,officetel】查询客户资料
 		 * 当有多条记录时，只提取第一条记录【peeknum=1】
 		 */
-		log.info("ani:"+customerForm.getAni());
+		log.info("ani:"+customerForm.getAni()+", cid:"+customerForm.getCid()+", talkdt:"+customerForm.getTalkdt());
 		DotSession ds = DotSession.getVTSession(request);
 		customerDao.queryTanpinInfo(ds, customerForm);
 		
@@ -429,7 +429,14 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 	public String setCustomerState()
 	{
 		log.info("cid:"+customerForm.getCid()+", state:"+customerForm.getState());
-		customerDao.setCustomerState(customerForm);
+		if(customerForm.getState()!=0)
+		{
+			customerDao.setCustomerState(customerForm);
+		}
+		else
+		{
+			log.info("no state change!");
+		}
 		log.info("set state complete!");
 		return null;
 	}
