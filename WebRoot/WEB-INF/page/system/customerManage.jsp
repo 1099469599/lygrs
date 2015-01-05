@@ -184,7 +184,7 @@
 						</c:choose>
 					</td>
 					<c:if test="${sessionScope.vts.roleID eq 3 }">
-					<td id="call_time">${ls.calltimes }</td>
+					<td id="call_time${ls.cid }">${ls.calltimes }</td>
 					</c:if>
 					<c:if test="${sessionScope.vts.roleID eq 1 or sessionScope.vts.roleID eq 2 }">
 					<td id="td_agtacc${status.count }">${ls.agtacc }</td>
@@ -382,8 +382,8 @@ $(function(){
 		var callid = ocx.GetCallID();
 		ocx.doDialEx(mobile,"b,"+cid+","+callid);
 		callingTel.innerHTML="正在呼叫："+mobile;
-		var ct = $("#call_time")[0].innerHTML; 
-		$("#call_time")[0].innerHTML=parseInt(ct)+1;
+		var ct = $("#call_time"+cid)[0].innerHTML; 
+		$("#call_time"+cid)[0].innerHTML=parseInt(ct)+1;
 		//添加呼叫次数
 		addCallTime(cid);
 	}
