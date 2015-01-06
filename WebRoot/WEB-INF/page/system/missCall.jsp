@@ -21,9 +21,6 @@
 	<script type="text/javascript" src="<c:url value='jPage/jPages.js'/>"></script>
  	<!-- jPage 分页插件  end -->
  	<script type="text/javascript" src="<c:url value='js/changeTabColor.js'/>"></script>
- 	<style type="text/css">
-		a.losta:visited{color:#FF0000;}
- 	</style>
 </head>
 <body>
 <div id="contentWrap">
@@ -32,29 +29,27 @@
 		<table cellpadding="0" cellspacing="0" class="tab_border">
 			<thead class="tab_head">
                  <tr>
-                     <th width="6%">编号</th>
                      <th width="10%">呼叫时间</th>
                      <th width="10%">来电号码</th>
                      <th width="10%">等待时长(秒)</th>
-                     <th width="6%">备注</th>
+                     <th width="6%">状态</th>
                      <th width="10%">操作</th>
                  </tr>
              </thead>
              <tbody id="movies">
              	<c:forEach items="${mcList }" var="ls" varStatus="status">
 				<tr align="center">
-					<td>${ls.csid }</td>
 					<td>${fn:substring(ls.callin,0,19) }</td>
 					<td>${ls.ani }</td>
 					<td>${ls.wait }</td>
 					<td id="huflag_${status.count }">
 						<c:choose>
 							<c:when test="${ls.replyit eq 1 }">已呼</c:when>
-							<c:otherwise>未呼</c:otherwise>
+							<c:otherwise>未回复</c:otherwise>
 						</c:choose>
 					</td>
 					<td>
-						<a class="losta" href="javascript:callCustomer('${ls.ani }','${ls.csid }','${status.count }')">呼叫</a>&nbsp;&nbsp;
+						<a class="losta" href="javascript:callCustomer('${ls.ani }','${ls.csid }','${status.count }')">回拔</a>&nbsp;&nbsp;
 					</td>
 				</tr>
 				</c:forEach>
