@@ -22,4 +22,15 @@ piccadmin / Picc20141201
 
 点击播放分机信息，签入->
 
+=====
+20150106
+update procedure:
+	web_lygrs_query_owner
+	web_lygrs_userlist_query
+	web_lygrs_work_info
+add function:
+	dbo.rounds
+	
+	
+	
 
