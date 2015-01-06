@@ -261,7 +261,7 @@ public class AgentDaoImpl extends BaseDaoImpl implements AgentDao {
 				int columnCount = rsm.getColumnCount();
 				//
 				String filePath = ServletActionContext.getServletContext().getRealPath("excelTemplate")+"/"+excelExportFile;
-				HSSFWorkbook wb=DotSession.fromRStoExcel(filePath, 1, true, rs, columnCount);
+				HSSFWorkbook wb=DotSession.fromRStoExcel(filePath, 1, true, rs, columnCount-1);
 				try {
 					response.reset();
 					response.setHeader("Content-Disposition", "attachment;filename=" + outputFileName);

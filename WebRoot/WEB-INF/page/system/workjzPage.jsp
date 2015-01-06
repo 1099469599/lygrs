@@ -21,6 +21,8 @@
                  <tr>
                      <td width="10%">类别</td>
                      <td width="10%">呼叫次数</td>
+                     <td width="10%">通话次数</td>
+                     <td width="10%">接通率</td>
                      <td width="10%">通话时长(秒)</td>
                      <td width="10%">平均通话时长(秒)</td>
                      <td width="10%">等待时长(秒)</td>
@@ -31,6 +33,8 @@
 				<tr align="center">
 					<td>总体</td>
 					<td>${c1Map.tn }</td>
+					<td>${c1Map.an }</td>
+					<td>${c1Map.anp }</td>
 					<td>${c1Map.tt }</td>
 					<td>${c1Map.at }</td>
 					<td>${c1Map.tw }</td>
@@ -39,6 +43,8 @@
 				<tr align="center">
 					<td>呼入</td>
 					<td>${c1Map.itn }</td>
+					<td>${c1Map.ian }</td>
+					<td>${c1Map.ianp }</td>
 					<td>${c1Map.itt }</td>
 					<td>${c1Map.iat }</td>
 					<td>${c1Map.iw }</td>
@@ -47,6 +53,8 @@
 				<tr align="center">
 					<td>外呼</td>
 					<td>${c1Map.otn }</td>
+					<td>${c1Map.oan }</td>
+					<td>${c1Map.oanp }</td>
 					<td>${c1Map.ot }</td>
 					<td>${c1Map.oat }</td>
 					<td>${c1Map.ow }</td>

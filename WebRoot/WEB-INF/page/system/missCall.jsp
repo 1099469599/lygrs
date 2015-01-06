@@ -44,7 +44,7 @@
 					<td>${ls.wait }</td>
 					<td id="huflag_${status.count }">
 						<c:choose>
-							<c:when test="${ls.replyit eq 1 }">已呼</c:when>
+							<c:when test="${ls.replyit eq 1 }">已回复</c:when>
 							<c:otherwise>未回复</c:otherwise>
 						</c:choose>
 					</td>
@@ -139,6 +139,15 @@ document.onkeydown = function(e) {
 	    });
 		
 	}
+</script>
+<script type="text/javascript">
+	$(function(){
+		var weijietxt = window.parent.document.getElementById("weijie");
+		var obj = window.parent.document.getElementById("lost_time");
+		weijietxt.style.color="#ffffff";
+		obj.style.color="#ffffff";
+		obj.innerHTML="0"; 
+	});
 </script>
 </body>
 </html>

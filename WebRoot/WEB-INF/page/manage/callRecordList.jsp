@@ -127,7 +127,7 @@
 	        next : "下一页",
 	        last : "尾页",
 	       	startPage : 1,
-	        perPage : 24,
+	        perPage : 22,
 	        keyBrowse:true,
 	        delay : 0,
 	        callback : function( pages, items ){
