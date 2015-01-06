@@ -47,7 +47,6 @@
 		<table cellpadding="0" cellspacing="0" class="tab_border">
 			<thead class="tab_head2">
                  <tr>
-                     <th width="8%">话务员账号</th>
                      <th width="8%">座席号码</th>
                      <th width="8%">姓名</th>
                      <th width="6%">外呼<br/>次数</th>
@@ -57,13 +56,12 @@
                      <th width="8%">总通话<br/>时长(秒)</th>
                      <th width="8%">平均通话<br/>时长(秒)</th>
                      <th width="8%">有效通话(8秒)<br/>次数</th>
-                     <th width="8%">接听本方<br/>挂机次数</th>
+                     <th width="8%">本方挂机<br/>次数</th>
                  </tr>
              </thead>
              <tbody id="movies">
                	<c:forEach items="${calloutList }" var="ls">
 				<tr align="center">
-					<td>${ls.account }</td>
 					<td>${ls.telnum }</td>
 					<td>${ls.agtname }</td>
 					<td>${ls.cn }</td>
