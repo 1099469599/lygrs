@@ -47,10 +47,9 @@
 		<table cellpadding="0" cellspacing="0" class="tab_border">
 			<thead class="tab_head2">
                  <tr>
-                     <th width="8%">分机号码</th>
-                     <th width="8%">账号</th>
+                     <th width="8%">座席号码</th>
                      <th width="8%">姓名</th>
-                     <th width="6%">请求<br/>次数</th>
+                     <th width="6%">呼入<br/>次数</th>
                      <th width="6%">接听<br/>次数</th>
                      <th width="8%">总等待<br/>时长(秒)</th>
                      <th width="8%">平均等待<br/>时长(秒)</th>
@@ -64,7 +63,6 @@
                	<s:iterator id="agent" value="#session.vts.list">
 				<tr align="center">
 					<td>${agent.telnum }</td>
-					<td>${agent.account }</td>
 					<td>${agent.agtname }</td>
 					<td>${agent.cn }</td>
 					<td>${agent.ans }</td>

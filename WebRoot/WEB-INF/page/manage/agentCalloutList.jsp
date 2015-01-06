@@ -48,7 +48,7 @@
 			<thead class="tab_head2">
                  <tr>
                      <th width="8%">话务员账号</th>
-                     <th width="8%">分机号码</th>
+                     <th width="8%">座席号码</th>
                      <th width="8%">姓名</th>
                      <th width="6%">外呼<br/>次数</th>
                      <th width="6%">应答<br/>次数</th>
