@@ -84,7 +84,7 @@
     					<c:set var="miscalcolor" value="#ffffff"></c:set>
     				</c:otherwise>
     			</c:choose>
-    			<a id="weijie" href="#" onclick="viewMissCall(this)" target="mainFrame" style="color:${miscalcolor }; cursor:pointer" title="点击查看未接来电详情">未接来电</a>&nbsp;
+    			<a id="weijie" href="#" onclick="viewMissCall(this)" target="mainFrame" style="color:${miscalcolor }; cursor:pointer" title="点击查看未接来电详情">新未接来电</a>&nbsp;
     			<label id="lost_time" style="color:${miscalcolor }; font-size:16px">${sessionScope.vts.agtlosttime }</label>
     		</span>
     		<script type="text/javascript">
