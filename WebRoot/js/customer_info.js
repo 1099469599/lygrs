@@ -184,30 +184,18 @@ function saveCustomerBtn()
 //设置预约时间
 function setYuyDateTime(cid,yflag)
 {
-	var dt = $("#yuydatex").val();
-	if(!dt)
-	{
-		$("#error_msg").css("display","block");
-		$("#error_msg")[0].innerHTML="预约日期时间不能为空！";
-		return false;
-	}
-	else
-	{
-		var yd = dt.substring(0,10);
-		var yt = dt.substring(11,19);
-		$("#error_msg").css("display","none");
-		$("#error_msg")[0].innerHTML="";
-		$.ajax({
-			cache:false,
-			async:false,
-			type:"post",
-			data:{cid:cid,yuydate:yd,yuytime:yt,yuyflag:yflag},
-			url:"setYuydt.action",
-			success: function(data) {
-				alert("设置预约时间成功！");
-			}
-		});
-	}
+	var yd = $("#yuydatex").val();
+	var yt = $("#yuytimex").val();
+	$.ajax({
+		cache:false,
+		async:false,
+		type:"post",
+		data:{cid:cid,yuydate:yd,yuytime:yt,yuyflag:yflag},
+		url:"setYuydt.action",
+		success: function(data) {
+			alert("设置预约时间成功！");
+		}
+	});
 }
 
 //取消预约时间
@@ -221,6 +209,7 @@ function cancelYuyDateTime(cid,yflag)
 		url:"setYuydt.action",
 		success: function(data) {
 			$("#yuydatex").val("");
+			$("#yuytimex").val("");
 			alert("取消预约时间成功！");
 		}
 	});

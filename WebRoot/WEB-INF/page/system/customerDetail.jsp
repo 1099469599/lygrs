@@ -102,18 +102,18 @@
 			<div class="formtitle"><span>预约信息</span></div>
 			<div class="queryDiv_n">
 			   	<ul class="queryWrap_ul" style="padding-left:70px;">
-					<li><label>预约日期时间：</label><input type="text" id="yuydatex" name="yuydate" value="${fn:substring(tpMap.pdt,0,19) }" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'%y-%M-%d %H:%m:%s'})" class="Wdate inputDefault" style="width:180px; height:20px"/></li>
+					<li><label>预约日期：</label><input type="text" id="yuydatex" name="yuydate" value="${fn:substring(tpMap.pdt,0,10) }" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',errDealMode:2,isShowClear:false,isShowToday:false,isShowOK:false})" class="Wdate inputDefault" style="width:90px; height:20px"/></li>
 			        <li>
-			        	<!-- 
-			        	<label>预约时间：</label><input type="text" id="yuytimex" name="yuytime" value="${fn:substring(tpMap.pdt,11,16) }" onclick="WdatePicker({dateFmt:'HH:mm',minDate:'%H:%m'})" class="Wdate inputDefault" style="width:90px; height:20px"/>
-			        	 -->
+			        	<label>时间：</label><input type="text" id="yuytimex" name="yuytime" value="${fn:substring(tpMap.pdt,11,16) }" onclick="WdatePicker({dateFmt:'HH:mm',errDealMode:2,isShowClear:false,isShowToday:false,isShowOK:false})" class="Wdate inputDefault" style="width:60px; height:20px"/>
 			        </li>
-			        <li><input type="button" class="btn4" value="确&nbsp;&nbsp;定" onclick="setYuyDateTime('${cid }','1')"/></li>
+			        <li><input type="button" class="btn4" value="设置预约" onclick="setYuyDateTime('${cid }','1')"/></li>
 			        <li>
+			        	<!--
 			        	<c:set var="yuyueriqi" value="${fn:substring(tpMap.pdt,0,10) }"></c:set>
 			        	<c:if test="${fn:length(yuyueriqi) gt 0}">
 			        	<input type="button" class="btn4" value="取&nbsp;&nbsp;消" onclick="cancelYuyDateTime('${cid }','0')"/>
 			        	</c:if>
+			        	-->
 			        </li>
 				</ul>
 			</div>
@@ -292,7 +292,7 @@
 <!--POP PLAYER END-->
 <script type="text/javascript" src="<c:url value='js/jquery.form-3.46.0.js?v=5'/>"></script>
 <script type="text/javascript" src="<c:url value='js/cts.js?v=2'/>"></script>
-<script type="text/javascript" src="<c:url value='js/customer_info.js?v=27'/>"></script>
+<script type="text/javascript" src="<c:url value='js/customer_info.js?v=28'/>"></script>
 <script type="text/javascript">
 	var ocx = $("#OCXPlugin",window.parent.document)[0];
 	var callingTel = $("#calling_num",window.parent.document)[0];
