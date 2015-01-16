@@ -41,7 +41,7 @@
    		<input type="hidden" name="q_mobile" value="${q_mobile }"/>
    		<input type="hidden" name="q_agtacc" value="${q_agtacc }"/>
    		<input type="hidden" name="q_state" value="${q_state }"/>
-   		<input type="hidden" id="pageflag" name="pageflag"/>
+   		<input type="hidden" name="pageflag" value="${pageflag }"/>
 		<input type="hidden" name="viewall" value="${viewall }"/>
    	</form>
    	<div id="usual1" class="usual"> 
@@ -99,25 +99,21 @@
 			</div>
 			<div id="error_msg" class="error_msg"></div>
 			<c:if test="${sessionScope.vts.roleID eq 3 }">
-			<div class="formtitle"><span>预约信息</span></div>
-			<div class="queryDiv_n">
-			   	<ul class="queryWrap_ul" style="padding-left:70px;">
-					<li><label>预约日期：</label><input type="text" id="yuydatex" name="yuydate" value="${fn:substring(tpMap.pdt,0,10) }" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',errDealMode:2,isShowClear:false,isShowToday:false,isShowOK:false})" class="Wdate inputDefault" style="width:90px; height:20px"/></li>
-			        <li>
-			        	<label>时间：</label><input type="text" id="yuytimex" name="yuytime" value="${fn:substring(tpMap.pdt,11,16) }" onclick="WdatePicker({dateFmt:'HH:mm',errDealMode:2,isShowClear:false,isShowToday:false,isShowOK:false})" class="Wdate inputDefault" style="width:60px; height:20px"/>
-			        </li>
-			        <li><input type="button" class="btn4" value="设置预约" onclick="setYuyDateTime('${cid }','1')"/></li>
-			        <li>
-			        	<!--
-			        	<c:set var="yuyueriqi" value="${fn:substring(tpMap.pdt,0,10) }"></c:set>
-			        	<c:if test="${fn:length(yuyueriqi) gt 0}">
-			        	<input type="button" class="btn4" value="取&nbsp;&nbsp;消" onclick="cancelYuyDateTime('${cid }','0')"/>
-			        	</c:if>
-			        	-->
-			        </li>
-				</ul>
-			</div>
+				<!-- 预约信息只在状态为跟踪状态时，显示并设置 -->
+				<c:if test="${tpMap.state eq 0 }">
+					<div class="formtitle"><span>预约信息</span></div>
+					<div class="queryDiv_n">
+					   	<ul class="queryWrap_ul" style="padding-left:70px;">
+							<li><label>预约日期：</label><input type="text" id="yuydatex" name="yuydate" value="${fn:substring(tpMap.pdt,0,10) }" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',errDealMode:2,isShowClear:false,isShowToday:false,isShowOK:false})" class="Wdate inputDefault" style="width:90px; height:20px"/></li>
+					        <li>
+					        	<label>时间：</label><input type="text" id="yuytimex" name="yuytime" value="${fn:substring(tpMap.pdt,11,16) }" onclick="WdatePicker({dateFmt:'HH:mm',errDealMode:2,isShowClear:false,isShowToday:false,isShowOK:false})" class="Wdate inputDefault" style="width:60px; height:20px"/>
+					        </li>
+					        <li><input type="button" class="btn4" value="设置预约" onclick="setYuyDateTime('${cid }','1')"/></li>
+						</ul>
+					</div>
+				</c:if>
 			</c:if>
+			
 			<div class="formtitle"><span>车辆信息</span></div>
 			<div class="queryDiv_n">
 			   	<ul class="queryWrap_ul" style="padding-left:70px;">
@@ -176,6 +172,7 @@
   		<%-- tab2 start --%>
   		<div id="tab2" class="tabson" style="padding-left:20px;">
   			<div class="formtitle"><span>保费保单信息</span></div>
+  			<br/>
   			<div style="padding-left:170px;">
   			<form id="bandanForm" action="<c:url value='customer-saveBaodan.action'/>" method="post">
   				<input type="hidden" name="cid" value="${cid }"/>
@@ -292,7 +289,7 @@
 <!--POP PLAYER END-->
 <script type="text/javascript" src="<c:url value='js/jquery.form-3.46.0.js?v=5'/>"></script>
 <script type="text/javascript" src="<c:url value='js/cts.js?v=2'/>"></script>
-<script type="text/javascript" src="<c:url value='js/customer_info.js?v=28'/>"></script>
+<script type="text/javascript" src="<c:url value='js/customer_info.js?v=29'/>"></script>
 <script type="text/javascript">
 	var ocx = $("#OCXPlugin",window.parent.document)[0];
 	var callingTel = $("#calling_num",window.parent.document)[0];

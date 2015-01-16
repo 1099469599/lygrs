@@ -186,16 +186,23 @@ function setYuyDateTime(cid,yflag)
 {
 	var yd = $("#yuydatex").val();
 	var yt = $("#yuytimex").val();
-	$.ajax({
-		cache:false,
-		async:false,
-		type:"post",
-		data:{cid:cid,yuydate:yd,yuytime:yt,yuyflag:yflag},
-		url:"setYuydt.action",
-		success: function(data) {
-			alert("设置预约时间成功！");
-		}
-	});
+	if(yd && yt)
+	{
+		$.ajax({
+			cache:false,
+			async:false,
+			type:"post",
+			data:{cid:cid,yuydate:yd,yuytime:yt,yuyflag:yflag},
+			url:"setYuydt.action",
+			success: function(data) {
+				alert("设置预约时间成功！");
+			}
+		});
+	}
+	else
+	{
+		alert("预约日期和时间不能为空！");
+	}
 }
 
 //取消预约时间

@@ -31,7 +31,7 @@
 		<c:if test="${sessionScope.vts.roleID eq 3 }">我的客户资料</c:if>
 	</h3>
    	<form name="form1" action="<c:url value='/customer-query.action'/>" method="post">
-   	<input type="hidden" id="pageflag" name="pageflag" value=""/>
+   	<input type="hidden" id="pageflag" name="pageflag" value="${pageflag }"/>
 	<div class="queryDiv_h80">
 	   	<ul class="queryWrap_ul">
 			<li><label>批次：</label><input type="text" name="q_pino" class="ipt100 inputDefault" value="${q_pino }" maxlength="20"/></li>
@@ -106,9 +106,6 @@
                  <tr>
                      <th width="8%">批次</th>
                      <th width="6%">车牌号码</th>
-                     <c:if test="${sessionScope.vts.roleID eq 2 }">
-                     <th width="2%">状态</th>
-                     </c:if>
                      <th width="2%">车龄</th>
                      <th width="4%">出险次数</th>
                      <c:if test="${sessionScope.vts.roleID eq 3 }">
@@ -122,8 +119,9 @@
                      <c:if test="${sessionScope.vts.roleID eq 1 or sessionScope.vts.roleID eq 2 }">
                      <th width="6%">所属话务员</th>
                      </c:if>
+                     <th width="2%">状态</th>
                      <th width="8%">备注信息</th>
-                     <th width="10%">操作</th>
+                     <th width="6%">操作</th>
                  </tr>
              </thead>
              <tbody class="tab_tbody" id="movies">
@@ -150,9 +148,6 @@
 						</c:choose>
 					</td>
 					<td>${ls.cp }</td>
-					<c:if test="${sessionScope.vts.roleID eq 2 }">
-					<td>${ls.state }</td>
-					</c:if>
 					<td>${ls.byear }</td>
 					<td>${ls.ot }</td>
 					<c:if test="${sessionScope.vts.roleID eq 3 }">
@@ -189,6 +184,7 @@
 					<c:if test="${sessionScope.vts.roleID eq 1 or sessionScope.vts.roleID eq 2 }">
 					<td id="td_agtacc${status.count }">${ls.agtacc }</td>
 					</c:if>
+					<td>${ls.state }</td>
 					<td title="${ls.noteinfo }">
 						<c:set var="nilen" value="${fn:length(ls.noteinfo) }"/>
 						<c:choose>
@@ -252,6 +248,7 @@
 		<input type="hidden" id="vq_agtacc" name="q_agtacc"/>
 		<input type="hidden" id="vq_state" name="q_state"/>
 		<input type="hidden" name="viewall" value="${viewall }"/>
+		<input type="hidden" id="pageflag_x" name="pageflag" value="${pageflag }"/>
 	</form>
     
 </div>
@@ -275,6 +272,7 @@ $(function(){
         keyBrowse:true,
         delay : 0,
         callback : function( pages, items ){
+			document.getElementById("pageflag_x").value = pages.current;
 			parent.document.getElementById("curCusManagePage").value = pages.current;
 	        $("#legend1").html("&nbsp;&nbsp;当前第"+pages.current+"页 ,&nbsp;&nbsp;总共"+pages.count+"页,&nbsp;&nbsp;");
 	        $("#legend2").html("当前显示第"+items.range.start+" - "+items.range.end+"条记录,&nbsp;&nbsp;总共"+items.count+"条记录&nbsp;&nbsp;");
@@ -311,21 +309,6 @@ $(function(){
 		var tab = document.getElementById("movies");
 		//tr 
 		var row = document.getElementById("rowIndex_"+index);
-		//
-		/*
-		layer.confirm("确定要删除吗？",function(){
-			$("#del_cidx").val(cid);
-			$("#form3").ajaxSubmit({ 
-				success:function(data){ //提交成功的回调函数
-					//$("#pageflag").val("update");
-					//document.form1.submit();
-					tab.deleteRow(row.sectionRowIndex);	
-					layer.closeAll();	
-		        }  
-			}); 
-		    return false;
-		});
-		*/
 		var m=confirm("你确定要删除吗?"); 
 		if(m==true)
 		{ 
