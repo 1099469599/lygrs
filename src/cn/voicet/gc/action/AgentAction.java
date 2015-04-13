@@ -87,4 +87,12 @@ public class AgentAction extends BaseAction implements ModelDriven<AgentForm>{
 		response.getWriter().print("ok");
 		return null;
 	}
+	
+	public String dataTrans() throws IOException
+	{
+		log.info("agtfrom:"+agentForm.getAgtfrom()+", agtto:"+agentForm.getAgtto());
+		agentDao.dataTrans(agentForm);
+		response.getWriter().print("ok");
+		return null;
+	}
 }

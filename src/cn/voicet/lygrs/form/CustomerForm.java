@@ -89,6 +89,8 @@ public class CustomerForm {
 	private int baomode;	//统计保费模式
 	
 	private int viewall=0;
+	//
+	private int firstcall = 0;	//首拔 
 	
 	public String getPino() {
 		return pino;
@@ -403,4 +405,11 @@ public class CustomerForm {
 	public void setViewall(int viewall) {
 		this.viewall = viewall;
 	}
+	public int getFirstcall() {
+		return firstcall;
+	}
+	public void setFirstcall(int firstcall) {
+		this.firstcall = firstcall;
+	}
+	
 }

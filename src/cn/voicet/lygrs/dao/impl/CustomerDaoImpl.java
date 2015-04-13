@@ -450,11 +450,12 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 	 * 重置分配数
 	 */
 	public void resetFenpei(final CustomerForm customerForm) {
-		log.info("sp:web_lygrs_userdata_reset(?)");
-		this.getJdbcTemplate().execute("{call web_lygrs_userdata_reset(?)}", new CallableStatementCallback() {
+		log.info("sp:web_lygrs_userdata_reset(?,?)");
+		this.getJdbcTemplate().execute("{call web_lygrs_userdata_reset(?,?)}", new CallableStatementCallback() {
 			public Object doInCallableStatement(CallableStatement cs)
 					throws SQLException, DataAccessException {
-				cs.setString(1, customerForm.getPino());
+				cs.setString("ids", customerForm.getPino());
+				cs.setString("agtacc", customerForm.getAgtacc());
 				cs.execute();
 				return null;
 			}
@@ -480,8 +481,8 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 	 * 连云港人寿--车辆信息列表查询
 	 */
 	public List<Map<String, Object>> queryCustomerInfo(final CustomerForm customerForm) {
-		log.info("sp:web_lygrs_userlist_query(?,?,?,?,?,?,?,?,?,?)");
-		return (List<Map<String, Object>>)this.getJdbcTemplate().execute("{call web_lygrs_userlist_query(?,?,?,?,?,?,?,?,?,?)}", new CallableStatementCallback() {
+		log.info("sp:web_lygrs_userlist_query(?,?,?,?,?,?,?,?,?,?,?)");
+		return (List<Map<String, Object>>)this.getJdbcTemplate().execute("{call web_lygrs_userlist_query(?,?,?,?,?,?,?,?,?,?,?)}", new CallableStatementCallback() {
 			public Object doInCallableStatement(CallableStatement cs)
 					throws SQLException, DataAccessException {
 				//所属话务员
@@ -512,6 +513,7 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 				{
 					cs.setInt("state", customerForm.getQ_state());
 				}
+				cs.setInt("firstcall", customerForm.getFirstcall());
 				cs.execute();
 				ResultSet rs = cs.getResultSet();
 				List list = new ArrayList();
@@ -528,8 +530,8 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 	}
 
 	public void exportCustomerData(final CustomerForm customerForm, final HttpServletResponse response) {
-		log.info("sp:web_lygrs_userlist_query(?,?,?,?,?,?,?,?,?,?)");
-		this.getJdbcTemplate().execute("{call web_lygrs_userlist_query(?,?,?,?,?,?,?,?,?,?)}", new CallableStatementCallback() {
+		log.info("sp:web_lygrs_userlist_query(?,?,?,?,?,?,?,?,?,?,?)");
+		this.getJdbcTemplate().execute("{call web_lygrs_userlist_query(?,?,?,?,?,?,?,?,?,?,?)}", new CallableStatementCallback() {
 			public Object doInCallableStatement(CallableStatement cs)
 					throws SQLException, DataAccessException {
 				//所属话务员
@@ -559,6 +561,7 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 				{
 					cs.setInt("state", customerForm.getQ_state());
 				}
+				cs.setInt("firstcall", customerForm.getFirstcall());
 				cs.execute();
 				//
 				ResultSet rs = cs.getResultSet();
@@ -566,7 +569,7 @@ public class CustomerDaoImpl extends BaseDaoImpl implements CustomerDao {
 				//int columnCount = rsm.getColumnCount();
 				//
 				String filePath = ServletActionContext.getServletContext().getRealPath("excelTemplate")+"/"+"customer_exportTemplate.xls";
-				HSSFWorkbook wb=VTJime.fromRStoExcel(filePath, 1, true, rs, 20);
+				HSSFWorkbook wb=VTJime.fromRStoExcel(filePath, 1, true, rs, 22);
 				try {
 					response.reset();
 					response.setHeader("Content-Disposition", "attachment;filename=" + "customerData.xls");

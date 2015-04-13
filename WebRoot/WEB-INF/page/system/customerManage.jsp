@@ -36,8 +36,31 @@
 	   	<ul class="queryWrap_ul">
 			<li><label>批次：</label><input type="text" name="q_pino" class="ipt100 inputDefault" value="${q_pino }" maxlength="20"/></li>
 			<li><label>车龄：</label><input type="text" name="q_caryear" class="ipt60 inputDefault" value="${q_caryear }" placeholder="如:&gt;2014" maxlength="8"/></li>
-	        <li><label>出险次数：</label><input type="text" name="q_chuxcs" class="ipt60 inputDefault" value="${q_chuxcs }" placeholder="如:&gt;10" maxlength="8"/></li>
+	        <li>
+	        	<!--
+	        	<label>出险次数：</label><input type="text" name="q_chuxcs" class="ipt60 inputDefault" value="${q_chuxcs }" placeholder="如:&gt;10" maxlength="8"/>
+	        	-->
+	        	<input type="hidden" name="q_chuxcs" value=""/>
+	        </li>
 	        <li><label>车牌号码：</label><input type="text" name="q_chephm" class="ipt100 inputDefault" value="${q_chephm }" maxlength="20"/></li>
+			<li>
+	        	<c:if test="${sessionScope.vts.roleID eq 2 }">
+				<input type="checkbox" id="firstcall" <c:if test='${firstcall eq 1 }'>checked='checked'</c:if> name="firstcall" value="${firstcall }" onclick="viewFirstcall(this)"/><label for="view_all">&nbsp;首拔</label>
+				<script type="text/javascript">
+					function viewFirstcall(obj)
+					{
+						if(obj.checked)
+						{
+							obj.value=1;
+						}
+						else
+						{
+							obj.value=0;
+						}
+					}
+				</script>
+				</c:if>
+	        </li>
 	        <li>
 	        	<!--	
 	        	<c:if test="${sessionScope.vts.roleID eq 1 or sessionScope.vts.roleID eq 2}">
@@ -64,11 +87,11 @@
 				</c:if>
 	        </li>
 		</ul>
-		<ul class="queryWrap_ul" style="margin-top:-4px;">
+		<ul class="queryWrap_ul" style="margin-top:-4px;">	 
 			<li>
 	        	<label>客户姓名：</label>
 	        	<input type="text" name="q_uname" class="ipt100 inputDefault" value="${q_uname }" maxlength="20"/>
-	        </li>	       
+	        </li>      
 	        <li>
 	        	<label>手机：</label>
 	        	<input type="text" name="q_mobile" class="ipt100 inputDefault" value="${q_mobile }" maxlength="11"/>
@@ -107,21 +130,19 @@
                      <th width="8%">批次</th>
                      <th width="6%">车牌号码</th>
                      <th width="2%">车龄</th>
-                     <th width="4%">出险次数</th>
+                     <th width="8%">拔打时间</th>
                      <c:if test="${sessionScope.vts.roleID eq 3 }">
                      <th width="6%">预约时间</th>
                      </c:if>
                      <th width="4%">客户姓名</th>
                      <th width="6%">手机</th>
-                     <c:if test="${sessionScope.vts.roleID eq 3 }">
                      <th width="2%" title="已呼叫次数">*</th>
-                     </c:if>
                      <c:if test="${sessionScope.vts.roleID eq 1 or sessionScope.vts.roleID eq 2 }">
                      <th width="6%">所属话务员</th>
                      </c:if>
                      <th width="2%">状态</th>
-                     <th width="8%">备注信息</th>
-                     <th width="6%">操作</th>
+                     <th width="4%">备注信息</th>
+                     <th width="5%">操作</th>
                  </tr>
              </thead>
              <tbody class="tab_tbody" id="movies">
@@ -149,7 +170,7 @@
 					</td>
 					<td>${ls.cp }</td>
 					<td>${ls.byear }</td>
-					<td>${ls.ot }</td>
+					<td>${fn:substring(ls.ltdt,0,19) }</td>
 					<c:if test="${sessionScope.vts.roleID eq 3 }">
 						<c:set var="cd" value="${fn:substring(ls.pdt,0,10) }"></c:set>
 						<c:set var="ct" value="${fn:substring(ls.pdt,10,19) }"></c:set>
@@ -178,9 +199,7 @@
 							<c:otherwise>${ls.mobile }</c:otherwise>
 						</c:choose>
 					</td>
-					<c:if test="${sessionScope.vts.roleID eq 3 }">
 					<td id="call_time${ls.cid }">${ls.calltimes }</td>
-					</c:if>
 					<c:if test="${sessionScope.vts.roleID eq 1 or sessionScope.vts.roleID eq 2 }">
 					<td id="td_agtacc${status.count }">${ls.agtacc }</td>
 					</c:if>
@@ -188,7 +207,7 @@
 					<td title="${ls.noteinfo }">
 						<c:set var="nilen" value="${fn:length(ls.noteinfo) }"/>
 						<c:choose>
-							<c:when test="${nilen gt 7 }">${fn:substring(ls.noteinfo,0,7) }..</c:when>
+							<c:when test="${nilen gt 4 }">${fn:substring(ls.noteinfo,0,4) }..</c:when>
 							<c:otherwise>${ls.noteinfo }</c:otherwise>
 						</c:choose>
 					</td>

@@ -52,6 +52,8 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 	{
 		List<Map<String, Object>> list = customerDao.queryPiNo();
 		request.setAttribute("pList", list);
+		//放务员列表
+		alist = customerDao.queryAgentList();
 		return "customerImportPage";
 	}
 	
@@ -108,6 +110,11 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 	
 	public String resetFenpei()
 	{
+		log.info("pino:"+customerForm.getPino()+", agtacc:"+customerForm.getAgtacc());
+		if(customerForm.getAgtacc().length()==0)
+		{
+			customerForm.setAgtacc(null);
+		}
 		customerDao.resetFenpei(customerForm);
 		log.info("重置分配批次["+customerForm.getPino()+"]完成");
 		return null;
@@ -143,7 +150,7 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 		{
 			customerForm.setViewall(1);
 		}
-		log.info("q_pino:"+customerForm.getQ_pino()+", q_caryear:"+customerForm.getQ_caryear()+", q_chuxcs:"+customerForm.getQ_chuxcs()+", q_chephm:"+customerForm.getQ_chephm()+", q_uname:"+customerForm.getQ_uname()+", q_mobile:"+customerForm.getQ_mobile()+", q_agtacc:"+customerForm.getQ_agtacc()+", viewall:"+customerForm.getViewall()+", q_state:"+customerForm.getQ_state());
+		log.info("q_pino:"+customerForm.getQ_pino()+", q_caryear:"+customerForm.getQ_caryear()+", q_chuxcs:"+customerForm.getQ_chuxcs()+", q_chephm:"+customerForm.getQ_chephm()+", q_uname:"+customerForm.getQ_uname()+", q_mobile:"+customerForm.getQ_mobile()+", q_agtacc:"+customerForm.getQ_agtacc()+", viewall:"+customerForm.getViewall()+", q_state:"+customerForm.getQ_state()+", firstcall:"+customerForm.getFirstcall());
 		List<Map<String, Object>> list = customerDao.queryCustomerInfo(customerForm);
 		request.setAttribute("cList", list);
 		//
@@ -158,7 +165,7 @@ public class CustomerAction extends BaseAction implements ModelDriven<CustomerFo
 	 */
 	public String exportAll()
 	{
-		log.info("pino:"+customerForm.getPino()+", caryear:"+customerForm.getCaryear()+", chuxcs:"+customerForm.getChuxcs()+", chephm:"+customerForm.getChephm()+", uname:"+customerForm.getUname()+", mobile:"+customerForm.getMobile()+", agtacc:"+customerForm.getAgtacc());
+		log.info("pino:"+customerForm.getPino()+", caryear:"+customerForm.getCaryear()+", chuxcs:"+customerForm.getChuxcs()+", chephm:"+customerForm.getChephm()+", uname:"+customerForm.getUname()+", mobile:"+customerForm.getMobile()+", agtacc:"+customerForm.getAgtacc()+", firstcall:"+customerForm.getFirstcall());
 		customerDao.exportCustomerData(customerForm, response);
 		return null;
 	}

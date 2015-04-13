@@ -24,7 +24,51 @@
 <body>
 <div id="contentWrap">
 	<h3 class="h3_title">座席资料维护</h3>
-	<div class="content_List615">
+	
+    <div class="queryDiv">
+	   	<ul class="queryWrap_ul_w600 left">
+			<li>
+				<label>选择话务员：</label>
+				<s:select id="agent-sel1" list="#session.vts.list" listKey="telnum" listValue="account" value=""></s:select>
+				<label>==></label>
+				<s:select id="agent-sel2" list="#session.vts.list" listKey="telnum" listValue="account" value=""></s:select>
+			</li>
+	        <li><input type="button" class="btn4" value="资料转移" onclick="dataTrans()"/></li>
+	        <script type="text/javascript">
+	        	function dataTrans()
+	        	{
+	        		var agtf = $('#agent-sel1 option:selected').val();//选中的值
+	        		var agtt = $('#agent-sel2 option:selected').val();
+	        		var m=confirm("你确定要转移资料吗?"); 
+	        		if(m==true)
+	        		{ 
+	        			$.ajax({
+	        				cache:false,
+	        				async:false,
+	        				type:"post",
+	        				data:{agtfrom:agtf, agtto:agtt},
+	        				url:" agent-dataTrans.action",
+	        				success: function(data) {
+	        					if(data=="ok")
+	        					{
+									alert("成功");
+	        					}else{}
+	        				}
+	        			});
+	        		} 
+	        		else
+	        		{ 
+	        			
+	        		} 
+	        	}
+	        </script>
+		</ul>
+		<ul class="queryWrap_ul_w100 right">
+	        <li></li>
+		</ul>
+	</div>
+	
+	<div class="content_List568">
 		<table cellpadding="0" cellspacing="0" class="tab_border">
 			<thead class="tab_head">
                  <tr>
@@ -148,7 +192,7 @@ $(function(){
         next : "下一页",
         last : "尾页",
         startPage : nowPage,
-        perPage : 28,
+        perPage : 26,
         keyBrowse:true,
         delay : 0,
         callback : function( pages, items ){

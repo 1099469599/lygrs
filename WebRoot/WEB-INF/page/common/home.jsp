@@ -531,6 +531,14 @@
 			var recalltel = ocx.GetLastCallee();
 			var callid = ocx.GetCallID();
 			ocx.doDialEx(recalltel,"b,,"+callid);
+			/*
+			* 2015-04-13该修改需更新ocx插件，暂不更新 
+			var param = ocx.GetLastCalleeParam();
+			if(param)
+			{
+				ocx.doDialEx(param);
+			}
+			*/
 			callingTel.innerHTML=ing+recalltel;
 		}
 	}

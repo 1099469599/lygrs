@@ -22,7 +22,7 @@
 <div id="contentWrap">
 	<h3 class="h3_title1">客户资料导入&nbsp;<span class="down">点击<a href="${pageContext.request.contextPath }/excelTemplate/customer_importTemplate.xls">下载</a>模板文件</span></h3>
 	<form id="form1" name="form1" action="<c:url value='/customer-importData.action'/>" method="post">
-	
+		<input type="hidden" name="agtacc" id="q-agt-tel" value=""/>
 	</form>
 	<div class="content_List615">
 		<table cellpadding="0" cellspacing="0" class="tab_border">
@@ -32,9 +32,12 @@
                      <th width="8%">创建日期</th>
                      <th width="4%">客户数</th>
                      <th width="4%">未分配数</th>
-                     <th width="12%">备注信息</th>
-                     <th width="16%" style="text-align:center">
+                     <th width="10%">备注信息</th>
+                     <th width="14%" style="text-align:center">
                      	<input type="button" onclick="savePiNo('add','','')" value="创建批次" class="btn btn-primary"/>
+                     </th>
+                     <th width="10%" style="text-align:left">
+                     	&nbsp;话务员：<s:select id="selectAGTACC" list="alist" cssStyle="width:80px; height:20px;" headerKey="" headerValue="--请选择--" listKey="telnum" listValue="telagt" name="q_agtacc" value="agtacc" onchange="changeAgent(this)"></s:select>
                      </th>
                  </tr>
              </thead>
@@ -64,14 +67,6 @@
 							</c:otherwise>
 						</c:choose>
 						<c:choose>
-							<c:when test="${ls.tn gt 0 and ls.tn ne ls.un }">
-								<a href="javascript:resetFenpei('${ls.ids }')">重置分配</a>&nbsp;&nbsp;	
-							</c:when>
-							<c:otherwise>
-								<label style="color:#808080;">重置分配&nbsp;&nbsp;</label>
-							</c:otherwise>
-						</c:choose>
-						<c:choose>
 							<c:when test="${ls.tn gt 0 }">
 								<a href="javascript:clearPino('${ls.ids }')">清空批次</a>&nbsp;&nbsp;	
 							</c:when>
@@ -85,6 +80,17 @@
 							</c:when>
 							<c:otherwise>
 							<label style="color:#808080;">删除&nbsp;&nbsp;</label>
+							</c:otherwise>
+						</c:choose>
+					</td>
+					<td>
+						
+						<c:choose>
+							<c:when test="${ls.tn gt 0 and ls.tn ne ls.un }">
+								<a href="javascript:resetFenpei('${ls.ids }')">重置分配</a>&nbsp;&nbsp;	
+							</c:when>
+							<c:otherwise>
+								<label style="color:#808080;">重置分配&nbsp;&nbsp;</label>
 							</c:otherwise>
 						</c:choose>
 					</td>
@@ -166,7 +172,16 @@
 <%-- 重置分配  --%>
 <form id="form5" name="form5" action="<c:url value='customer-resetFenpei.action'/>" method="post">
 	<input type="hidden" name="pino" id="reset_pino"/>
+	<input type="hidden" name="agtacc" id="r-agt-tel" value=""/>
 </form>
+<script type="text/javascript">
+	function changeAgent(obj)
+	{
+		$("#r-agt-tel").val(obj.value);
+		//
+		$("#q-agt-tel").val(obj.value);
+	}
+</script>
 
 <%-- 分配  --%>
 <form id="form6" name="form6" action="<c:url value='customer-alloc.action'/>" method="post">
@@ -241,6 +256,22 @@ document.onkeydown = function(e) {
 <script type="text/javascript" src="<c:url value='js/changeTabColor.js'/>"></script>
 <script type="text/javascript" src="<c:url value='js/jquery.form-3.46.0.js'/>"></script>
 <script type="text/javascript" src="<c:url value='js/customer.js?v=18'/>"></script>
+
+<script type="text/javascript">
+	//default selected
+	$(function(){
+		var t = '${agtacc }';
+		var selectSTATE = document.getElementById("selectAGTACC");
+		for(var i=0; i<selectSTATE.options.length; i++)
+		{
+			console.log(selectSTATE.options[i].value);
+			if(selectSTATE.options[i].value==t){  
+				selectSTATE.options[i].selected=true;
+                break;  
+            }  
+		}
+	});
+</script>
 
 </body>
 </html>

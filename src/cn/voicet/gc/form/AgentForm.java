@@ -22,6 +22,9 @@ public class AgentForm {
 	
 	private String account;
 	
+	private String agtfrom;
+	private String agtto;
+	
 	public String getSdt() {
 		return sdt;
 	}
@@ -82,4 +85,17 @@ public class AgentForm {
 	public void setAccount(String account) {
 		this.account = account;
 	}
+	public String getAgtfrom() {
+		return agtfrom;
+	}
+	public void setAgtfrom(String agtfrom) {
+		this.agtfrom = agtfrom;
+	}
+	public String getAgtto() {
+		return agtto;
+	}
+	public void setAgtto(String agtto) {
+		this.agtto = agtto;
+	}
+	
 }

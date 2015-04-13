@@ -275,4 +275,18 @@ public class AgentDaoImpl extends BaseDaoImpl implements AgentDao {
 		});
 	}
 
+	@Override
+	public void dataTrans(final AgentForm agentForm) {
+		log.info("sp:web_lygrs_userdata_trans(?,?)");
+		this.getJdbcTemplate().execute("{call web_lygrs_userdata_trans(?,?)}", new CallableStatementCallback() {
+			public Object doInCallableStatement(CallableStatement cs)
+					throws SQLException, DataAccessException {
+				cs.setString("agtfrom", agentForm.getAgtfrom());
+				cs.setString("agtto", agentForm.getAgtto());
+				cs.execute();
+				return null;
+			}
+		});
+	}
+
 }
